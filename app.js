@@ -16,7 +16,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({ secret: 'your secret here' }));
-  app.use(express.compiler({ src: __dirname + '/public', enable: ['less'] }));
+  app.use(require('connect-less')({ src: __dirname + '/public/', compress: true }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
@@ -31,21 +31,7 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', function(req, res){
-  res.render('index', {
-    locals: {
-      title: 'Express'
-    }
-  });
-});
+require('./routes')(app);
 
-require('./controllers/user')(app);
-require('./controllers/posts')(app);
-require('./controllers/tags')(app);
-
-// Only listen on $ node app.js
-
-if (!module.parent) {
-  app.listen(3000);
-  console.log("Express server listening on port %d", app.address().port)
-}
+app.listen(3000);
+console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
