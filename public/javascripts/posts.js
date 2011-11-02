@@ -1,4 +1,5 @@
 $(function(){
+    // New post
     var newPost = $('.new-post textarea');
     var preview = $('.new-post .preview');
     var converter = new Showdown.converter();
@@ -45,4 +46,26 @@ $(function(){
         newPost.css({height: 60});
     });
 
+    // Post comments
+    $('.post').each(function(i, el){
+        var e = $(el),
+            opened = false,
+            showComments = e.find('a.show-comments'),
+            loading = e.children('.loading'),
+            comments = e.children('.comments');
+
+        showComments.click(function(){
+            if(opened){
+              comments.slideUp();
+              opened = false;
+            } else {
+              loading.slideDown();
+              setTimeout(function(){
+                  loading.slideUp();
+                  comments.slideDown();
+                  opened = true;
+              }, 1000);
+            }
+        });
+    });
 });

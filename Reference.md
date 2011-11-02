@@ -24,6 +24,7 @@ JQuery plugins
 ----
 [autoresize](http://james.padolsey.com/javascript/jquery-plugin-autoresize/)
 [Autocomplete](https://github.com/agarzola/jQueryAutocompletePlugin)
+[AutoComplete](http://www.amirharel.com/2011/03/07/implementing-autocomplete-jquery-plugin-for-textarea/)
 
 Other Javascript
 ----

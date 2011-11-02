@@ -343,6 +343,8 @@ footer{border:none;}
 .avatar-info{display:inline;float:left;margin-left:20px;width:70px;}.avatar-info .avatar a.avatar{display:block;width:64px;height:64px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.25);-moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.25);box-shadow:0 1px 3px rgba(0, 0, 0, 0.25);}
 .post{background-color:#ffffff;color:#000000;padding:20px;display:inline;float:left;margin-left:20px;width:550px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.25);-moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.25);box-shadow:0 1px 3px rgba(0, 0, 0, 0.25);}.post a{color:rgba(0, 0, 0, 0.5);}
 .post a:hover{color:rgba(0, 0, 0, 0.8);}
+.post .loading{display:none;}
+.post .comments{display:none;}
 .post-controls{float:right;}
 .post-controls,.post-info{font-size:13px;font-weight:bold;}
 .following,.follower{display:block;font-size:18px;padding:10px;}
