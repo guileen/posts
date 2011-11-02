@@ -1,6 +1,7 @@
 .row
   .span12
 
+    // new post
     .row.entry
 
       .avatar-info
@@ -10,13 +11,22 @@
 
       .new-post
         form
-          .clearfix
-            textarea
-          .clearfix
+          .clearfix.tips
             a(href="#") Help &nbsp;
-            a(href="#") Expand &nbsp;
-            a(href="#") Upload Image&nbsp;
+            &nbsp;
+            a.collapse(href="#") &times;
+          .clearfix
+            textarea.default(placeholder="")
+                #Title
+                
+                Content
+                
+                #tag#
+          .clearfix.actions
+            a(href="#") Upload Image
+            &nbsp;
             input.btn.primary(type="submit", value="Post")
+          .clearfix.preview
 
 
     .row.entry
