@@ -1,0 +1,68 @@
+.entry {
+  margin-bottom: 20px;
+}
+
+.new-post {
+  .makeColumn(10);
+  textarea{
+    width: 100%;
+    height: 4em;
+  }
+}
+
+.avatar-info{
+  .makeColumn(1.5);
+  .avatar {
+    a.avatar{
+      display: block;
+      width: 64px;
+      height: 64px;
+      .border-radius();
+      .box-shadow();
+    }
+  }
+}
+
+.post {
+  background-color: @postBackground;
+  color:            @postColor;
+  padding:          20px;
+  .makeColumn(9.5);
+  .border-radius();
+  .box-shadow();
+
+  a {
+    color:      @postLinkColor;
+  }
+
+  a:hover {
+    color:    @postLinkColorHover;
+  }
+
+}
+
+.post-controls {
+  float: right;
+}
+
+.post-controls, .post-info {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.following, .follower{
+  display: block;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.following{
+  .border-radius(5px 5px 0 0);
+  .box-shadow();
+  background-color: darken(@background, 15);
+}
+.follower{
+  .border-radius(0 0 5px 5px);
+  .box-shadow();
+  background-color: darken(@background, 5);
+}
