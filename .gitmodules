@@ -7,3 +7,6 @@
 [submodule "public/javascripts/github-flavored-markdown"]
 	path = public/javascripts/github-flavored-markdown
 	url = git://github.com/github/github-flavored-markdown.git
+[submodule "public/javascripts/autocomplete"]
+	path = public/javascripts/autocomplete
+	url = git://github.com/agarzola/jQueryAutocompletePlugin.git
