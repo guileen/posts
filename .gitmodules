@@ -1,3 +1,6 @@
 [submodule "public/bootstrap"]
 	path = public/bootstrap
 	url = git://github.com/twitter/bootstrap.git
+[submodule "public/javascripts/autoresize"]
+	path = public/javascripts/autoresize
+	url = git://github.com/jamespadolsey/jQuery.fn.autoResize.git
