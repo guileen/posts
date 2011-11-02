@@ -4,11 +4,17 @@ References
 Node.js
 ----
 [express]
-[connect]
 [less]
 [jade]
-[connect-less]
 [mongoskin]
+[connect]
+
+Connect
+----
+[uglify-js-middleware](https://github.com/JakeWharton/uglify-js-middleware/blob/master/uglify-js-middleware.js)
+[connect-less]
+[connect-asset]
+[connect-resource]
 
 Stylesheets
 ----
@@ -17,3 +23,8 @@ Stylesheets
 JQuery plugins
 ----
 [autoresize](http://james.padolsey.com/javascript/jquery-plugin-autoresize/)
+[Autocomplete](https://github.com/agarzola/jQueryAutocompletePlugin)
+
+Other Javascript
+----
+[github flavored markdown](https://github.com/github/github-flavored-markdown)

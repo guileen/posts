@@ -3,19 +3,30 @@
 }
 
 .new-post {
-  .makeColumn(10);
+  .makeColumn(10.2);
   textarea{
-    width: 100%;
+    width: 98%;
     height: 60px;
     resize: none;
   }
 
-  .tips, .actions {
+  .preview, .tips, .actions {
     display: none;
   }
 
   .tips {
-    text-align : right;
+    line-height: 24px;
+    font-weight: bold;
+  }
+
+  .preview {
+    background-color: @postBackground;
+    color:            @postColor;
+    border: 3px dotted #ccc;
+    padding: 20px;
+    max-height: 250px;
+    overflow: auto;
+    .border-radius();
   }
 }
 
