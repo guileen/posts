@@ -1,7 +1,13 @@
 $(function(){
+
     // New post
     var newPost = $('.new-post textarea');
     var preview = $('.new-post .preview');
+
+    if(newPost.length===0 || preview.length===0){
+      return;
+    }
+
     var converter = new Showdown.converter();
 
     function refreshPreview(){
@@ -26,10 +32,12 @@ $(function(){
         });
 
         if(newPost.hasClass('default')){
+          newPost.val('#Title\n\nContent\n\n#tag#');
+          refreshPreview();
           setTimeout(function(){
             newPost.select();
           }, 100);
-        };
+        }
     });
 
     // prevent select all text if not first time click textarea
@@ -44,6 +52,9 @@ $(function(){
         $('.new-post .preview').hide();
         newPost.data('AutoResizer').destroy();
         newPost.css({height: 60});
+        if(newPost.hasClass('default')){
+          newPost.val('');
+        }
     });
 
     // Post comments
@@ -68,4 +79,16 @@ $(function(){
             }
         });
     });
+
+    // Upload image
+    var uploader = new qq.FileUploader({
+        element: document.getElementById('btn-uploader'),
+        action: '/upload',
+        template: '<div class="qq-uploader">' +
+                      '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
+                      '<div class="qq-upload-button">Upload</div>' +
+                      '<ul class="qq-upload-list"></ul>' +
+                  '</div>'
+    });
+
 });

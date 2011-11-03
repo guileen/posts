@@ -1,0 +1,33 @@
+script(src="/javascripts/preferences.js")
+
+.page-header
+  h1 Preferences &nbsp;
+    small custom you profile
+
+form
+  .clearfix
+    label(for="username") Username
+    .input
+      input(name="username", placeholder="User name")
+
+  .clearfix
+    label(for="password") Current Password
+    .input
+      input(name="password", type="password", placeholder="Current Password")
+  .clearfix
+    label(for="new-password") New Password
+    .input
+      input(name="new-password", type="password", placeholder="New password")
+  .clearfix
+    label(for="repeat-password") Repeat Password
+    .input
+      input(name="repeat-password", type="password", placeholder="Repeat new password")
+
+  .clearfix
+    label Avatar
+    .input#select-avatar
+
+  .actions
+    input.btn.primary(type="submit", value="Save settings")
+    &nbsp;
+    button.btn(type="reset") Cancel

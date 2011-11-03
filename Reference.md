@@ -16,6 +16,14 @@ Connect
 [connect-asset]
 [connect-resource]
 
+Markdown
+----
+[node-discount]
+[github-flavored-markdown](https://github.com/github/github-flavored-markdown)
+[node github-flavored-markdown](https://github.com/isaacs/github-flavored-markdown)
+[robotskirt]
+[sundown](https://github.com/tanoku/sundown)
+
 Stylesheets
 ----
 [Bootstrap]
@@ -29,3 +37,5 @@ JQuery plugins
 Other Javascript
 ----
 [github flavored markdown](https://github.com/github/github-flavored-markdown)
+[smoothscroll](http://www.kryogenix.org/code/browser/smoothscroll/)
+[file-uploader](https://github.com/valums/file-uploader)

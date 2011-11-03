@@ -1,3 +1,5 @@
+script(src="/javascripts/posts.js")
+
 .row
   .span12
 
@@ -18,15 +20,10 @@
               a.collapse(href="#") &times;
             div
               a(href="#") Upload Image
+              #btn-uploader
               &nbsp;
           .clearfix
-            textarea.default(placeholder="")
-                #Title
-
-                Content
-
-                #tag#
-
+            textarea.default(placeholder="Say something")
           .preview
 
           .clearfix.actions
@@ -44,3 +41,15 @@
     section
       form
         input(type="search", placeholder="Search here")
+
+    section.quests
+      li
+        a Send a text message
+      li
+        a Upload a image
+      li
+        a Send a image with link
+      li
+        a Send a video with link
+      li
+        a Send a audio with link
