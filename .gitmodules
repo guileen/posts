@@ -13,3 +13,12 @@
 [submodule "public/javascripts/file-uploader"]
 	path = public/javascripts/file-uploader
 	url = git://github.com/valums/file-uploader.git
+[submodule "public/javascripts/H5F"]
+	path = public/javascripts/H5F
+	url = git://github.com/ryanseddon/H5F.git
+[submodule "public/javascripts/form"]
+	path = public/javascripts/form
+	url = git://github.com/malsup/form.git
+[submodule "public/javascripts/jquery-pjax"]
+	path = public/javascripts/jquery-pjax
+	url = git://github.com/defunkt/jquery-pjax.git
