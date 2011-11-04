@@ -20,7 +20,7 @@ $(function(){
     newPost.keyup(refreshPreview);
 
     // show new-post panel
-    $('.new-post').focusin(function(){
+    newPost.focusin(function(){
         $('.new-post .actions').fadeIn();
         $('.new-post .tips').fadeIn();
         $('.new-post .preview').fadeIn();
@@ -47,14 +47,14 @@ $(function(){
 
     // collapse, close new-post panel
     $('.new-post .collapse').click(function(){
+        if(newPost.hasClass('default')){
+          newPost.val('');
+        }
+        newPost.css({height: 60});
         $('.new-post .actions').hide();
         $('.new-post .tips').hide();
         $('.new-post .preview').hide();
         newPost.data('AutoResizer').destroy();
-        newPost.css({height: 60});
-        if(newPost.hasClass('default')){
-          newPost.val('');
-        }
     });
 
     // Post comments
