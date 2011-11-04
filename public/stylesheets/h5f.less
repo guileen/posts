@@ -1,0 +1,29 @@
+input::-webkit-input-placeholder	{ color: #a9a9a9; }
+input:-moz-placeholder			{ color: #a9a9a9; }
+
+.input input {
+  background: #fff url(../images/ico_validation.png) 379px 24px no-repeat;
+}
+
+/* Enhanced error styling */
+.input input.error
+{
+	background-color: pink; 
+	background-position: right 3px;
+	outline: none; 
+}
+.input input.required
+{
+	background-color: #fff; 
+	background-position: right -29px;
+}
+.input input.valid
+{ 
+	background-color: #fff;
+	background-position: right -61px;
+}
+.input fieldset input:required:valid
+{ 
+	background-color: #fff;
+	background-position: right -61px;
+}

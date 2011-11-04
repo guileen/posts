@@ -12,10 +12,4 @@ module.exports = function(app){
       res.render('index', { title: 'Express' })
   });
 
-  app.get('/preferences', function(req, res) {
-      res.render('preferences', {
-          title: 'Prefrences'
-      });
-  });
-
 }

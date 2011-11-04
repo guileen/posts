@@ -7,7 +7,9 @@ Node.js
 [less]
 [jade]
 [mongoskin]
+[mongolian]
 [connect]
+[node-seq]
 
 Connect
 ----
@@ -15,6 +17,13 @@ Connect
 [connect-less]
 [connect-asset]
 [connect-resource]
+
+Forms
+----
+file upload [node-formidable]
+[connect-form]
+[node-validator]
+bugs [express-validator](https://github.com/ctavan/express-validator)
 
 Markdown
 ----
@@ -34,8 +43,25 @@ JQuery plugins
 [Autocomplete](https://github.com/agarzola/jQueryAutocompletePlugin)
 [AutoComplete](http://www.amirharel.com/2011/03/07/implementing-autocomplete-jquery-plugin-for-textarea/)
 
+[jquerytools](https://github.com/jquerytools/jquerytools)
+* validator, overlay, 
+
+[lazyload](https://github.com/tuupola/jquery_lazyload)
+
+PJAX
+----
+[jquery-pjax]
+[article,html5 pushstate, github 3 lider](https://github.com/blog/760-the-tree-slider)
+
 Other Javascript
 ----
 [github flavored markdown](https://github.com/github/github-flavored-markdown)
 [smoothscroll](http://www.kryogenix.org/code/browser/smoothscroll/)
 [file-uploader](https://github.com/valums/file-uploader)
+[HTML 5 form, H5F](https://github.com/ryanseddon/H5F)
+
+Image preview
+----
+[ibox](http://www.enthropia.com/labs/ibox/)
+[a blog about image loading](http://jqueryfordesigners.com/image-loading/)
+[jqZoom](http://www.mind-projects.it/projects/jqzoom/)
