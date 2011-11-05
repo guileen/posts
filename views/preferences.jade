@@ -1,33 +1,39 @@
-script(src="/javascripts/preferences.js")
+extends layout
 
-.page-header
-  h1 Preferences &nbsp;
-    small custom you profile
+block scripts
+  script(src="/javascripts/preferences.js")
 
-form
-  .clearfix
-    label(for="email") Username
-    .input
-      input(name="email", placeholder="User name")
+block content
+  .page-header
+    h1 Preferences &nbsp;
+      small custom you profile
 
-  .clearfix
-    label(for="password") Current Password
-    .input
-      input(name="password", type="password", placeholder="Current Password")
-  .clearfix
-    label(for="new-password") New Password
-    .input
-      input(name="new-password", type="password", placeholder="New password")
-  .clearfix
-    label(for="repeat-password") Repeat Password
-    .input
-      input(name="repeat-password", type="password", placeholder="Repeat new password")
+  form
+    .celarfix.select-avatar
+      label Avatar
+      .input#select-avatar
 
-  .clearfix
-    label Avatar
-    .input#select-avatar
+  form.preferences(action='/preferences', method='post')
+    .clearfix
+      label(for="fullname") Full name
+      .input
+        input(name="fullname", placeholder="Full name", value=user.fullname, autocomplete='off')
 
-  .actions
-    input.btn.primary(type="submit", value="Save settings")
-    &nbsp;
-    button.btn(type="reset") Cancel
+    - if(!locals.setAvatar)
+      .clearfix
+        label(for="password") Current Password
+        .input
+          input(name="password", type="password", placeholder="Current Password")
+      .clearfix
+        label(for="new-password") New Password
+        .input
+          input(name="new-password", type="password", placeholder="New password")
+      .clearfix
+        label(for="repeat-password") Repeat Password
+        .input
+          input(name="repeat-password", type="password", placeholder="Repeat new password")
+
+    .actions
+      input.btn.primary(type="submit", value="Save settings")
+      &nbsp;
+      button.btn(type="reset") Cancel

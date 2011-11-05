@@ -1,18 +1,21 @@
-.page-header
-  h1 Page name 
-    small Supporting text or tagline
+extends ../layout
 
-form
-  .clearfix
-    label(for="email") Username
-    .input
-      input(name="email", placeholder="User name")
+block content
+  .page-header
+    h1 Sign in
+      small enter the world of posts
 
-  .clearfix
-    label(for="password") Password
-    .input
-      input(name="password", type="password", placeholder="Password")
-  .actions
-    input.btn.primary(type="submit", value="Sign in")
-    &nbsp;
-    button.btn(type="reset") Cancel
+  form
+    .clearfix
+      label(for="email") Username
+      .input
+        input(name="email", placeholder="User name")
+
+    .clearfix
+      label(for="password") Password
+      .input
+        input(name="password", type="password", placeholder="Password")
+    .actions
+      input.btn.primary(type="submit", value="Sign in")
+      &nbsp;
+      button.btn(type="reset") Cancel

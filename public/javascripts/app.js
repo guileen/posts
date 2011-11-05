@@ -1,4 +1,5 @@
 $(function(){
+    // default pjax, currently just test
     $('a.pjax').pjax('.content .next', {
         fragment: '.content .current'
     }).live('click', function(){
@@ -12,4 +13,8 @@ $(function(){
         console.log('pjax:end');
         $('.content .next').addClass('current');
     });
+
+    // init notify
+    window.$notify = $('#notify-container').notify();
 });
+

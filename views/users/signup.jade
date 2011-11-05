@@ -2,10 +2,10 @@ extends ../layout
 
 block content
   .page-header
-    h1 Page name
-      small Supporting text or tagline
+    h1 Sign up &nbsp;
+      small
 
-  form#signup(method='post', action='/signup')
+  form.signup(method='post', action='/signup')
     .clearfix
       label(for='email') Email
       .input
@@ -24,20 +24,25 @@ block content
     .actions
       input.btn.primary(type='submit', value='Sign up')
       &nbsp;
-      button.btn(type='reset') Cancel
+      a.pjax(href="/signin") Sign in
 
 block scripts
   script
     $(function(){
-      H5F.setup(document.getElementById('signup'));
-      $('#signup').ajaxForm({
-        error: function(xhr){
+      $form = $('form.signup');
+      H5F.setup($form[0]);
+      $form.ajaxForm({
+        error: function(xhr, st, err){
+          console.log(st);
+          console.log(err);
         },
-        success: function(data, s, x){
+        success: function(data, s, xhr){
           if(data.success){
+            location.href = '/signup-step2';
+          } else {
+            $notify.notify('create', {title:'Something went wrong', text: data.msg});
           }
         }
       });
     });
-
 

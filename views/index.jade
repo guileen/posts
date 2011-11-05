@@ -1,7 +1,39 @@
 extends layout
 
 block content
+  .page-header
+    h1 Sign in&nbsp;
+      small enter the world of posts
 
-  h1 Posts.li
+  form#form-signin(action='/api/signin', method='post')
+    .clearfix
+      label(for="email") Username
+      .input
+        input(name="email", placeholder="User name", required)
 
-  p Read, write, chat, note, play
+    .clearfix
+      label(for="password") Password
+      .input
+        input(name="password", type="password", placeholder="Password", required)
+    .actions
+      input.btn.primary(type="submit", value="Sign in")
+      &nbsp;
+      a(href='signup') Sign up
+
+block scripts
+  script
+    $(function(){
+      $('#form-signin').ajaxForm({
+        error: function(xhr, st, err){
+          console.log(st);
+          console.log(err);
+        },
+        success: function(data, s, xhr){
+          if(data.success){
+            location.href="/";
+          } else {
+            $notify.notify('create', {title: 'Something went wront', text: data.msg});
+          }
+        }
+      });
+    });

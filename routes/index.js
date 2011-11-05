@@ -1,15 +1,22 @@
-module.exports = function(app){
+exports.route = function(app){
+  var posts = require('./posts');
 
-  require('./users')(app);
-  require('./posts')(app);
-  require('./tags')(app);
-  require('./upload')(app);
+  require('./users').route(app)
+  require('./posts').route(app)
+  require('./tags').route(app)
+  require('./upload').route(app);
 
   /*
    * GET home page.
    */
-  app.get('/', function(req, res){
-      res.render('index', { title: 'Express' })
+  app.get('/', function(req, res, next){
+      if(!req.session.user){
+        res.render('index', {
+            title: 'Posts'
+        });
+      } else {
+        posts.posts(req, res, next);
+      }
   });
 
 }

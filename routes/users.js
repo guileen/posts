@@ -1,4 +1,4 @@
-module.exports = function(app){
+exports.route = function(app){
 
   var crypto = require('crypto');
   var db = require('../db');
@@ -67,18 +67,14 @@ module.exports = function(app){
   app.post('/api/signin', function(req, res) {
       authenticate(req.body.email, req.body.password, function(err, user) {
           if (err) {
-            res.send({
-                login: false,
-                message: err.message
+            res.json({
+                sueccess: false
+              , msg: err.message
             });
           } else if (user) {
             req.session.user = user;
-            res.send({
-                login: true
-            });
-          } else {
-            res.send({
-                login: false
+            res.json({
+                success: true
             });
           }
       });
@@ -87,21 +83,21 @@ module.exports = function(app){
   app.post('/signin', function(req, res) {
       authenticate(req.body.email, req.body.password, function(err, user) {
           if (err) {
-            res.render('users/login', {
+            res.render('users/signin', {
                 fail: true,
                 message: err.message,
-                title: 'Login'
+                title: 'Sign in'
             });
           } else if (user) {
             req.session.user = user;
             res.redirect(req.query["continue"] || '/');
           } else {
-            res.render('users/login', {
+            res.render('users/signin', {
                 fail: true,
                 message: 'email or password is incorrect',
                 email: req.body.email,
                 "continue": req.body["continue"] || '',
-                title: 'Login'
+                title: 'Sign in'
             });
           }
       });
@@ -125,7 +121,7 @@ module.exports = function(app){
       });
   });
 
-  app.get('/user/signout', function(req, res) {
+  app.get('/signout', function(req, res) {
       return req.session.destroy(function() {
           return res.redirect('/');
       });
@@ -134,6 +130,46 @@ module.exports = function(app){
   app.get('/preferences', function(req, res) {
       res.render('preferences', {
           title: 'Prefrences'
+          , bodyClasses: 'preferences'
+      });
+  });
+
+  app.post('/preferences', function(req, res) {
+      console.dir(req.body);
+      var fullname = req.body.fullname.trim()
+        , email = req.session.user.email
+        , avatar = req.body.avatar;
+
+      users.findOne({fullname: fullname, email: {$ne: email}}, {fullname: 1}, function(err, user){
+          if(err){
+            res.json({
+                msg: 'Can not verify fullname'
+            });
+            console.log(err);
+          } else if(user){
+            res.json({
+                msg: 'Full name has been taken'
+            });
+          } else {
+            users.update({email: email}, {$set: {fullname: fullname}}, function(err, reply){
+                if(err){
+                  res.json({
+                      msg: 'Error update fullname'
+                  });
+                } else {
+                  res.json({
+                      success: true
+                  });
+                }
+            });
+          }
+      });
+  });
+
+  app.get('/signup-step2', function(req, res) {
+      res.render('preferences', {
+          title: 'Set avatar'
+          , setAvatar: true
       });
   });
 

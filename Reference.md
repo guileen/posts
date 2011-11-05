@@ -60,6 +60,7 @@ JQuery plugins
 * validator, overlay, 
 
 [lazyload](https://github.com/tuupola/jquery_lazyload)
+[notification](http://www.erichynds.com/examples/jquery-notify/)
 
 PJAX
 ----
