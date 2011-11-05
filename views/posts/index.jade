@@ -1,55 +1,59 @@
-script(src="/javascripts/posts.js")
+extends ../layout
 
-.row
-  .span12
+block scripts
+  script(src="/javascripts/posts.js")
 
-    // new post
-    .row.entry
+block content
+  .row
+    .span12
 
-      .avatar-info
-        // avatar
-        .avatar
-          a.avatar(href="#", style="background-image:url('/images/avatar.png')", title="Jason's blog")
+      // new post
+      .row.entry
 
-      .new-post
+        .avatar-info
+          // avatar
+          .avatar
+            a.avatar(href="#", style="background-image:url('/images/avatar.png')", title="Jason's blog")
+
+        .new-post
+          form
+            .tips
+              div(style="float:right;")
+                a(href="#") Help &nbsp;
+                &nbsp;
+                a.collapse(href="#") &times;
+              div
+                a(href="#") Upload Image
+                #btn-uploader
+                &nbsp;
+            .clearfix
+              textarea.default(placeholder="Say something")
+            .preview
+
+            .clearfix.actions
+              input.btn.primary(type="submit", value="Post")
+
+
+      != partial('entry', ['', '', '', '', '', '', '', '', ''])
+
+    .span4.sidebar
+
+      section
+        a.following(href="#") Following 30
+        a.follower(href="#") Follower 50
+
+      section
         form
-          .tips
-            div(style="float:right;")
-              a(href="#") Help &nbsp;
-              &nbsp;
-              a.collapse(href="#") &times;
-            div
-              a(href="#") Upload Image
-              #btn-uploader
-              &nbsp;
-          .clearfix
-            textarea.default(placeholder="Say something")
-          .preview
+          input(type="search", placeholder="Search here")
 
-          .clearfix.actions
-            input.btn.primary(type="submit", value="Post")
-
-
-    != partial('entry', ['', '', '', '', '', '', '', '', ''])
-
-  .span4.sidebar
-
-    section
-      a.following(href="#") Following 30
-      a.follower(href="#") Follower 50
-
-    section
-      form
-        input(type="search", placeholder="Search here")
-
-    section.quests
-      li
-        a Send a text message
-      li
-        a Upload a image
-      li
-        a Send a image with link
-      li
-        a Send a video with link
-      li
-        a Send a audio with link
+      section.quests
+        li
+          a Send a text message
+        li
+          a Upload a image
+        li
+          a Send a image with link
+        li
+          a Send a video with link
+        li
+          a Send a audio with link

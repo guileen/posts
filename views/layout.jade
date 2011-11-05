@@ -19,6 +19,8 @@ html(lang="en")
     script(src="/javascripts/jquery-pjax/jquery.pjax.js")
     script(src="/javascripts/app.js")
 
+    block scripts
+
     <!-- Le fav and touch icons -->
     link(rel="shortcut icon", href="images/favicon.ico")
     link(rel="apple-touch-icon", href="images/apple-touch-icon.png")
@@ -37,7 +39,8 @@ html(lang="en")
 
       .content
         .current
-          != body
+          block content
+            != body
         .next
 
       footer

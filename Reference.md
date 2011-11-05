@@ -11,6 +11,19 @@ Node.js
 [connect]
 [node-seq]
 
+i18n
+----
+[i18n-node](https://github.com/mashpie/i18n-node)
+[simple i18n](https://gist.github.com/578342)
+But I need a i18n both client and server side
+
+[web translateit](https://webtranslateit.com/)
+
+SNS
+----
+[node-weibo](https://github.com/fengmk2/node-weibo)
+
+
 Connect
 ----
 [uglify-js-middleware](https://github.com/JakeWharton/uglify-js-middleware/blob/master/uglify-js-middleware.js)

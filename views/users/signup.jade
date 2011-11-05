@@ -1,38 +1,43 @@
-.page-header
-  h1 Page name 
-    small Supporting text or tagline
+extends ../layout
 
-form#signup(method='post', action='/signup')
-  .clearfix
-    label(for='email') Email
-    .input
-      input(type='email', name='email', placeholder='Email', required)
+block content
+  .page-header
+    h1 Page name
+      small Supporting text or tagline
 
-  .clearfix
-    label(for='password') Password
-    .input
-      input(name='password', type='password', placeholder='Password', required)
+  form#signup(method='post', action='/signup')
+    .clearfix
+      label(for='email') Email
+      .input
+        input(type='email', name='email', placeholder='Email', required)
 
-  .clearfix
-    label(for='repeat-password') Repeat Password
-    .input
-      input(name='repeat-password', type='password', placeholder='Repeat Password', required)
+    .clearfix
+      label(for='password') Password
+      .input
+        input(name='password', type='password', placeholder='Password', required)
 
-  .actions
-    input.btn.primary(type='submit', value='Sign up')
-    &nbsp;
-    button.btn(type='reset') Cancel
+    .clearfix
+      label(for='repeat-password') Repeat Password
+      .input
+        input(name='repeat-password', type='password', placeholder='Repeat Password', required)
 
-script
-  $(function(){
-    H5F.setup(document.getElementById('signup'));
-    $('#signup').ajaxForm({
-      error: function(xhr){
-      },
-      success: function(data, s, x){
-        if(data.success){
-          
+    .actions
+      input.btn.primary(type='submit', value='Sign up')
+      &nbsp;
+      button.btn(type='reset') Cancel
+
+block scripts
+  script
+    $(function(){
+      H5F.setup(document.getElementById('signup'));
+      $('#signup').ajaxForm({
+        error: function(xhr){
+        },
+        success: function(data, s, x){
+          if(data.success){
+          }
         }
-      }
+      });
     });
-  });
+
+
