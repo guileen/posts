@@ -22,3 +22,6 @@
 [submodule "public/javascripts/jquery-pjax"]
 	path = public/javascripts/jquery-pjax
 	url = git://github.com/defunkt/jquery-pjax.git
+[submodule "public/javascripts/jquery-notify"]
+	path = public/javascripts/jquery-notify
+	url = git://github.com/ehynds/jquery-notify.git
