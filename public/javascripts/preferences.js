@@ -15,6 +15,11 @@ $(function(){
             $notify.notify('create', {
                 title: 'Preferences saved successfully'
             });
+            if($('body').hasClass('signup-step2')){
+              setTimeout(function(){
+                  location.href = '/';
+              }, 100);
+            }
           } else {
             $notify.notify('create', {
                 title: 'Something went wrong'
