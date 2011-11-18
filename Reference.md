@@ -10,12 +10,21 @@ Node.js
 [mongolian]
 [connect]
 [node-seq]
+[browsertify]
+
+Google reader
+----
+[node-googlereaderauth](https://github.com/Tobbe/googlereaderauth)
 
 i18n
 ----
 [i18n-node](https://github.com/mashpie/i18n-node)
+auto generate files
+
 [simple i18n](https://gist.github.com/578342)
 But I need a i18n both client and server side
+
+[client side i18n](http://requirejs.org/docs/api.html#i18n)
 
 [web translateit](https://webtranslateit.com/)
 
@@ -79,3 +88,4 @@ Image preview
 [ibox](http://www.enthropia.com/labs/ibox/)
 [a blog about image loading](http://jqueryfordesigners.com/image-loading/)
 [jqZoom](http://www.mind-projects.it/projects/jqzoom/)
+
