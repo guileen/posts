@@ -1,7 +1,34 @@
 var OAuth = require('oauth').OAuth
   , querystring = require('querystring');
 
+var getRequestTokenUrl = "https://www.google.com/accounts/OAuthGetRequestToken";
+
+// GData specifid: scopes that wa want access to
+var gdataScopes = [
+  // contact info
+  // querystring.escape("https://www.google.com/m8/feeds/"),
+  querystring.escape('http://www.google.com/reader/api')
+];
+
+
+var googleOAuth = new OAuth(getRequestTokenUrl+"?scope="+gdataScopes.join('+'),
+  "https://www.google.com/accounts/OAuthGetAccessToken",
+  "anonymous",
+  "anonymous",
+  "1.0",
+  "http://localhost:3000/callback/google", //+( req.param('action') ? "?action="+querystring.escape(req.param('action')) : "" ),
+  "HMAC-SHA1");
+
+OAuth.prototype.setCallback = function (url) {
+  // this is not a good solution to do for multi callback url, 
+  // use session to store the user last operation, as the callback url
+  this._authorize_callback = url;
+  return this;
+}
+
+
 exports.route = function(app) {
+
   app.get('/sync/google-reader', function(req, res, next) {
       if(!req.session.google_oauth_token) {
         res.redirect('/sync/google-login');
@@ -12,24 +39,7 @@ exports.route = function(app) {
   // Request an OAuth Request Token, and redirects the user to authorize it
   app.get('/sync/google-login', function(req, res, next) {
 
-      var getRequestTokenUrl = "https://www.google.com/accounts/OAuthGetRequestToken";
-
-      // GData specifid: scopes that wa want access to
-      var gdataScopes = [
-        // contact info
-        // querystring.escape("https://www.google.com/m8/feeds/"),
-        querystring.escape('http://www.google.com/reader/api')
-      ];
-
-      var oa = new OAuth(getRequestTokenUrl+"?scope="+gdataScopes.join('+'),
-        "https://www.google.com/accounts/OAuthGetAccessToken",
-        "anonymous",
-        "anonymous",
-        "1.0",
-        "http://localhost:3000/callback/google"+( req.param('action') ? "?action="+querystring.escape(req.param('action')) : "" ),
-        "HMAC-SHA1");
-
-      oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
+      googleOAuth.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
           if(error) {
             console.log('error');
             console.log(error);
@@ -37,7 +47,6 @@ exports.route = function(app) {
           }
           else { 
             // store the tokens in the session
-            req.session.oa = oa;
             req.session.oauth_token = oauth_token;
             req.session.oauth_token_secret = oauth_token_secret;
 
@@ -53,17 +62,7 @@ exports.route = function(app) {
 
       // get the OAuth access token with the 'oauth_verifier' that we received
 
-      var oa = new OAuth(req.session.oa._requestUrl,
-        req.session.oa._accessUrl,
-        req.session.oa._consumerKey,
-        req.session.oa._consumerSecret,
-        req.session.oa._version,
-        req.session.oa._authorize_callback,
-        req.session.oa._signatureMethod);
-
-      console.log(oa);
-
-      oa.getOAuthAccessToken(
+      googleOAuth.getOAuthAccessToken(
         req.session.oauth_token, 
         req.session.oauth_token_secret, 
         req.param('oauth_verifier'), 
@@ -78,8 +77,7 @@ exports.route = function(app) {
             // store the access token in the session
             req.session.oauth_access_token = oauth_access_token;
             req.session.oauth_access_token_secret = oauth_access_token_secret;
-
-            res.redirect((req.param('action') && req.param('action') != "") ? req.param('action') : "/google-contacts");
+            res.redirect(req.param('action') || req.session.google_callback_url);
           }
 
       });
@@ -88,8 +86,9 @@ exports.route = function(app) {
 
 
   function require_google_login(req, res, next) {
+    console.log('originalUrl:' + req.originalUrl);
     if(!req.session.oauth_access_token) {
-      console.log('originalUrl:' + req.originalUrl);
+      res.session.google_callback_url = req.originalUrl;
       res.redirect("/sync/google-login?action="+querystring.escape(req.originalUrl));
       return;
     }
@@ -97,21 +96,12 @@ exports.route = function(app) {
   };
 
   app.get('/google-readers', require_google_login, function(req, res, next) {
-      var oa = new OAuth(req.session.oa._requestUrl,
-        req.session.oa._accessUrl,
-        req.session.oa._consumerKey,
-        req.session.oa._consumerSecret,
-        req.session.oa._version,
-        req.session.oa._authorize_callback,
-        req.session.oa._signatureMethod);
-
-      console.log("in google-reader:" + oa);
 
       // Example using GData API v3
       // GData Specific Header
-      oa._headers['GData-Version'] = '3.0'; 
+      googleOAuth._headers['GData-Version'] = '3.0'; 
 
-      oa.getProtectedResource(
+      googleOAuth.getProtectedResource(
         'http://www.google.com/reader/api/0/subscription/list?output=json',
         "GET",
         req.session.oauth_access_token,
@@ -131,21 +121,12 @@ exports.route = function(app) {
   });
 
   app.get('/google-contacts', require_google_login, function(req, res, next) {
-      var oa = new OAuth(req.session.oa._requestUrl,
-        req.session.oa._accessUrl,
-        req.session.oa._consumerKey,
-        req.session.oa._consumerSecret,
-        req.session.oa._version,
-        req.session.oa._authorize_callback,
-        req.session.oa._signatureMethod);
-
-      console.log(oa);
 
       // Example using GData API v3
       // GData Specific Header
-      oa._headers['GData-Version'] = '3.0'; 
+      googleOAuth._headers['GData-Version'] = '3.0'; 
 
-      oa.getProtectedResource(
+      googleOAuth.getProtectedResource(
         "https://www.google.com/m8/feeds/contacts/default/full?alt=json", 
         "GET", 
         req.session.oauth_access_token, 
@@ -162,18 +143,12 @@ exports.route = function(app) {
   });
 
   app.get('/google-calendars', require_google_login, function(req, res, next) {
-      var oa = new OAuth(req.session.oa._requestUrl,
-        req.session.oa._accessUrl,
-        req.session.oa._consumerKey,
-        req.session.oa._consumerSecret,
-        req.session.oa._version,
-        req.session.oa._authorize_callback,
-        req.session.oa._signatureMethod);
+
       // Example using GData API v2
       // GData Specific Header
-      oa._headers['GData-Version'] = '2'; 
+      googleOAuth._headers['GData-Version'] = '2'; 
 
-      oa.getProtectedResource(
+      googleOAuth.getProtectedResource(
         "https://www.google.com/calendar/feeds/default/allcalendars/full?alt=jsonc", 
         "GET", 
         req.session.oauth_access_token, 
