@@ -43,6 +43,10 @@ html(lang="en")
       header
         .user-controls
           - if(user)
+            a(href='/username')
+              img(src=avatar(user.md5, 20))
+            a(href='/username')= user.fullname || user.email
+            &nbsp;
             a.preferences(href="/preferences") Preferences
             &nbsp;
             a.signout(href='/signout') Sign out

@@ -8,10 +8,6 @@ block content
     h1 Preferences &nbsp;
       small custom you profile
 
-  form
-    .celarfix.select-avatar
-      label Avatar
-      .input#select-avatar
 
   form.preferences(action='/preferences', method='post')
     .clearfix
@@ -19,7 +15,16 @@ block content
       .input
         input(name="fullname", placeholder="Full name", value=user.fullname, autocomplete='off')
 
-    - if(!locals.setAvatar)
+    .clearfix
+      label SNS
+      .input
+        a()同步新浪微博
+        a()同步腾讯微博
+        a twitter
+        a facebook
+        a(href='/sync/google-reader') google reader
+
+    - if(!locals.signupStep2)
       .clearfix
         label(for="password") Current Password
         .input
@@ -32,6 +37,13 @@ block content
         label(for="repeat-password") Repeat Password
         .input
           input(name="repeat-password", type="password", placeholder="Repeat new password")
+
+    .clearfix
+      .input.avatarexplain
+        img(src=avatar(user.md5, 48))
+        p
+          strong Change you avatar at <a href="http://getavatar.com" target="_blank">getavatar.com</a>
+          | using #{user.email}
 
     .actions
       input.btn.primary(type="submit", value="Save settings")

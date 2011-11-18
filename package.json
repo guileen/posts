@@ -6,7 +6,9 @@
       "express": "2.5.0"
     , "less": ">= 0.0.1"
     , "jade": ">= 0.0.1"
+    , "connect-redis": "*"
     , "connect-less": ">= 0.0.1"
     , "express-validator": ">= 0.1.1"
+    , "formidable" : ">= 1.0.0"
   }
 }

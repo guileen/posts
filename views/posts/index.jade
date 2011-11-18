@@ -13,7 +13,7 @@ block content
         .avatar-info
           // avatar
           .avatar
-            a.avatar(href="#", style="background-image:url('/images/avatar.png')", title="Jason's blog")
+            a.avatar(href="#", style="background-image:url('#{avatar(user.md5, 64)}')", title="Jason's blog")
 
         .new-post
           form

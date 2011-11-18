@@ -1,22 +1,19 @@
 exports.route = function(app){
 
-  var crypto = require('crypto');
+  var common = require('../common');
+  var md5 = common.md5;
+  var sha1 = common.sha1;
   var db = require('../db');
   var users = db.users;
   var validator = require('express-validator');
 
   function encryptPassword(password) {
-    var md5, sha1;
-    sha1 = crypto.createHmac('sha1', 'sha1 key');
-    md5 = crypto.createHmac('md5', 'md5 key');
-    sha1.update(password);
-    md5.update(sha1.digest('hex'));
-    return md5.digest('hex');
+    return md5(sha1(password));
   };
 
   function authenticate(email, password, fn) {
     return users.findOne({
-        email: email
+        email: email.toLowerCase().trim()
       }, function(err, user) {
         if (!user) {
           return fn(new Error('Can not find user'));
@@ -29,9 +26,9 @@ exports.route = function(app){
   };
 
   app.post('/signup', function(req, res) {
-      req.body.email = req.body.email.trim();
-      req.body.password = req.body.password.trim();
-      users.findOne({email: req.body.email}, {email: 1}, function(err, user){
+      var email = req.body.email.trim().toLowerCase();
+      var password = req.body.password;
+      users.findOne({email: email}, {email: 1}, function(err, user){
           if(err){
             return res.json({
                 msg: 'error to validate user'
@@ -44,8 +41,9 @@ exports.route = function(app){
           }
 
           users.save({
-              email: req.body.email,
-              password: encryptPassword(req.body.password),
+              email: email,
+              password: encryptPassword(password),
+              md5: md5(email), // use in getavatar
               createDate: new Date()
             }, function(err, user) {
               if (err) {
@@ -122,8 +120,8 @@ exports.route = function(app){
   });
 
   app.get('/signout', function(req, res) {
-      return req.session.destroy(function() {
-          return res.redirect('/');
+      req.session.destroy(function() {
+          res.redirect('/');
       });
   });
 
@@ -135,7 +133,6 @@ exports.route = function(app){
   });
 
   app.post('/preferences', function(req, res) {
-      console.dir(req.body);
       var fullname = req.body.fullname.trim()
         , email = req.session.user.email
         , avatar = req.body.avatar;
@@ -152,13 +149,18 @@ exports.route = function(app){
             });
           } else {
             users.update({email: email}, {$set: {fullname: fullname}}, function(err, reply){
+                console.dir(reply);
                 if(err){
                   res.json({
                       msg: 'Error update fullname'
                   });
                 } else {
-                  res.json({
-                      success: true
+                  users.findOne({email: email}, function(err, user){
+                      req.session.user = user;
+                      console.dir(user);
+                      res.json({
+                          success: true
+                      });
                   });
                 }
             });
@@ -169,7 +171,8 @@ exports.route = function(app){
   app.get('/signup-step2', function(req, res) {
       res.render('preferences', {
           title: 'Set avatar'
-          , setAvatar: true
+        , signupStep2: true
+        , bodyClasses: 'signup-step2'
       });
   });
 
