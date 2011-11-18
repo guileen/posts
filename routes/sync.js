@@ -2,15 +2,15 @@ var OAuth = require('oauth').OAuth
   , querystring = require('querystring');
 
 exports.route = function(app) {
-  app.get('/sync/google-reader', function(req, res) {
+  app.get('/sync/google-reader', function(req, res, next) {
       if(!req.session.google_oauth_token) {
-        res.redirect('/sync/google_login');
+        res.redirect('/sync/google-login');
       }
   });
 
 
   // Request an OAuth Request Token, and redirects the user to authorize it
-  app.get('/sync/google_login', function(req, res) {
+  app.get('/sync/google-login', function(req, res, next) {
 
       var getRequestTokenUrl = "https://www.google.com/accounts/OAuthGetRequestToken";
 
@@ -26,13 +26,14 @@ exports.route = function(app) {
         "anonymous",
         "anonymous",
         "1.0",
-        "http://localhost:3000/google_cb"+( req.param('action') && req.param('action') != "" ? "?action="+querystring.escape(req.param('action')) : "" ),
+        "http://localhost:3000/callback/google"+( req.param('action') ? "?action="+querystring.escape(req.param('action')) : "" ),
         "HMAC-SHA1");
 
       oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
           if(error) {
             console.log('error');
             console.log(error);
+            next(error);
           }
           else { 
             // store the tokens in the session
@@ -48,7 +49,7 @@ exports.route = function(app) {
   });
 
   // Callback for the authorization page
-  app.get('/google_cb', function(req, res) {
+  app.get('/callback/google', function(req, res, next) {
 
       // get the OAuth access token with the 'oauth_verifier' that we received
 
@@ -78,7 +79,7 @@ exports.route = function(app) {
             req.session.oauth_access_token = oauth_access_token;
             req.session.oauth_access_token_secret = oauth_access_token_secret;
 
-            res.redirect((req.param('action') && req.param('action') != "") ? req.param('action') : "/google_contacts");
+            res.redirect((req.param('action') && req.param('action') != "") ? req.param('action') : "/google-contacts");
           }
 
       });
@@ -88,13 +89,14 @@ exports.route = function(app) {
 
   function require_google_login(req, res, next) {
     if(!req.session.oauth_access_token) {
-      res.redirect("/google_login?action="+querystring.escape(req.originalUrl));
+      console.log('originalUrl:' + req.originalUrl);
+      res.redirect("/sync/google-login?action="+querystring.escape(req.originalUrl));
       return;
     }
     next();
   };
 
-  app.get('/google_readers', require_google_login, function(req, res) {
+  app.get('/google-readers', require_google_login, function(req, res, next) {
       var oa = new OAuth(req.session.oa._requestUrl,
         req.session.oa._accessUrl,
         req.session.oa._consumerKey,
@@ -103,7 +105,7 @@ exports.route = function(app) {
         req.session.oa._authorize_callback,
         req.session.oa._signatureMethod);
 
-      console.log(oa);
+      console.log("in google-reader:" + oa);
 
       // Example using GData API v3
       // GData Specific Header
@@ -114,9 +116,11 @@ exports.route = function(app) {
         "GET",
         req.session.oauth_access_token,
         req.session.oauth_access_token_secret,
-        function (error, data, response) {
+        function (err, data, response) {
+          if(err) return next(err);
 
           var feed = JSON.parse(data);
+          console.log(feed);
 
           res.render('import_google_reader.jade', {
               feed: feed
@@ -126,7 +130,7 @@ exports.route = function(app) {
 
   });
 
-  app.get('/google_contacts', require_google_login, function(req, res) {
+  app.get('/google-contacts', require_google_login, function(req, res, next) {
       var oa = new OAuth(req.session.oa._requestUrl,
         req.session.oa._accessUrl,
         req.session.oa._consumerKey,
@@ -157,7 +161,7 @@ exports.route = function(app) {
 
   });
 
-  app.get('/google_calendars', require_google_login, function(req, res) {
+  app.get('/google-calendars', require_google_login, function(req, res, next) {
       var oa = new OAuth(req.session.oa._requestUrl,
         req.session.oa._accessUrl,
         req.session.oa._consumerKey,
