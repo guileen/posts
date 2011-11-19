@@ -8,17 +8,19 @@ var RedisStore = require('connect-redis')(express);
 
 var app = module.exports = express.createServer();
 
+var development = app.settings.env == 'development';
+
 // Configuration
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
-  app.set('view options', {layout: false});
+  app.set('view options', {pretty: development, layout: false});
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({ secret: "keyboard cat", store: new RedisStore }));
-  app.use(require('connect-less')({ src: __dirname + '/public/', compress: true }));
+  app.use(require('connect-less')({ src: __dirname + '/public/', compress: !development }));
   app.use(express.favicon(__dirname + '/public/favicon.ico'))
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
@@ -26,7 +28,6 @@ app.configure(function(){
 
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
-  app.set('view options', {pretty: true, layout: false});
 });
 
 app.configure('production', function(){
