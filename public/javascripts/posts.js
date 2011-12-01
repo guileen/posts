@@ -91,4 +91,12 @@ $(function(){
                   '</div>'
     });
 
+    $(".new-post form").ajaxForm({
+        success : function(data, textStatus, xhr) {
+          var html = $(data).hide();
+          $("#posts-list").prepend(html);
+          html.slideDown();
+        }
+    });
+
 });

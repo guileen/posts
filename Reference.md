@@ -43,6 +43,10 @@ Connect
 Forms
 ----
 file upload [node-formidable]
+simple ajax file upload using iframe http://www.openjs.com/articles/ajax/ajax_file_upload/
+jquery-form handle file upload
+upload progress http://stackoverflow.com/questions/4856917/jquery-upload-progress-and-ajax-file-upload
+drag drop upload http://js1.hotblocks.nl/tests/ajax/file-drag-drop.html
 [connect-form]
 [node-validator]
 bugs [express-validator](https://github.com/ctavan/express-validator)
@@ -89,3 +93,18 @@ Image preview
 [a blog about image loading](http://jqueryfordesigners.com/image-loading/)
 [jqZoom](http://www.mind-projects.it/projects/jqzoom/)
 
+Node deployment
+----
+[node-http-proxy]
+[multi-node]
+[forever]
+[cluster]
+
+Server envorionment
+----
+keywords: Continuous integration, Continuous deployment, Automated deployment.
+[use git pre-commit CI](http://www.javascriptkata.com/2010/10/28/ready-js-prepare-your-javascript-for-production/)
+[deploying node app](http://www.carbonsilk.com/node/deploying-nodejs-apps/)
+[MRTG] for network monitor
+[puppet]
+[chef]
