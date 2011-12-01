@@ -32,7 +32,7 @@ $(function(){
         });
 
         if(newPost.hasClass('default')){
-          newPost.val('#Title\n\nContent\n\n#tag#');
+          newPost.val('Title\n====\n\nContent\n\n#tag#');
           refreshPreview();
           setTimeout(function(){
             newPost.select();
