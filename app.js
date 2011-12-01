@@ -27,12 +27,37 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+  // app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
 });
 
 app.configure('production', function(){
-  app.use(express.errorHandler()); 
+  // app.use(express.errorHandler()); 
 });
+
+app.use(function(err, req, res, next) {
+    if(err instanceof Error) {
+      // log req.body, req.query, req.cookie, req.user, and error 
+      res.render('500');
+      console.log(err.stack);
+    }
+    if(err == 404){
+      res.render('404');
+    } else if(err == 500) {
+      res.render('500');
+    }
+});
+
+app.get('/404', function(req, res, next) {
+    next(404);
+});
+
+app.get('/500', function(req, res, next) {
+    next(500);
+});
+
+app.get('/error', function(req, res, next) {
+    next(new Error('fuck you'));
+})
 
 // helpers
 app.helpers(require('./common'));
