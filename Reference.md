@@ -70,10 +70,14 @@ JQuery plugins
 [AutoComplete](http://www.amirharel.com/2011/03/07/implementing-autocomplete-jquery-plugin-for-textarea/)
 
 [jquerytools](https://github.com/jquerytools/jquerytools)
-* validator, overlay, 
+* validator, overlay( overlay is a better keywords than popup and dialog)
 
 [lazyload](https://github.com/tuupola/jquery_lazyload)
 [notification](http://www.erichynds.com/examples/jquery-notify/)
+
+[lightbox loading images! cool!]https://github.com/krewenki/jquery-lightbox
+[css modal dialog](http://raventools.com/blog/create-a-modal-dialog-using-css-and-javascript/)
+[jqModal](http://dev.iceburg.net/jquery/jqModal/)
 
 PJAX
 ----
