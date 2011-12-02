@@ -47,7 +47,8 @@
       a.show-comments(href="javascript:void(0)") 10 comments&nbsp;&nbsp;
 
     .post-info
-      span(title="#{entry.createTime.format('yyyy-mm-dd HH:MM:ss')}")= smartDate(entry.createTime)
+      // TODO fix time update problem
+      span(rel="twipsy", date="#{entry.createTime.getTime()}", title="#{entry.createTime.format('yyyy-mm-dd HH:MM:ss')}")= smartDate(entry.createTime)
 
     .loading Loading...
     .comments

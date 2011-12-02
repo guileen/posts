@@ -5,7 +5,7 @@ block scripts
 
 block content
   .row
-    .span12
+    .span16
 
       // new post
       .row.entry
@@ -33,28 +33,44 @@ block content
             .clearfix.actions
               input.btn.primary(type="submit", value="Post")
 
+        .span4.sidebar
+          a.btn(data-controls-modal="my-modal", data-backdrop="static", data-keyboard="true") foo1 &nbsp;
+          a.btn#pop-info info &nbsp;
+
+          script
+            $(function () {
+              $("#pop-info").popover({
+                  offset: 10
+                  , placement: 'below'
+                  , title:  function(){return 'the title'}
+                  , content : function(){return 'the the content'}
+              });
+            });
+
+          #my-modal.modal.hide.fade
+            .modal-header
+              a.close(href="#") &times;
+              h3 Modal Heading
+            .modal-body
+              p One fine body…
+              p this is a test modal
+            .modal-footer
+              <a href="#" class="btn primary">Primary</a>
+              <a href="#" class="btn secondary">Secondary</a>
+
+          #editor-help.hide
+            h3 markdown help
+            p * list item
+            p + list item
+            p *italic*
+            p **bold**
+            p # h1
+            p ## h2 
+            p ###### h6
+            p h1<br>===
+            p h2<br>---
+            p [link](http://www)
+            p ![image](http://www)
 
       #posts-list
         != partial('entry', locals.posts)
-
-    .span4.sidebar
-
-      section
-        a.following(href="#") Following 30
-        a.follower(href="#") Follower 50
-
-      section
-        form(name="search")
-          input(type="search", placeholder="Search here")
-
-      section.quests
-        li
-          a Send a text message
-        li
-          a Upload a image
-        li
-          a Send a image with link
-        li
-          a Send a video with link
-        li
-          a Send a audio with link

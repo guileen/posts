@@ -20,6 +20,9 @@ html(lang="en")
       script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js')
       script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js')
 
+    script(src="/bootstrap/js/bootstrap-modal.js")
+    script(src="/bootstrap/js/bootstrap-twipsy.js")
+    script(src="/bootstrap/js/bootstrap-popover.js")
     script(src="/javascripts/autoresize/jquery.autoresize.js")
     script(src="/javascripts/github-flavored-markdown/scripts/showdown.js")
     script(src="/javascripts/file-uploader/client/fileuploader.js")
@@ -42,6 +45,8 @@ html(lang="en")
     .container
       header
         .user-controls
+          form.search
+            input(type='search')
           - if(user)
             a(href='/username')
               img(src=avatar(user.md5, 20))

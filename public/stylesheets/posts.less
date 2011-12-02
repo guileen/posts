@@ -54,7 +54,7 @@
   background-color: @postBackground;
   color:            @postColor;
   padding:          20px;
-  .makeColumn(9.5);
+  .makeColumn(9.5 + 4);
   .border-radius();
   .box-shadow();
 
@@ -118,4 +118,8 @@
   .border-radius(0 0 5px 5px);
   .box-shadow();
   background-color: darken(@background, 5);
+}
+
+#editor-help {
+  margin: 10px;
 }

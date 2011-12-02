@@ -24,6 +24,7 @@ $(function(){
         $('.new-post .actions').fadeIn();
         $('.new-post .tips').fadeIn();
         $('.new-post .preview').fadeIn();
+        $("#editor-help").fadeIn();
         // auto resize textarea when input
         newPost.autoResize({
             minHeight: 100,
@@ -54,6 +55,7 @@ $(function(){
         $('.new-post .actions').hide();
         $('.new-post .tips').hide();
         $('.new-post .preview').hide();
+        $("#editor-help").hide();
         newPost.data('AutoResizer').destroy();
     });
 

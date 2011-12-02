@@ -14,6 +14,16 @@ $(function(){
         $('.content .next').addClass('current');
     });
 
+    $("form.search").focusin(function(){
+        $("form.search input").animate({width: 450});
+    }).focusout(function(){
+        $("form.search input").animate({width: 150});
+    });
+
+    $("[rel=twipsy]").twipsy({
+        live: true
+    });
+
     // init notify
     window.$notify = $('#notify-container').notify();
 });
