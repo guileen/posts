@@ -34,6 +34,9 @@
       // .inside-content
       != entry.html
 
+    .post-info
+      span(title="#{entry.createTime.format('yyyy-mm-dd HH:MM:ss')}")= smartDate(entry.createTime)
+
     .loading Loading...
     .comments
       .comment
