@@ -3,7 +3,7 @@
   .avatar-info
     // avatar
     .avatar
-      a.avatar(href="#", style="background-image:url('/images/avatar.png')", title="Jason's blog")
+      a.avatar(href="#", style="background-image:url('#{avatar(user.md5, 64)}')", title="Jason's blog")
       // show this on hover, click to pop menu
       .user_info
 
@@ -19,20 +19,32 @@
   .post
 
     .post-controls
-      a.show-comments(href="javascript:void(0)") 10 comments&nbsp;&nbsp;
+      // scores
+      // show-comment       1
+      // add comment        2
+      // bookmark(favorit)  3
+      // reblog             4
+      // junk              -5
+
       a(href="#") reblog&nbsp;&nbsp;
-      a(href="#") like&nbsp;
-      a(href="#") junk&nbsp;
-      a(href="#") jabber&nbsp;
+      // &#9733; for selected
+      a.special-chars(href="#") &#9734;&nbsp;
+      a.special-chars(href="#") &hearts;&nbsp;
+      a(href="#") junk&nbsp;&#9660;
+      // like has no effect, user wont click it
+      // use bookmark, favorit
 
     .post-info
-      a(href="#") Jason Green
+      a(href="#")= entry.author.fullname
         span :
 
     .post-content
       // h3 The blog title
       // .inside-content
       != entry.html
+
+    .post-controls.right
+      a.show-comments(href="javascript:void(0)") 10 comments&nbsp;&nbsp;
 
     .post-info
       span(title="#{entry.createTime.format('yyyy-mm-dd HH:MM:ss')}")= smartDate(entry.createTime)

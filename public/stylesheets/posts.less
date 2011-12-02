@@ -76,7 +76,25 @@
 
 }
 
+
 .post-controls {
+  float: right;
+  visibility: hidden;
+  .special-chars {
+    font-family: serif;
+    font-size: 16px;
+    color: gray;
+  }
+  .special-chars.selected {
+    color: red;
+  }
+}
+
+.post:hover .post-controls {
+  visibility: visible;
+}
+
+.right {
   float: right;
 }
 
