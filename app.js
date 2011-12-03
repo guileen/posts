@@ -4,6 +4,7 @@
  */
 
 var express = require('express');
+var settings = require('./settings');
 var RedisStore = require('connect-redis')(express);
 
 var app = module.exports = express.createServer();
@@ -24,6 +25,10 @@ app.configure(function(){
   app.use(express.favicon(__dirname + '/public/favicon.ico'))
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+
+  for(var name in settings) {
+    app.set(name, settings[name]);
+  }
 });
 
 app.configure('development', function(){

@@ -110,6 +110,12 @@ $(function(){
         $("#upload-form").ajaxSubmit({
             success:function(data){
               console.log(data);
+              if(newPost.hasClass('default')){
+                newPost.removeClass('default');
+                newPost.val('');
+              }
+              newPost.mkdInsertLink(data.url, data.filename, data.mime.indexOf('image/') === 0);
+              refreshPreview();
             }
         });
     });

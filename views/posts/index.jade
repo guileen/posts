@@ -17,14 +17,10 @@ block content
 
         .new-post
           .tips
-            div(style="float:right;")
+            .right
               a(href="#") Help &nbsp;
               &nbsp;
               a.collapse(href="#") &times;
-            div
-              a(href="#") Upload Image
-              #btn-uploader
-              &nbsp;
           form(action="/posts/new", method="post", name='post')
             .clearfix
               textarea.default(placeholder="Say something", name='content')
@@ -59,6 +55,13 @@ block content
               <a href="#" class="btn secondary">Secondary</a>
 
           #editor-help.hide
+
+            hr
+            a.insert-link(href="#insert") insert link
+            form#upload-form(action="/upload", method="post", enctype="multipart/form-data")
+              input#input-file(type="file", name="file", style='visibility:hidden;position:absolute;')
+              a#btn-upload.btn Upload
+
             h3 markdown help
             p * list item
             p + list item

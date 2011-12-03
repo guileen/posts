@@ -1,6 +1,22 @@
 References
 ====
 
+Node deployment
+----
+[node-http-proxy]
+[multi-node]
+[forever]
+[cluster]
+
+Server envorionment
+----
+keywords: Continuous integration, Continuous deployment, Automated deployment.
+[use git pre-commit CI](http://www.javascriptkata.com/2010/10/28/ready-js-prepare-your-javascript-for-production/)
+[deploying node app](http://www.carbonsilk.com/node/deploying-nodejs-apps/)
+[MRTG] for network monitor
+[puppet]
+[chef]
+
 Node.js
 ----
 [express]
@@ -78,6 +94,7 @@ JQuery plugins
 [lightbox loading images! cool!]https://github.com/krewenki/jquery-lightbox
 [css modal dialog](http://raventools.com/blog/create-a-modal-dialog-using-css-and-javascript/)
 [jqModal](http://dev.iceburg.net/jquery/jqModal/)
+[jquery-modal](https://github.com/kylefox/jquery-modal)
 
 PJAX
 ----
@@ -97,18 +114,9 @@ Image preview
 [a blog about image loading](http://jqueryfordesigners.com/image-loading/)
 [jqZoom](http://www.mind-projects.it/projects/jqzoom/)
 
-Node deployment
+Icon and Design
 ----
-[node-http-proxy]
-[multi-node]
-[forever]
-[cluster]
-
-Server envorionment
-----
-keywords: Continuous integration, Continuous deployment, Automated deployment.
-[use git pre-commit CI](http://www.javascriptkata.com/2010/10/28/ready-js-prepare-your-javascript-for-production/)
-[deploying node app](http://www.carbonsilk.com/node/deploying-nodejs-apps/)
-[MRTG] for network monitor
-[puppet]
-[chef]
+[icon finder]http://www.iconfinder.com/search/?q=trash
+[iconic set]http://somerandomdude.com/work/iconic/
+[pc icons]http://pc.de/icons/
+[750 icons set, $]http://www.webalys.com/premium/design-vector-icons-library.html
