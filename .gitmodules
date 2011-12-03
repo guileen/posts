@@ -25,3 +25,6 @@
 [submodule "public/javascripts/jquery-notify"]
 	path = public/javascripts/jquery-notify
 	url = git://github.com/ehynds/jquery-notify.git
+[submodule "public/javascripts/smooth-scroll"]
+	path = public/javascripts/smooth-scroll
+	url = git://github.com/kswedberg/jquery-smooth-scroll.git
