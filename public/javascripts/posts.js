@@ -25,20 +25,39 @@ $(function(){
         $('.new-post .tips').fadeIn();
         $('.new-post .preview').fadeIn();
         $("#editor-help").fadeIn();
+
+        if(newPost.hasClass('default')){
+
+          var defaultContent = 'Header 1\n' +
+                               '====\n' +
+                               'Header 2\n' +
+                               '----\n' +
+                               '### Header 3\n' +
+                               '**bold**, *italic*, _underline_, [web link](http://posts.li), `code`\n' +
+                               '\n' +
+                               '- item 1\n' +
+                               '- item 2\n' +
+                               '\n' +
+                               '```\n' +
+                               'code block\n' +
+                               '```\n' +
+                               '> quote text\n' +
+                               '\n' +
+                               '![images](http://dev:3000/images/logo-small.png)\n';
+
+          newPost.val(defaultContent);
+          refreshPreview();
+          setTimeout(function(){
+            newPost.select();
+          }, 100);
+        }
+
         // auto resize textarea when input
         newPost.autoResize({
             minHeight: 100,
             maxHeight: 300,
             extraSpace:16
         });
-
-        if(newPost.hasClass('default')){
-          newPost.val('Title\n====\n\nContent\n\n#tag#');
-          refreshPreview();
-          setTimeout(function(){
-            newPost.select();
-          }, 100);
-        }
     });
 
     // prevent select all text if not first time click textarea
@@ -82,16 +101,19 @@ $(function(){
         });
     });
 
-    // Upload image
-    var uploader = new qq.FileUploader({
-        element: document.getElementById('btn-uploader'),
-        action: '/upload',
-        template: '<div class="qq-uploader">' +
-                      '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
-                      '<div class="qq-upload-button">Upload</div>' +
-                      '<ul class="qq-upload-list"></ul>' +
-                  '</div>'
+    $("#btn-upload").click(function(){
+        console.log('hello');
+        $("#input-file").click();
     });
+
+    $("#input-file").change(function(){
+        $("#upload-form").ajaxSubmit({
+            success:function(data){
+              console.log(data);
+            }
+        });
+    });
+
 
     $(".new-post form").ajaxForm({
         success : function(data, textStatus, xhr) {
