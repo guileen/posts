@@ -21,36 +21,7 @@ $(function(){
 
     // show new-post panel
     newPost.focusin(function(){
-        $('.new-post .actions').fadeIn();
-        $('.new-post .tips').fadeIn();
-        $('.new-post .preview').fadeIn();
-        $("#editor-help").fadeIn();
-
-        if(newPost.hasClass('default')){
-
-          var defaultContent = 'Header 1\n' +
-                               '====\n' +
-                               'Header 2\n' +
-                               '----\n' +
-                               '### Header 3\n' +
-                               '**bold**, *italic*, _underline_, [web link](http://posts.li), `code`\n' +
-                               '\n' +
-                               '- item 1\n' +
-                               '- item 2\n' +
-                               '\n' +
-                               '```\n' +
-                               'code block\n' +
-                               '```\n' +
-                               '> quote text\n' +
-                               '\n' +
-                               '![images](http://dev:3000/images/logo-small.png)\n';
-
-          newPost.val(defaultContent);
-          refreshPreview();
-          setTimeout(function(){
-            newPost.select();
-          }, 100);
-        }
+        $(".lazy").fadeIn();
 
         // auto resize textarea when input
         newPost.autoResize({
@@ -60,23 +31,14 @@ $(function(){
         });
     });
 
-    // prevent select all text if not first time click textarea
-    newPost.change(function(){
-        newPost.removeClass('default');
-    });
+    function closeEditor(){
+        newPost.css({height: 60});
+        $(".lazy").hide();
+        newPost.data('AutoResizer').destroy();
+    }
 
     // collapse, close new-post panel
-    $('.new-post .collapse').click(function(){
-        if(newPost.hasClass('default')){
-          newPost.val('');
-        }
-        newPost.css({height: 60});
-        $('.new-post .actions').hide();
-        $('.new-post .tips').hide();
-        $('.new-post .preview').hide();
-        $("#editor-help").hide();
-        newPost.data('AutoResizer').destroy();
-    });
+    $('.new-post .collapse').click(closeEditor);
 
     // Post comments
     $('.post').each(function(i, el){
@@ -110,10 +72,6 @@ $(function(){
         $("#upload-form").ajaxSubmit({
             success:function(data){
               console.log(data);
-              if(newPost.hasClass('default')){
-                newPost.removeClass('default');
-                newPost.val('');
-              }
               newPost.mkdInsertLink(data.url, data.filename, data.mime.indexOf('image/') === 0);
               refreshPreview();
             }
@@ -123,9 +81,12 @@ $(function(){
 
     $(".new-post form").ajaxForm({
         success : function(data, textStatus, xhr) {
+          closeEditor();
           var html = $(data).hide();
           $("#posts-list").prepend(html);
           html.slideDown();
+          newPost.val('');
+          refreshPreview();
         }
     });
 

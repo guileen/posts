@@ -45,8 +45,8 @@ html(lang="en")
     .container
       header
         .user-controls
-          form.search
-            input(type='search')
+          form.search(action='/')
+            input(type='search', name='q', placeholder="Seach...")
           - if(user)
             a(href='/username')
               img(src=avatar(user.md5, 20))

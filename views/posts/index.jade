@@ -16,18 +16,26 @@ block content
             a.avatar(href="#", style="background-image:url('#{avatar(user.md5, 64)}')", title="Jason's blog")
 
         .new-post
-          .tips
-            .right
-              a(href="#") Help &nbsp;
-              &nbsp;
-              a.collapse(href="#") &times;
           form(action="/posts/new", method="post", name='post')
-            .clearfix
-              textarea.default(placeholder="Say something", name='content')
-            .preview
+            .side-controls.lazy
+              .clearfix
+                label
+                  input(type="checkbox", name="syncWeibo")
+                  span 同步到微博
+                input(name="status", value="Short description [url]")
 
-            .clearfix.actions
-              input.btn.primary(type="submit", value="Post")
+              .clearfix
+                input.btn.primary(type="submit", value="Post")
+
+            .tips.lazy
+              .right
+                a(href="#") Help &nbsp;
+                &nbsp;
+                a.collapse(href="#") &times;
+
+            textarea.default(placeholder="Say something", name='content')
+            .preview.lazy
+
 
         .span4.sidebar
           a.btn(data-controls-modal="my-modal", data-backdrop="static", data-keyboard="true") foo1 &nbsp;
@@ -39,7 +47,7 @@ block content
                   offset: 10
                   , placement: 'below'
                   , title:  function(){return 'the title'}
-                  , content : function(){return 'the the content'}
+                  , content : function(){return '<p>the the content</p>'}
               });
             });
 
@@ -54,26 +62,33 @@ block content
               <a href="#" class="btn primary">Primary</a>
               <a href="#" class="btn secondary">Secondary</a>
 
-          #editor-help.hide
+          #editor-help.lazy
 
             hr
-            a.insert-link(href="#insert") insert link
             form#upload-form(action="/upload", method="post", enctype="multipart/form-data")
               input#input-file(type="file", name="file", style='visibility:hidden;position:absolute;')
               a#btn-upload.btn Upload
 
-            h3 markdown help
-            p * list item
-            p + list item
-            p *italic*
-            p **bold**
-            p # h1
-            p ## h2 
-            p ###### h6
-            p h1<br>===
-            p h2<br>---
-            p [link](http://www)
-            p ![image](http://www)
+
+          pre.hide
+            | Header 1
+            | ====
+            | Header 2
+            | ----
+            | ### Header 3
+            | **bold**, *italic*, _underline_, [web link](http://posts.li), `code`
+
+            | - item 1
+            | - item 2
+
+            | ```
+            | code block
+            | ```
+            | > quote text
+
+            | ![images](http://dev:3000/images/logo-small.png)
+
+
 
       #posts-list
         != partial('entry', locals.posts)

@@ -2,16 +2,24 @@
   margin-bottom: 20px;
 }
 
+.lazy {
+  display:none;
+}
+
 .new-post {
   .makeColumn(10.2);
+  .side-controls {
+    float: right;
+    width: 300px;
+    margin: 120px -320px 0 0;
+    label {
+      float : none;
+    }
+  }
   textarea{
     width: 98%;
     height: 60px;
     resize: none;
-  }
-
-  .preview, .tips, .actions {
-    display: none;
   }
 
   .tips {
@@ -23,6 +31,7 @@
     background-color: @postBackground;
     color:            @postColor;
     border: 3px dotted #ccc;
+    margin-top: 15px;
     padding: 20px;
     max-height: 250px;
     overflow: auto;
