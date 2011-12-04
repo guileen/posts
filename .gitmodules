@@ -10,9 +10,6 @@
 [submodule "public/javascripts/autocomplete"]
 	path = public/javascripts/autocomplete
 	url = git://github.com/agarzola/jQueryAutocompletePlugin.git
-[submodule "public/javascripts/file-uploader"]
-	path = public/javascripts/file-uploader
-	url = git://github.com/valums/file-uploader.git
 [submodule "public/javascripts/H5F"]
 	path = public/javascripts/H5F
 	url = git://github.com/ryanseddon/H5F.git
