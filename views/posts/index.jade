@@ -26,8 +26,21 @@ block content
               .clearfix
                 label
                   input(type="checkbox", name="syncWeibo")
-                  span 同步到微博
-                input(name="status", value="Short description [url]")
+                  span 微博
+                label
+                  input(type="checkbox", name="syncWeibo")
+                  span QQ微博
+                label
+                  input(type="checkbox", name="syncWeibo")
+                  span twitter
+                label
+                  if(locals.facebook)
+                    input(type="checkbox", name="syncWeibo")
+                    span facebook
+                  else
+                    a(href="/syncfacebook", target="_blank") facebook
+
+                textarea(name="description", maxlength="120", placeholder="enter your description[url])
 
               .clearfix
                 input.btn.primary(type="submit", value="Post")
@@ -38,7 +51,7 @@ block content
                 &nbsp;
                 a.collapse(href="#") &times;
 
-            textarea.default(placeholder="Say something", name='content')
+            textarea(placeholder="Say something", name='content')
           .lazy
             form#upload-form(action="/upload", method="post", enctype="multipart/form-data")
               input#input-file(type="file", name="file", style='visibility:hidden;position:absolute;')

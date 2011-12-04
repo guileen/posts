@@ -1,11 +1,11 @@
 $(function(){
 
     // New post
-    var newPost = $('.new-post textarea');
-    var preview = $('.new-post .preview');
+    var $preview = $('.new-post .preview');
     var form = document.forms.post;
+    var $editor = $(form.content);
 
-    if(newPost.length===0 || preview.length===0){
+    if($editor.length===0 || $preview.length===0){
       return;
     }
 
@@ -13,37 +13,40 @@ $(function(){
 
     var lastTitle;
     function refreshPreview(){
-      var html = converter.makeHtml(newPost.val());
-      preview.html(html);
-      var title = preview.children('h1,h2,h3,h4,h5,h6').first().text();
-      if(title != lastTitle) {
+      var html = converter.makeHtml($editor.val());
+      $preview.html(html);
+      var title = $preview.children('h1,h2,h3,h4,h5,h6').first().text();
+      if(!title) {
+        form.description.value = $preview.text().replace(/\n/g, '').substring(0,100) + ' [url]';
+      } else if(title != lastTitle) {
         lastTitle = title;
         form.title.value = title;
         form.slug.value = title.toLowerCase().replace(/[\s'",?&]+/g, '-');
+        form.description.value = title + ' [url]';
       }
     }
 
     refreshPreview();
 
     //TODO make it a little delay, don't refresh too fast
-    newPost.keyup(refreshPreview);
+    $editor.keyup(refreshPreview);
 
     // show new-post panel
-    newPost.focusin(function(){
+    $editor.focusin(function(){
         $(".lazy").fadeIn();
 
         // auto resize textarea when input
-        newPost.autoResize({
-            minHeight: 100,
+        $editor.autoResize({
+            // minHeight: 100,
             maxHeight: 300,
             extraSpace:16
         });
     });
 
     function closeEditor(){
-        newPost.css({height: 60});
+        $editor.css({height: 60});
         $(".lazy").hide();
-        newPost.data('AutoResizer').destroy();
+        $editor.data('AutoResizer').destroy();
     }
 
     // collapse, close new-post panel
@@ -81,7 +84,7 @@ $(function(){
         $("#upload-form").ajaxSubmit({
             success:function(data){
               console.log(data);
-              newPost.mkdInsertLink(data.url, data.filename, data.mime.indexOf('image/') === 0);
+              $editor.mkdInsertLink(data.url, data.filename, data.mime.indexOf('image/') === 0);
               refreshPreview();
             }
         });
@@ -94,9 +97,19 @@ $(function(){
           var html = $(data).hide();
           $("#posts-list").prepend(html);
           html.slideDown();
-          newPost.val('');
+          $editor.val('');
           refreshPreview();
         }
+    });
+
+    $(form.description).focus(function(){
+        var self = this;
+        setTimeout(function(){
+            self.select();
+            self.selectionStart = 0;
+            var i = self.value.indexOf('[url]');
+            self.selectionEnd = self.value[i - 1] == ' ' ? i - 1 : i;
+        }, 50);
     });
 
 });
