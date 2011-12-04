@@ -18,7 +18,7 @@
 
   .post
 
-    .post-controls
+    .post-controls.right
       // scores
       // show-comment       1
       // add comment        2
@@ -30,6 +30,7 @@
       if(user.md5 == entry.author.md5)
         span.icon.pen.clickable.tipsy(title="edit")
       span.icon.trash.clickable.tipsy(title="Remove")
+      span.icon.clock.clickable.tipsy(title="Read later")
       // like has no effect, user wont click it
       // use bookmark, favorit
 
@@ -51,6 +52,11 @@
     .post-info
       // TODO fix time update problem
       span.tipsy(date="#{entry.createTime.getTime()}", title="#{entry.createTime.format('yyyy-mm-dd HH:MM:ss')}")= smartDate(entry.createTime)
+      &nbsp;&nbsp;
+      for tag in ['cpp', 'node']
+        a.tag(class="tag-#{tag}", href="/tag/#{tag}")= tag
+      span.post-controls
+        span.icon.tag.clickable.tipsy(class = true && 'fill', title="Add tags")
 
     .loading Loading...
     .comments
