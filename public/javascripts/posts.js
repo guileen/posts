@@ -3,6 +3,7 @@ $(function(){
     // New post
     var newPost = $('.new-post textarea');
     var preview = $('.new-post .preview');
+    var form = document.forms.post;
 
     if(newPost.length===0 || preview.length===0){
       return;
@@ -10,13 +11,21 @@ $(function(){
 
     var converter = new Showdown.converter();
 
+    var lastTitle;
     function refreshPreview(){
       var html = converter.makeHtml(newPost.val());
       preview.html(html);
+      var title = preview.children('h1,h2,h3,h4,h5,h6').first().text();
+      if(title != lastTitle) {
+        lastTitle = title;
+        form.title.value = title;
+        form.slug.value = title.toLowerCase().replace(/[\s'",?&]+/g, '-');
+      }
     }
 
     refreshPreview();
 
+    //TODO make it a little delay, don't refresh too fast
     newPost.keyup(refreshPreview);
 
     // show new-post panel

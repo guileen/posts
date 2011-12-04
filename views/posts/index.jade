@@ -19,6 +19,11 @@ block content
           form(action="/posts/new", method="post", name='post')
             .side-controls.lazy
               .clearfix
+                hr
+                span posts.li/
+                input.slug(name="slug")
+                input(type='hidden', name='title')
+              .clearfix
                 label
                   input(type="checkbox", name="syncWeibo")
                   span 同步到微博
@@ -34,7 +39,12 @@ block content
                 a.collapse(href="#") &times;
 
             textarea.default(placeholder="Say something", name='content')
-            .preview.lazy
+          .lazy
+            form#upload-form(action="/upload", method="post", enctype="multipart/form-data")
+              input#input-file(type="file", name="file", style='visibility:hidden;position:absolute;')
+              a#btn-upload.btn Upload
+
+          .preview.lazy
 
 
         .span4.sidebar
@@ -61,14 +71,6 @@ block content
             .modal-footer
               <a href="#" class="btn primary">Primary</a>
               <a href="#" class="btn secondary">Secondary</a>
-
-          #editor-help.lazy
-
-            hr
-            form#upload-form(action="/upload", method="post", enctype="multipart/form-data")
-              input#input-file(type="file", name="file", style='visibility:hidden;position:absolute;')
-              a#btn-upload.btn Upload
-
 
           pre.hide
             | Header 1
