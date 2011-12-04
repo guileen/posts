@@ -53,9 +53,13 @@
       // TODO fix time update problem
       span.tipsy(date="#{entry.createTime.getTime()}", title="#{entry.createTime.format('yyyy-mm-dd HH:MM:ss')}")= smartDate(entry.createTime)
       &nbsp;&nbsp;
-      for tag in ['cpp', 'node']
-        a.tag(class="tag-#{tag}", href="/tag/#{tag}")= tag
       span.post-controls
+        for tag in ['cpp', 'node']
+          a.tag(class="tag-#{tag}", href="/tag/#{tag}")= tag
+        a.tag(class="tag-mytag", href="/tag/mytag") my-tag
+        span.clickable &times;
+        a.tag(class="tag-mytag", href="/tag/mytag") my-tag
+        span.clickable &times;
         span.icon.tag.clickable.tipsy(class = true && 'fill', title="Add tags")
 
     .loading Loading...
