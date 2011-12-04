@@ -1,4 +1,5 @@
 $(function(){
+    // TODO editor support <c-z> undo, redo
 
     // New post
     var $preview = $('.new-post .preview');
@@ -29,6 +30,8 @@ $(function(){
     function resetEditor(){
       $editor.val('');
       $editor.attr('data-numlinks', 0)
+      $editor[0].dataLinks = {};
+      $editor[0].dataNumLinks = 0;
       form.slug.value = '';
       refreshPreview();
     }
@@ -117,5 +120,10 @@ $(function(){
             self.selectionEnd = self.value[i - 1] == ' ' ? i - 1 : i;
         }, 50);
     });
+
+    $('.new-post img.emotion').click(function(){
+        $editor.mkdInsertLink(this.src, this.alt, true);
+        refreshPreview();
+    })
 
 });

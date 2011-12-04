@@ -2,15 +2,19 @@ $.fn.extend({
 
     mkdInsertLink : function(url, description, image){
       var el = this[0];
-      var numlinks = this.attr('data-numlinks') | 0;
-        var left = image ? '![' : '[';
-        var right = ']';
-        var defaultDescription = description || 'Enter your description';
-      ++numlinks;
-      console.log(el.selectionStart);
-      console.log(el);
-      if(document.selection){
+      var data = el.dataLinks = el.dataLinks || {};
+      var num = data[url];
+      if(!num) {
+        num = el.dataNumLinks = (el.dataNumLinks | 0) + 1;
+        data[url] = num;
+        if(num===1) el.value += '\n';
+        el.value += '\n  ['+ num + ']: ' + url;
+      }
+      var left = image ? '![' : '[';
+      var right = ']';
+      var defaultDescription = description || 'Enter your description';
 
+      if(document.selection){
         el.focus();
         sel = document.selection.createRange();
         sel.text = myValue;
@@ -27,21 +31,16 @@ $.fn.extend({
           var endStr = el.value.substring(endPos);
           var m = endStr.match(/\]\[\d+\]/);
           if(m) {
+            insertText = defaultDescription;
             startPos = endPos += m[0].length;
           }
         }
-        el.value = el.value.substring(0, startPos) + left + insertText + right + '[' + numlinks + ']' + el.value.substring(endPos,el.value.length);
-        if(numlinks===1) el.value += '\n';
-        el.value += '\n  ['+ (numlinks) + ']: ' + url;
+        el.value = el.value.substring(0, startPos) + left + insertText + right + '[' + num + ']' + el.value.substring(endPos,el.value.length);
         el.select();
         el.selectionStart = startPos + left.length;
         el.selectionEnd = startPos + insertText.length + left.length;
         el.scrollTop = scrollTop;
-      } else {
-        el.value += left + defaultDescription + right + '\n\n  [' + numlinks + ']: ' + url;
       }
-
-      this.attr('data-numlinks', numlinks);
     }
 
   , mkdIndent : function(indent/* = '    ' */) {

@@ -23,7 +23,7 @@
           else
             a(href="/syncfacebook", target="_blank") facebook
 
-        textarea(name="description", maxlength="120", placeholder="enter your description[url])
+        textarea(name="description", maxlength="120", placeholder="enter your description[url]")
 
       .clearfix
         input.btn.primary(type="submit", value="Post")
@@ -39,5 +39,9 @@
     form#upload-form(action="/upload", method="post", enctype="multipart/form-data")
       input#input-file(type="file", name="file", style='visibility:hidden;position:absolute;')
       a#btn-upload.btn Upload
+
+    a.btn Images
+    img.emotion(src="http://dev:8080/upload/1322905260_trash_stroke.png", alt="trash")
+    img.emotion(src="http://dev:8080/upload/1322905436_heart.png", alt="heart")
 
   .preview.lazy
