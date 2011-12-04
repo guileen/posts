@@ -66,7 +66,7 @@ $(function(){
     $('.post').each(function(i, el){
         var e = $(el),
             opened = false,
-            showComments = e.find('a.show-comments'),
+            showComments = e.find('.show-comments'),
             loading = e.children('.loading'),
             comments = e.children('.comments');
 

@@ -27,11 +27,9 @@
       // junk              -5
       // searching keywords also effect to user taste
 
-      a(href="#") reblog&nbsp;&nbsp;
-      // &#9733; for selected
-      a.special-chars(href="#") &#9734;&nbsp;
-      a.special-chars(href="#") &hearts;&nbsp;
-      a(href="#") junk&nbsp;&#9660;
+      if(user.md5 == entry.author.md5)
+        span.icon.pen.clickable.tipsy(title="edit")
+      span.icon.trash.clickable.tipsy(title="Remove")
       // like has no effect, user wont click it
       // use bookmark, favorit
 
@@ -40,16 +38,19 @@
         span :
 
     .post-content
-      // h3 The blog title
-      // .inside-content
       != entry.html
 
     .post-controls.right
-      a.show-comments(href="javascript:void(0)") 10 comments&nbsp;&nbsp;
+      span.icon.loop.clickable.tipsy(class = true && 'fill', title="reblog")
+      span.icon.star.clickable.tipsy(class = true && 'fill', title="favorit")
+      span.icon.heart.clickable.tipsy(class = true && 'fill', title="Like")
+      span.show-comments.icon.comment-icon.clickable.tipsy(class=true && "fill" , title="100 comments")
+      span.icon.none
+      span.icon.close-icon.tipsy(title="never show this again")
 
     .post-info
       // TODO fix time update problem
-      span(rel="twipsy", date="#{entry.createTime.getTime()}", title="#{entry.createTime.format('yyyy-mm-dd HH:MM:ss')}")= smartDate(entry.createTime)
+      span.tipsy(date="#{entry.createTime.getTime()}", title="#{entry.createTime.format('yyyy-mm-dd HH:MM:ss')}")= smartDate(entry.createTime)
 
     .loading Loading...
     .comments

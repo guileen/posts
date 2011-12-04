@@ -80,7 +80,7 @@ $(function(){
         $("form.search input").animate({width: 150});
     });
 
-    $("[rel=twipsy]").twipsy({
+    $(".tipsy").twipsy({
         live: true
     });
 
