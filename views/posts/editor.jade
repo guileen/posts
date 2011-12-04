@@ -1,0 +1,43 @@
+.new-post
+  form(action="/posts/new", method="post", name='post')
+    .side-controls.lazy
+      .clearfix
+        hr
+        span posts.li/
+        input.slug(name="slug")
+        input(type='hidden', name='title')
+      .clearfix
+        label
+          input(type="checkbox", name="syncWeibo")
+          span 微博
+        label
+          input(type="checkbox", name="syncWeibo")
+          span QQ微博
+        label
+          input(type="checkbox", name="syncWeibo")
+          span twitter
+        label
+          if(locals.facebook)
+            input(type="checkbox", name="syncWeibo")
+            span facebook
+          else
+            a(href="/syncfacebook", target="_blank") facebook
+
+        textarea(name="description", maxlength="120", placeholder="enter your description[url])
+
+      .clearfix
+        input.btn.primary(type="submit", value="Post")
+
+    .tips.lazy
+      .right
+        a(href="#") Help &nbsp;
+        &nbsp;
+        a.collapse(href="#") &times;
+
+    textarea(placeholder="Say something", name='content')
+  .lazy
+    form#upload-form(action="/upload", method="post", enctype="multipart/form-data")
+      input#input-file(type="file", name="file", style='visibility:hidden;position:absolute;')
+      a#btn-upload.btn Upload
+
+  .preview.lazy
