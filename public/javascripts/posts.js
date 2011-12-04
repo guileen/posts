@@ -26,6 +26,13 @@ $(function(){
       }
     }
 
+    function resetEditor(){
+      $editor.val('');
+      $editor.attr('data-numlinks', 0)
+      form.slug.value = '';
+      refreshPreview();
+    }
+
     refreshPreview();
 
     //TODO make it a little delay, don't refresh too fast
@@ -97,8 +104,7 @@ $(function(){
           var html = $(data).hide();
           $("#posts-list").prepend(html);
           html.slideDown();
-          $editor.val('');
-          refreshPreview();
+          resetEditor();
         }
     });
 
