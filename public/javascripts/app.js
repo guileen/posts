@@ -22,6 +22,14 @@ $.fn.extend({
         var scrollTop = el.scrollTop;
 
         var insertText = el.value.substring(startPos, endPos) || defaultDescription;
+
+        if(endPos > startPos) {
+          var endStr = el.value.substring(endPos);
+          var m = endStr.match(/\]\[\d+\]/);
+          if(m) {
+            startPos = endPos += m[0].length;
+          }
+        }
         el.value = el.value.substring(0, startPos) + left + insertText + right + '[' + numlinks + ']' + el.value.substring(endPos,el.value.length);
         if(numlinks===1) el.value += '\n';
         el.value += '\n  ['+ (numlinks) + ']: ' + url;
