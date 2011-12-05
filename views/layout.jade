@@ -25,7 +25,6 @@ html(lang="en")
     script(src="/bootstrap/js/bootstrap-popover.js")
     script(src="/javascripts/autoresize/jquery.autoresize.js")
     script(src="/javascripts/github-flavored-markdown/scripts/showdown.js")
-    script(src="/javascripts/file-uploader/client/fileuploader.js")
     script(src="/javascripts/H5F/h5f.js")
     script(src="/javascripts/form/jquery.form.js")
     script(src="/javascripts/jquery-pjax/jquery.pjax.js")
@@ -74,12 +73,16 @@ html(lang="en")
         .next
 
       footer
-        p &copy; posts.li 2011
-        p powered by 
+        p All rights reserved. &copy; posts.li 2011
+        p Powered by 
           a(href="http://www.expressjs.org") express
-          &nbsp;|
-          a(href="") bootstrap
-          |
+          ,&nbsp;
+          a(href="http://twitter.github.com/bootstrap") bootstrap
+          ,&nbsp;
           a(href="http://somerandomdude.com/work/iconic/") iconic
+          &nbsp;and
+          a(href=user && "/user/#{user._id}") you
+          .
+
 
 

@@ -18,34 +18,23 @@ block content
         include editor
 
         .span4.sidebar
-          a.btn(data-controls-modal="my-modal", data-backdrop="static", data-keyboard="true") foo1 &nbsp;
-          a.btn#pop-info info &nbsp;
-          a.btn 温故
+          p
+            span.icon.loop
+            span 12345
+            span.icon.star
+            span 12345
+            span.icon.heart
+            span 12345
+          p
+            span.icon.award.disable
+
+          //
+            a.btn 温故
           // TODO bookmark plugin, 1 click send, 3 seconds wait for user react
           // if can not get "main", "content" info for the page, let user locate it
             a.btn(href=" /* see loader.js */ ") send to posts.li
 
-          script
-            $(function () {
-              $("#pop-info").popover({
-                  offset: 10
-                  , placement: 'below'
-                  , title:  function(){return 'the title'}
-                  , content : function(){return '<p>the the content</p>'}
-              });
-            });
-
-          #my-modal.modal.hide.fade
-            .modal-header
-              a.close(href="#") &times;
-              h3 Modal Heading
-            .modal-body
-              p One fine body…
-              p this is a test modal
-            .modal-footer
-              <a href="#" class="btn primary">Primary</a>
-              <a href="#" class="btn secondary">Secondary</a>
-
+        //
           pre.hide
             | Header 1
             | ====

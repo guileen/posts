@@ -42,12 +42,12 @@
       != entry.html
 
     .post-controls.right
-      span.icon.loop.clickable.tipsy(class = true && 'fill', title="reblog")
-      span.icon.star.clickable.tipsy(class = true && 'fill', title="favorit")
-      span.icon.heart.clickable.tipsy(class = true && 'fill', title="Like")
-      span.show-comments.icon.comment-icon.clickable.tipsy(class=true && "fill" , title="100 comments")
+      span.icon.loop.clickable.tipsy(class = false && 'fill', title="reblog")
+      span.icon.star.clickable.tipsy(class = false && 'fill', title="favorit")
+      span.icon.heart.clickable.tipsy(class = false && 'fill', title="Like")
+      span.show-comments.icon.comment-alt.clickable.tipsy(class=false && "fill" , title="100 comments")
       span.icon.none
-      span.icon.close-icon.tipsy(title="never show this again")
+      span.icon.close-icon.clickable.tipsy(title="never show this again")
 
     .post-info
       // TODO fix time update problem
@@ -60,7 +60,7 @@
         span.clickable &times;
         a.tag(class="tag-mytag", href="/tag/mytag") my-tag
         span.clickable &times;
-        span.icon.tag.clickable.tipsy(class = true && 'fill', title="Add tags")
+        span.icon.tag.clickable.tipsy(class = false && 'fill', title="Add tags")
 
     .loading Loading...
     .comments

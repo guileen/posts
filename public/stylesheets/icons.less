@@ -5,12 +5,16 @@
   margin: 0 5px;
   vertical-align: middle;
 
+  &.disable {
+    opacity: 0.3;
+  }
+
   &.trash {
     background: url(../images/trash_stroke.png);
   }
 
   &.heart {
-    background: url(../images/heart_stroke.png) 0 center no-repeat;
+    background: url(../images/heart_stroke.png) center center no-repeat;
   }
 
   &.star {
@@ -22,7 +26,7 @@
   }
 
   &.loop {
-    background: url(../images/loop_alt2.png) 0 center no-repeat;
+    background: url(../images/loop_alt2.png) center center no-repeat;
   }
 
   &.pen {
@@ -37,20 +41,32 @@
     background: url(../images/tag_stroke.png);
   }
 
+  &.award {
+    background: url(../images/award_stroke_8x16.png) center center no-repeat;
+  }
+
   &.close-icon {
-    background: url(../images/x_14x14.png) 0 center no-repeat;
+    background: url(../images/x_14x14.png) center center no-repeat;
   }
 
   &.comment-icon {
-    background: url(../images/comment_stroke.png) 0 center no-repeat;
+    background: url(../images/comment_stroke.png) center center no-repeat;
   }
 
   &.comment-icon.fill {
-    background: url(../images/comment_fill.png) 0 center no-repeat;
+    background: url(../images/comment_fill.png) center center no-repeat;
+  }
+
+  &.comment-alt {
+    background: url(../images/comment_alt_stroke.png) center center no-repeat;
+  }
+
+  &.comment-alt.fill {
+    background: url(../images/comment_alt_fill.png) center center no-repeat;
   }
 
   &.heart.fill {
-    background: url(../images/heart_fill.png) 0 center no-repeat;
+    background: url(../images/heart_fill.png) center center no-repeat;
   }
 
   &.star.fill {

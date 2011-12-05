@@ -2,7 +2,6 @@
   form(action="/posts/new", method="post", name='post')
     .side-controls.lazy
       .clearfix
-        hr
         span posts.li/
         input.slug(name="slug")
         input(type='hidden', name='title')
@@ -35,7 +34,7 @@
         a.collapse(href="#") &times;
 
     textarea(placeholder="Say something", name='content')
-  .lazy
+  .editor-bar.lazy
     form#upload-form(action="/upload", method="post", enctype="multipart/form-data")
       input#input-file(type="file", name="file", style='visibility:hidden;position:absolute;')
       a#btn-upload.btn Upload

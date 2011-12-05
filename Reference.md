@@ -7,6 +7,7 @@ Node deployment
 [multi-node]
 [forever]
 [cluster]
+[node-control]http://github.com/tsmith/node-control
 
 Server envorionment
 ----
