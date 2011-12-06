@@ -10,19 +10,17 @@ $(function(){
       return;
     }
 
-    var lastTitle;
     function refreshPreview(html){
       // var html = converter.makeHtml($editor.val());
       $preview.html(html);
       var title = $preview.children('h1,h2,h3,h4,h5,h6').first().text();
-      if(!title) {
-        form.description.value = $preview.text().replace(/\n/g, '').substring(0,100) + ' [url]';
-      } else if(title != lastTitle) {
-        form.title.value = title;
-        form.slug.value = title.toLowerCase().replace(/[\s'",?&]+/g, '-');
+      if(title) {
         form.description.value = 'Post "' + title + '" [url]';
+      } else {
+        form.description.value = $preview.text().replace(/\n/g, '').substring(0,100) + ' [url]';
       }
-      lastTitle = title;
+      form.title.value = title;
+      form.slug.value = title.toLowerCase().replace(/[\s'",?&]+/g, '-');
     }
 
     var editor = initEditor($editor,$('.editor .editor-bar') ,refreshPreview);

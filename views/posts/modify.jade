@@ -15,6 +15,7 @@ block content
         .right
           input.btn.primary(type="submit", value="Modify")
         input(name="message", placeholder="commit message")
+        input(name="title", type="hidden", value=entry.title)
     .span8
       .preview
         !=entry.html
