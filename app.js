@@ -66,8 +66,11 @@ app.get('/error', function(req, res, next) {
     next(new Error('fuck you'));
 })
 
-// helpers
-app.helpers(require('./common'));
+// app.helpers == app.locals
+app.locals(require('./common'));
+app.locals({
+    title: 'Posts'
+});
 app.dynamicHelpers({
     user: function(req){return req.session.user}
 });
