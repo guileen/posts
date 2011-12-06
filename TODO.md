@@ -84,3 +84,5 @@ Entertainment
 * 测试题编辑器
 support gist
 ![description](gist url)
+fuzzy id, cssname, replace \_id_myid, \_css_mycss, with a-zA-Z0-9, scope, public, view
+overlay is a big problem

@@ -27,9 +27,10 @@
       // junk              -5
       // searching keywords also effect to user taste
 
-      if(user._id == entry.authorId)
+      if(user._id == entry.authorId || isModerator(user))
         a.icon.pen.clickable.tipsy(href="/post/#{entry._id}/modify", title="Modify")
-      span.icon.trash.clickable.tipsy(title="Remove")
+        // TODO use something like tipsy drop down the confirm message
+        span.icon.trash.clickable.tipsy(title="Remove", onclick="removePost('#{entry._id}', this)")
       // TODO read later
       // span.icon.clock.clickable.tipsy(title="Read later")
       // like has no effect, user wont click it

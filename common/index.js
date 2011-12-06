@@ -141,4 +141,8 @@ module.exports = {
     return '/tag/' + tags.join('+');
   }
 
+, isModerator: function(user) {
+    return user.groups && user.groups.indexOf('moderator')>=0;
+  }
+
 };
