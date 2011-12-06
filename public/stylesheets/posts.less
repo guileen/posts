@@ -6,67 +6,6 @@
   display:none;
 }
 
-.new-post {
-  .makeColumn(10.2);
-  .side-controls {
-    float: right;
-    width: 300px;
-    margin: 50px -320px 0 0;
-    label {
-      float : none;
-    }
-  }
-
-  input.slug{
-    background:none;
-    .box-shadow(none);
-    .border-radius(0);
-    width:150px;
-    border: none;
-    border-bottom: 1px solid rgba(0,0,0,0.5);
-  }
-
-  textarea[name="content"]{
-    width: 98%;
-    height: 60px;
-    resize: none;
-  }
-
-  textarea[name="description"]{
-    width: 75%;
-    height: 4em;
-    resize: none;
-  }
-
-  .tips {
-    line-height: 24px;
-    font-weight: bold;
-  }
-
-  .editor-bar {
-    margin-top: 12px;
-  }
-
-  .preview {
-    background-color: @postBackground;
-    color:            @postColor;
-    border: 3px dotted #ccc;
-    margin-top: 15px;
-    padding: 20px;
-    max-height: 250px;
-    overflow: auto;
-    .border-radius();
-  }
-
-  #upload-form {
-    display: inline;
-  }
-
-  img.emotion {
-    cursor: pointer;
-  }
-}
-
 .avatar-info{
   .makeColumn(1.5);
   .avatar {
@@ -138,25 +77,4 @@
   font-size: 13px;
   font-weight: bold;
   color: gray;
-}
-
-.following, .follower{
-  display: block;
-  font-size: 18px;
-  padding: 10px;
-}
-
-.following{
-  .border-radius(5px 5px 0 0);
-  .box-shadow();
-  background-color: darken(@background, 15);
-}
-.follower{
-  .border-radius(0 0 5px 5px);
-  .box-shadow();
-  background-color: darken(@background, 5);
-}
-
-#editor-help {
-  margin: 10px;
 }

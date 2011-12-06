@@ -1,0 +1,76 @@
+.editor {
+  textarea {
+    resize : none;
+  }
+
+  .preview {
+    background-color: @postBackground;
+    color:            @postColor;
+    border: 3px dotted #ccc;
+    padding: 20px;
+    .border-radius();
+  }
+
+  #upload-form {
+    display: inline;
+  }
+
+  img.emotion {
+    cursor: pointer;
+  }
+}
+
+.new-post {
+  .makeColumn(10.2);
+  .side-controls {
+    float: right;
+    width: 300px;
+    margin: 50px -320px 0 0;
+    label {
+      float : none;
+    }
+  }
+
+  input.slug{
+    background:none;
+    .box-shadow(none);
+    .border-radius(0);
+    width:150px;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+  }
+
+  textarea[name="content"]{
+    width: 98%;
+    height: 60px;
+  }
+
+  textarea[name="description"]{
+    width: 75%;
+    height: 4em;
+  }
+
+  .tips {
+    line-height: 24px;
+    font-weight: bold;
+  }
+
+  .editor-bar {
+    margin-top: 12px;
+  }
+
+  .preview {
+    margin-top: 15px;
+    max-height: 250px;
+    overflow: auto;
+  }
+
+}
+
+.lazy {
+  display:none;
+}
+
+#editor-help {
+  margin: 10px;
+}
