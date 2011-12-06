@@ -11,7 +11,6 @@ $(function(){
     }
 
     function refreshPreview(html){
-      // var html = converter.makeHtml($editor.val());
       $preview.html(html);
       var title = $preview.children('h1,h2,h3,h4,h5,h6').first().text();
       if(title) {
@@ -27,19 +26,19 @@ $(function(){
 
     // show new-post panel
     $editor.focusin(function(){
-        $(".lazy").fadeIn();
+        $(".lazy").slideDown();
 
         // auto resize textarea when input
         $editor.autoResize({
-            // minHeight: 100,
+            // minHeight: 60,
             maxHeight: 300,
             extraSpace:16
         });
     });
 
-    function closeEditor(){
-        $editor.css({height: 60});
-        $(".lazy").hide();
+    function closeEditor(callback){
+      $editor.animate({height:60});
+        $(".lazy").slideUp(callback);
         $editor.data('AutoResizer').destroy();
     }
 
@@ -72,12 +71,13 @@ $(function(){
 
     $(".new-post form").ajaxForm({
         success : function(data, textStatus, xhr) {
-          closeEditor();
           var html = $(data).hide();
           $("#posts-list").prepend(html);
-          html.slideDown();
-          editor.reset();
-          form.slug.value = '';
+          closeEditor(function(){
+              html.slideDown();
+              editor.reset();
+              form.slug.value = '';
+          });
         }
     });
 
