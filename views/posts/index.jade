@@ -1,6 +1,7 @@
 extends ../layout
 
 block scripts
+  script(src="/javascripts/editor.js")
   script(src="/javascripts/posts.js")
 
 block content
@@ -15,7 +16,7 @@ block content
           .avatar
             a.avatar(href="#", style="background-image:url('#{avatar(user.md5, 64)}')", title="Jason's blog")
 
-        include editor
+        include new-post-editor
 
         .span4.sidebar
           p
