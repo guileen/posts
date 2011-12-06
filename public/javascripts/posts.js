@@ -20,11 +20,11 @@ $(function(){
       if(!title) {
         form.description.value = $preview.text().replace(/\n/g, '').substring(0,100) + ' [url]';
       } else if(title != lastTitle) {
-        lastTitle = title;
         form.title.value = title;
         form.slug.value = title.toLowerCase().replace(/[\s'",?&]+/g, '-');
-        form.description.value = title + ' [url]';
+        form.description.value = 'Post "' + title + '" [url]';
       }
+      lastTitle = title;
     }
 
     function resetEditor(){
