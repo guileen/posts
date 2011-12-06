@@ -27,23 +27,27 @@
       // junk              -5
       // searching keywords also effect to user taste
 
-      if(user.md5 == entry.author.md5)
-        span.icon.pen.clickable.tipsy(title="edit")
+      if(user._id == entry.authorId)
+        a.icon.pen.clickable.tipsy(href="/post/#{entry._id}/modify", title="Modify")
       span.icon.trash.clickable.tipsy(title="Remove")
-      span.icon.clock.clickable.tipsy(title="Read later")
+      // TODO read later
+      // span.icon.clock.clickable.tipsy(title="Read later")
       // like has no effect, user wont click it
       // use bookmark, favorit
 
     .post-info
-      a(href="#")= entry.author.fullname
+      // TODO simplfy this, just for test now
+      // a(href="#")= entry.contributors[entry.authorId].fullname
+      - var _author = entry.contributors && entry.contributors[entry.authorId]
+      a(href="#")= _author && _author.fullname
         span :
 
     .post-content
       != entry.html
 
     .post-controls.right
-      span.icon.loop.clickable.tipsy(class = false && 'fill', title="reblog")
-      span.icon.star.clickable.tipsy(class = false && 'fill', title="favorit")
+      span.icon.loop.clickable.tipsy(class = false && 'fill', title="Reblog")
+      span.icon.star.clickable.tipsy(class = false && 'fill', title="Mark")
       span.icon.heart.clickable.tipsy(class = false && 'fill', title="Like")
       span.show-comments.icon.comment-alt.clickable.tipsy(class=false && "fill" , title="100 comments")
       span.icon.none

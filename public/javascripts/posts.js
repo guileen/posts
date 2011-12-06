@@ -10,11 +10,9 @@ $(function(){
       return;
     }
 
-    var converter = new Showdown.converter();
-
     var lastTitle;
-    function refreshPreview(){
-      var html = converter.makeHtml($editor.val());
+    function refreshPreview(html){
+      // var html = converter.makeHtml($editor.val());
       $preview.html(html);
       var title = $preview.children('h1,h2,h3,h4,h5,h6').first().text();
       if(!title) {
@@ -27,19 +25,7 @@ $(function(){
       lastTitle = title;
     }
 
-    function resetEditor(){
-      $editor.val('');
-      $editor.attr('data-numlinks', 0)
-      $editor[0].dataLinks = {};
-      $editor[0].dataNumLinks = 0;
-      form.slug.value = '';
-      refreshPreview();
-    }
-
-    refreshPreview();
-
-    //TODO make it a little delay, don't refresh too fast
-    $editor.keyup(refreshPreview);
+    var editor = initEditor($editor,$('.editor .editor-bar') ,refreshPreview);
 
     // show new-post panel
     $editor.focusin(function(){
@@ -85,21 +71,6 @@ $(function(){
         });
     });
 
-    $("#btn-upload").click(function(){
-        console.log('hello');
-        $("#input-file").click();
-    });
-
-    $("#input-file").change(function(){
-        $("#upload-form").ajaxSubmit({
-            success:function(data){
-              console.log(data);
-              $editor.mkdInsertLink(data.url, data.filename, data.mime.indexOf('image/') === 0);
-              refreshPreview();
-            }
-        });
-    });
-
 
     $(".new-post form").ajaxForm({
         success : function(data, textStatus, xhr) {
@@ -107,7 +78,8 @@ $(function(){
           var html = $(data).hide();
           $("#posts-list").prepend(html);
           html.slideDown();
-          resetEditor();
+          editor.reset();
+          form.slug.value = '';
         }
     });
 
@@ -120,10 +92,5 @@ $(function(){
             self.selectionEnd = self.value[i - 1] == ' ' ? i - 1 : i;
         }, 50);
     });
-
-    $('.new-post img.emotion').click(function(){
-        $editor.mkdInsertLink(this.src, this.alt, true);
-        refreshPreview();
-    })
 
 });

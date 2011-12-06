@@ -1,0 +1,20 @@
+extends ../layout
+
+block scripts
+  script(src="/javascripts/editor.js")
+  script(src="/javascripts/post-modify.js")
+
+block content
+  .row.editor.modify-post
+    .span8
+      include editor-bar-outer
+      form(method="post", name="post")
+        textarea(placeholder="Say something", name="content")= entry.revisions[entry.revisions.length - 1].content
+        .clearfix.editor-bar
+          include editor-bar
+        .right
+          input.btn.primary(type="submit", value="Modify")
+        input(name="message", placeholder="commit message")
+    .span8
+      .preview
+        !=entry.html

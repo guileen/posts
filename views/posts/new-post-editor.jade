@@ -1,4 +1,5 @@
-.new-post
+.new-post.editor
+  include editor-bar-outer
   form(action="/posts/new", method="post", name='post')
     .side-controls.lazy
       .clearfix
@@ -35,12 +36,5 @@
 
     textarea(placeholder="Say something", name='content')
   .editor-bar.lazy
-    form#upload-form(action="/upload", method="post", enctype="multipart/form-data")
-      input#input-file(type="file", name="file", style='visibility:hidden;position:absolute;')
-      a#btn-upload.btn Upload
-
-    a.btn Images
-    img.emotion(src="http://dev:8080/upload/1322905260_trash_stroke.png", alt="trash")
-    img.emotion(src="http://dev:8080/upload/1322905436_heart.png", alt="heart")
-
+    include editor-bar
   .preview.lazy
