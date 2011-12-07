@@ -1,3 +1,18 @@
+function kissTemplate (template, params) {
+  return template.replace(/#(?:\{|%7B)(.*?)(?:\}|%7D)/g, function($1, $2) {
+      // return ($2 in params) ? params[$2] : '';
+      // to support embed properties
+      // var v = params;
+      // var s = $2.split['.']; // can not support foo[bar]
+      // for(var i=0;i<s.length;i++){
+      //   v = v[s[i]] || '';
+      // }
+      // return v;
+      // , a bit waste, but client so so
+      return params[$2] || new Function('o', 'with(o||{})return ' + $2)(params) || '';
+  });
+}
+
 $.fn.extend({
 
     mkdInsertLink : function(url, description, image) {
