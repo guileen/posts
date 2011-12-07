@@ -74,10 +74,10 @@ $(function() {
           var html = $(data).hide();
           $("#posts-list").prepend(html);
           closeEditor(function() {
-              html.slideDown();
               editor.reset();
               form.slug.value = '';
           });
+          html.slideDown();
         }
     });
 
