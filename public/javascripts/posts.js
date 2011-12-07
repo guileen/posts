@@ -88,13 +88,14 @@ $(function() {
      */
     $(".new-post form").ajaxForm({
         success : function(data, textStatus, xhr) {
-          var html = $(data).hide();
-          $("#posts-list").prepend(html);
+          var $html = $(data).hide();
+          triggerPost($html);
+          $("#posts-list").prepend($html);
           closeEditor(function() {
               editor.reset();
               form.slug.value = '';
           });
-          html.slideDown();
+          $html.slideDown();
         }
     });
 
@@ -108,27 +109,34 @@ $(function() {
         }, 50);
     });
 
-    /* ==========================
-     * remove post
-     * ==========================*/
+    /**
+     * triggerPost, init post controls, required for ajax append post
+     */
+    function triggerPost($post){
 
-    $('.icon.trash').popover({
-        trigger:'manual'
-      , html:true
-      , placement : 'below'
-      , content : function(){
-          var id = this.id.substring(3);
-          var hideSnip = "$('#rm-" + id + "').popover('hide')";
-          var removeSnip = "removePost('" + id + "');";
-          return '<p class="clearfix">Are you sure?</p><br>'
-          + '<p style="text-align:center;">'
-          + '<a class="btn" href="javascript:void(0)" onclick="' + removeSnip + hideSnip + '">Yes</a>'
-          + '&nbsp;<a class="btn primary" onclick="' + hideSnip + '">No</a></p>'
-        }
-    });
+      /* ==========================
+       * remove post
+       * ==========================*/
+      var $rm = $post.find('.icon.trash');
+      $rm.popover({
+          trigger:'manual'
+        , html:true
+        , placement : 'below'
+        , content : function(){
+            var id = this.id.substring(3);
+            var hideSnip = "$('#rm-" + id + "').popover('hide')";
+            var removeSnip = "removePost('" + id + "');";
+            return '<p class="clearfix">Are you sure?</p><br>'
+            + '<p style="text-align:center;">'
+            + '<a class="btn" href="javascript:void(0)" onclick="' + removeSnip + hideSnip + '">Yes</a>'
+            + '&nbsp;<a class="btn primary" onclick="' + hideSnip + '">No</a></p>'
+          }
+      });
 
-    $('.icon.trash').click(function(){
-        $(this).popover('show');
-    })
+      $rm.click(function(){
+          $(this).popover('show');
+      })
+    }
 
+    triggerPost($('.entry'));
 });

@@ -89,5 +89,5 @@ support gist
 fuzzy id, cssname, replace \_id_myid, \_css_mycss, with a-zA-Z0-9, scope, public, view
 overlay is a big problem
 a tray icon, click and add some text
-
+Collabrative i18n
 
