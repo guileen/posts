@@ -17,7 +17,7 @@ $.cleanData = function( elems ) {
 		try {
 			$( elem ).triggerHandler( "remove" );
 		// http://bugs.jquery.com/ticket/8235
-		} catch( e ) {}
+		} catch ( e ) {}
 	}
 	_cleanData( elems );
 };

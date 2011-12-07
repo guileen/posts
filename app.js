@@ -13,7 +13,7 @@ var development = app.settings.env == 'development';
 
 // Configuration
 
-app.configure(function(){
+app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.set('view options', {pretty: development, layout: false});
@@ -22,29 +22,29 @@ app.configure(function(){
   app.use(express.cookieParser());
   app.use(express.session({ secret: "keyboard cat", store: new RedisStore }));
   app.use(require('connect-less')({ src: __dirname + '/public/', compress: !development }));
-  app.use(express.favicon(__dirname + '/public/favicon.ico'))
+  app.use(express.favicon(__dirname + '/public/favicon.ico'));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 
-  for(var name in settings) {
+  for (var name in settings) {
     app.set(name, settings[name]);
   }
 });
 
-app.configure('development', function(){
+app.configure('development', function() {
   // app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
 });
 
-app.configure('production', function(){
+app.configure('production', function() {
   // app.use(express.errorHandler()); 
 });
 
 app.use(function(err, req, res, next) {
-    if(err == 404){
+    if (err == 404) {
       res.render('404');
-    } else if(err == 500) {
+    } else if (err == 500) {
       res.render('500');
-    } else if(err instanceof Error) {
+    } else if (err instanceof Error) {
       // log req.body, req.query, req.cookie, req.user, and error 
       res.render('500');
       console.log(err.stack);
@@ -64,7 +64,7 @@ app.get('/500', function(req, res, next) {
 
 app.get('/error', function(req, res, next) {
     next(new Error('fuck you'));
-})
+});
 
 // app.helpers == app.locals
 app.locals(require('./common'));
@@ -72,7 +72,7 @@ app.locals({
     title: 'Posts'
 });
 app.dynamicHelpers({
-    user: function(req){return req.session.user}
+    user: function(req) {return req.session.user}
 });
 
 // Middlewares

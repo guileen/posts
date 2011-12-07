@@ -1,7 +1,7 @@
-$(function(){
+$(function() {
     // Upload avatar
     var selectAvatar = document.getElementById('select-avatar');
-    if(selectAvatar){
+    if (selectAvatar) {
       var uploader = new qq.FileUploader({
           element: selectAvatar,
           multiple: false,
@@ -10,13 +10,13 @@ $(function(){
     }
 
     $('form.preferences').ajaxForm({
-        success: function(data){
-          if(data.success){
+        success: function(data) {
+          if (data.success) {
             $notify.notify('create', {
                 title: 'Preferences saved successfully'
             });
-            if($('body').hasClass('signup-step2')){
-              setTimeout(function(){
+            if ($('body').hasClass('signup-step2')) {
+              setTimeout(function() {
                   location.href = '/';
               }, 100);
             }
@@ -29,7 +29,7 @@ $(function(){
         }
     });
 
-    $('input[name=fullname]').blur(function(){
-        console.log('on blur')
+    $('input[name=fullname]').blur(function() {
+        console.log('on blur');
     });
 });

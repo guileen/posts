@@ -1,5 +1,5 @@
-function(window, document, namespace){
-  if(window[namespace] && typeof window[namespace].postToPostsli === 'function'){
+function(window, document, namespace) {
+  if (window[namespace] && typeof window[namespace].postToPostsli === 'function') {
     return;
   }
   var script = document.createElement('script');

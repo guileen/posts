@@ -1,20 +1,20 @@
 $.fn.extend({
 
-    mkdInsertLink : function(url, description, image){
+    mkdInsertLink : function(url, description, image) {
       var el = this[0];
       var data = el.dataLinks = el.dataLinks || {};
       var num = data[url];
-      if(!num) {
+      if (!num) {
         num = el.dataNumLinks = (el.dataNumLinks | 0) + 1;
         data[url] = num;
-        if(num===1) el.value += '\n';
-        el.value += '\n  ['+ num + ']: ' + url;
+        if (num === 1) el.value += '\n';
+        el.value += '\n  [' + num + ']: ' + url;
       }
       var left = image ? '![' : '[';
       var right = ']';
       var defaultDescription = description || 'Enter your description';
 
-      if(document.selection){
+      if (document.selection) {
         el.focus();
         sel = document.selection.createRange();
         sel.text = myValue;
@@ -27,15 +27,15 @@ $.fn.extend({
 
         var insertText = el.value.substring(startPos, endPos) || defaultDescription;
 
-        if(endPos > startPos) {
+        if (endPos > startPos) {
           var endStr = el.value.substring(endPos);
           var m = endStr.match(/\]\[\d+\]/);
-          if(m) {
+          if (m) {
             insertText = defaultDescription;
             startPos = endPos += m[0].length;
           }
         }
-        el.value = el.value.substring(0, startPos) + left + insertText + right + '[' + num + ']' + el.value.substring(endPos,el.value.length);
+        el.value = el.value.substring(0, startPos) + left + insertText + right + '[' + num + ']' + el.value.substring(endPos, el.value.length);
         el.select();
         el.selectionStart = startPos + left.length;
         el.selectionEnd = startPos + insertText.length + left.length;
@@ -48,7 +48,7 @@ $.fn.extend({
     }
 
   , indentText : function(text, indent) {
-      return text.split('\n').map(function(value){
+      return text.split('\n').map(function(value) {
           return indent + value;
       });
     }
@@ -58,11 +58,11 @@ $.fn.extend({
 /**
  * default load plugins
  */
-$(function(){
+$(function() {
     // default pjax, currently just test
     $('a.pjax').pjax('.content .next', {
         fragment: '.content .current'
-    }).live('click', function(){
+    }).live('click', function() {
         $('.content .current').slideUp().removeClass('current');
         $('.content').append('<div class="current"></div>');
     });
@@ -74,9 +74,9 @@ $(function(){
         $('.content .next').addClass('current');
     });
 
-    $("form.search").focusin(function(){
+    $("form.search").focusin(function() {
         $("form.search input").animate({width: 450});
-    }).focusout(function(){
+    }).focusout(function() {
         $("form.search input").animate({width: 150});
     });
 
