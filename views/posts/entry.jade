@@ -30,7 +30,7 @@
       if(user._id == entry.authorId || isModerator(user))
         a.icon.pen.clickable.tipsy(href="/post/#{entry._id}/modify", title="Modify")
         // TODO use something like tipsy drop down the confirm message
-        span.icon.trash.clickable.tipsy(title="Remove", onclick="removePost('#{entry._id}', this)")
+        span.icon.trash.clickable.tipsy(title="Remove", id="rm-#{entry._id}")
       // TODO read later
       // span.icon.clock.clickable.tipsy(title="Read later")
       // like has no effect, user wont click it
