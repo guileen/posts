@@ -91,3 +91,9 @@ overlay is a big problem
 a tray icon, click and add some text
 Collabrative i18n
 
+simplejsindent bug of . dot start
+
+str.replace()
+   .replace()
+   .replace();
+prevent too fast comment chating

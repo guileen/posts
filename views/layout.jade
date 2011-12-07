@@ -61,6 +61,8 @@ html(lang="en")
           img(src="/images/logo-small.png")
 
       #content
+        #comment-template
+          include posts/comment
         #notify-container.ui-notify
            #basic-template
              a.ui-notify-cross.ui-notify-close(href="#")&times;
@@ -83,6 +85,3 @@ html(lang="en")
           &nbsp;and
           a(href=user && "/user/#{user._id}") you
           .
-
-
-

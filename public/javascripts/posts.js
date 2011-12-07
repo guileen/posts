@@ -60,29 +60,6 @@ $(function() {
     // collapse, close new-post panel
     $('.new-post .collapse').click(closeEditor);
 
-    // Post comments
-    $('.post').each(function(i, el) {
-        var e = $(el),
-            opened = false,
-            showComments = e.find('.show-comments'),
-            loading = e.children('.loading'),
-            comments = e.children('.comments');
-
-        showComments.click(function() {
-            if (opened) {
-              comments.slideUp();
-              opened = false;
-            } else {
-              loading.slideDown();
-              setTimeout(function() {
-                  loading.slideUp();
-                  comments.slideDown();
-                  opened = true;
-              }, 1000);
-            }
-        });
-    });
-
     /*
      * submit new post
      */
@@ -108,6 +85,11 @@ $(function() {
             self.selectionEnd = self.value[i - 1] == ' ' ? i - 1 : i;
         }, 50);
     });
+
+    /*
+     * prepare template
+     */
+    var commentTemplate = $('#comment-template').html();
 
     /**
      * triggerPost, init post controls, required for ajax append post
@@ -136,7 +118,49 @@ $(function() {
       $rm.click(function(){
           $(this).popover('show');
       })
+
+      /* =======================
+       * comments
+       * ======================= */
+      $post.find('.post').each(function(i, el) {
+          var e = $(el),
+              opened = false,
+              loaded = false,
+              showComments = e.find('.show-comments'),
+              loading = e.children('.loading'),
+              comments = e.children('.comments');
+
+          showComments.click(function() {
+              if (opened) {
+                comments.slideUp(function(){
+                    opened = false;
+                });
+              } else if (loaded) {
+                comments.slideDown(function(){
+                    opened = true;
+                });
+              } else {
+                loading.slideDown();
+                // get latest top n comments, sort by user
+                $.get('/post/id/comments', {}, function(data){
+                    loaded = true;
+                    // var html = kissTemplate(commentTemplate, data);
+                    html = commentTemplate;
+                    // $html = $(html).hide();
+                    comments.append(html);
+                    // TODO loading icon
+                    loading.slideUp();
+                    comments.slideDown(function(){
+                        opened = true;
+                    });
+                });
+              }
+          });
+      });
+
+
     }
 
     triggerPost($('.entry'));
+
 });
