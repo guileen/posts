@@ -40,6 +40,7 @@ app.configure('production', function() {
 });
 
 app.use(function(err, req, res, next) {
+    // TODO send status code, and make this static
     if (err == 404) {
       res.render('404');
     } else if (err == 500) {

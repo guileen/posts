@@ -124,41 +124,59 @@ $(function() {
        * comments
        * ======================= */
       $post.find('.post').each(function(i, el) {
-          var e = $(el),
-              opened = false,
-              loaded = false,
-              showComments = e.find('.show-comments'),
-              loading = e.children('.loading'),
-              comments = e.children('.comments');
+          var $el = $(el)
+            , opened = false
+            , loaded = false
+            , $showComments = $el.find('.show-comments')
+            , $loading = $el.children('.loading')
+            , $comments = $el.children('.comments')
+            , $commentList = $comments.children('.comment-list');
 
-          showComments.click(function() {
+          $showComments.click(function() {
               if (opened) {
-                comments.slideUp(function(){
+                $comments.slideUp(function(){
                     opened = false;
                 });
               } else if (loaded) {
-                comments.slideDown(function(){
+                $comments.slideDown(function(){
                     opened = true;
                 });
               } else {
                 // loading.slideDown();
                 // get latest top n comments, sort by user
-                $.get('/post/id/comments', {}, function(data){
-                    loaded = true;
-                    // var html = kissTemplate(commentTemplate, data);
-                    html = commentTemplate;
-                    // $html = $(html).hide();
-                    comments.append(html);
-                    // TODO loading icon
-                    loading.slideUp();
-                    comments.slideDown(function(){
-                        opened = true;
-                    });
-                });
+                $.get('/post/id/comments', {}, appendComments)
               }
           });
-      });
 
+          function appendCommentForm(){
+            var formHtml = kissTemplate(commentFormTemplate, { id: $el.attr('data-id'), operation: 'new' });
+            var $formHtml = $(formHtml);
+            $form = $formHtml.find('form');
+            $form.ajaxForm({
+                success: function(r){
+                  $formHtml.find('textarea').val('');
+                  appendComments(r);
+                }
+            });
+            $comments.append($formHtml);
+          }
+
+          appendCommentForm();
+
+          function appendComments(comments) {
+            console.log('append');
+            loaded = true;
+            // var html = kissTemplate(commentTemplate, data);
+            $html = $(commentTemplate);
+            // $html = $(html).hide();
+            $commentList.append($html);
+            // TODO loading icon
+            $loading.slideUp();
+            if(!opened) $comments.slideDown(function(){
+                opened = true;
+            });
+          }
+      });
 
     }
 

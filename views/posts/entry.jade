@@ -1,7 +1,6 @@
 .row.entry
 
   .avatar-info
-    // avatar
     .avatar
       a.avatar(href="#", style="background-image:url('#{avatar(user.md5, 64)}')", title="Jason's blog")
       // show this on hover, click to pop menu
@@ -16,7 +15,7 @@
       .clearfix
         a(href="#") Unfollow
 
-  .post
+  .post(data-id=entry._id)
 
     .post-controls.right
       // scores
@@ -51,9 +50,9 @@
       span.icon.loop.clickable.tipsy(class = false && 'fill', title="Reblog")
       span.icon.star.clickable.tipsy(class = false && 'fill', title="Mark")
       span.icon.heart.clickable.tipsy(class = false && 'fill', title="Like")
-      span.show-comments.icon.comment-alt.clickable.tipsy(class=entry.commentsCount && "fill" , title="#{entry.commentsCount || 'no'} comments")
+      span.show-comments.icon.comment-alt.clickable.tipsy(class=entry.commentsCount && "fill" , title="#{entry.commentsCount || 'No'} comments")
       span.icon.none
-      span.icon.close-icon.clickable.tipsy(title="never show this again")
+      span.icon.close-icon.clickable.tipsy(title="Never show this again")
 
     .post-info
       // TODO fix time update problem
@@ -69,5 +68,4 @@
         span.icon.tag.clickable.tipsy(class = false && 'fill', title="Add tags")
 
     .comments
-      form(action='/post/#\{id}', method='post')
-        input(style="width:100%")
+      .comment-list

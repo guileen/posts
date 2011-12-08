@@ -61,12 +61,19 @@ html(lang="en")
           img(src="/images/logo-small.png")
 
       #content
-        #comment-template
-          include posts/comment
-        #comment-form
-          form(action='/post/#\{id}', method='post')
-            textarea(name="content", style="width:100%")
-            a.btn.primary() comment
+        #templates
+          #comment-template
+            include posts/comment
+          #comment-form
+            // TODO simplfy this
+            .row
+              .avatar-info
+                .avatar
+                  a.avatar(href="#", style="background-image:url('avatar(user.md5, 32)')", title="Jason's blog")
+              .span11
+                form(action='/post/#\{id}/comments/#\{operation}', method='post')
+                  textarea(name="content", style="width:100%")
+                  input.btn.primary(type="submit", value="comment")
         #notify-container.ui-notify
            #basic-template
              a.ui-notify-cross.ui-notify-close(href="#")&times;
