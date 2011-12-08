@@ -90,6 +90,7 @@ $(function() {
      * prepare template
      */
     var commentTemplate = $('#comment-template').html();
+    var commentFormTemplate = $('#comment-form').html();
 
     /**
      * triggerPost, init post controls, required for ajax append post
@@ -140,7 +141,7 @@ $(function() {
                     opened = true;
                 });
               } else {
-                loading.slideDown();
+                // loading.slideDown();
                 // get latest top n comments, sort by user
                 $.get('/post/id/comments', {}, function(data){
                     loaded = true;

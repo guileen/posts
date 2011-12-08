@@ -1,3 +1,34 @@
+.icon8, .icon12, .icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon8 {
+  width: 8px;
+  height: 8px;
+
+  &.pin {
+    background: url(../images/pin_8x8.png) center center no-repeat;
+  }
+
+  &.pin.fill {
+    background: url(../images/pin_blue_8x8.png) center center no-repeat;
+  }
+}
+
+.icon12 {
+  width: 12px;
+  height: 12px;
+
+  &.pin {
+    background: url(../images/pin_12x12.png) center center no-repeat;
+  }
+
+  &.pin.fill {
+    opacity: 0.8;
+    background: url(../images/pin_blue_12x12.png) center center no-repeat;
+  }
+}
+
 .icon {
   width: 16px;
   height: 16px;
@@ -53,12 +84,20 @@
     background: url(../images/comment_stroke.png) center center no-repeat;
   }
 
-  &.comment-icon.fill {
-    background: url(../images/comment_fill.png) center center no-repeat;
-  }
-
   &.comment-alt {
     background: url(../images/comment_alt_stroke.png) center center no-repeat;
+  }
+
+  &.share {
+    background: url(../images/share.png) center center no-repeat;
+  }
+
+  &.link {
+    background: url(../images/link.png) center center no-repeat;
+  }
+
+  &.comment-icon.fill {
+    background: url(../images/comment_fill.png) center center no-repeat;
   }
 
   &.comment-alt.fill {

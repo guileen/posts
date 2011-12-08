@@ -26,11 +26,12 @@
       // reblog             4  need comment
       // junk              -5
       // searching keywords also effect to user taste
-
       if(user._id == entry.authorId || isModerator(user))
         a.icon.pen.clickable.tipsy(href="/post/#{entry._id}/modify", title="Modify")
         // TODO use something like tipsy drop down the confirm message
         span.icon.trash.clickable.tipsy(title="Remove", id="rm-#{entry._id}")
+      span.icon.share.clickable.tipsy(class = false && 'fill', title="Share to SNS")
+      span.icon.link.clickable.tipsy(class = false && 'fill', title="Link")
       // TODO read later
       // span.icon.clock.clickable.tipsy(title="Read later")
       // like has no effect, user wont click it
@@ -50,7 +51,7 @@
       span.icon.loop.clickable.tipsy(class = false && 'fill', title="Reblog")
       span.icon.star.clickable.tipsy(class = false && 'fill', title="Mark")
       span.icon.heart.clickable.tipsy(class = false && 'fill', title="Like")
-      span.show-comments.icon.comment-alt.clickable.tipsy(class=false && "fill" , title="100 comments")
+      span.show-comments.icon.comment-alt.clickable.tipsy(class=entry.commentsCount && "fill" , title="#{entry.commentsCount || 'no'} comments")
       span.icon.none
       span.icon.close-icon.clickable.tipsy(title="never show this again")
 
@@ -67,23 +68,6 @@
         span.clickable &times;
         span.icon.tag.clickable.tipsy(class = false && 'fill', title="Add tags")
 
-    .loading Loading...
     .comments
-      .comment
-        p show something comments
-      .comment
-        p show something comments
-      .comment
-        p show something comments
-      .comment
-        p show something comments
-      .comment
-        p show something comments
-      .comment
-        p show something comments
-      .comment
-        p show something comments
-      .comment
-        p show something comments
-      .comment
-        p show something comments
+      form(action='/post/#\{id}', method='post')
+        input(style="width:100%")

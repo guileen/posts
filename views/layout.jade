@@ -63,6 +63,10 @@ html(lang="en")
       #content
         #comment-template
           include posts/comment
+        #comment-form
+          form(action='/post/#\{id}', method='post')
+            textarea(name="content", style="width:100%")
+            a.btn.primary() comment
         #notify-container.ui-notify
            #basic-template
              a.ui-notify-cross.ui-notify-close(href="#")&times;
