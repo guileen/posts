@@ -9,7 +9,11 @@ function kissTemplate (template, params) {
       // }
       // return v;
       // , a bit waste, but client so so
-      return params[$2] || new Function('o', 'with(o||{})return ' + $2)(params) || '';
+      try{
+        return params[$2] || new Function('o', 'with(o||{})return ' + $2)(params) || '';
+      } catch(e) {
+        return '#{' + $2 + '}';
+      }
   });
 }
 

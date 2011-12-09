@@ -125,6 +125,7 @@ $(function() {
        * ======================= */
       $post.find('.post').each(function(i, el) {
           var $el = $(el)
+            , postId = $el.attr('data-id')
             , opened = false
             , loaded = false
             , $showComments = $el.find('.show-comments')
@@ -132,7 +133,23 @@ $(function() {
             , $comments = $el.children('.comments')
             , $commentList = $comments.children('.comment-list');
 
-          $showComments.click(function() {
+          // uncomment to support cover layer
+          // var $cover = $('<div>')
+          // $el.append($cover);
+          // var pos = $el.position();
+          // $cover.css({
+          //     position: 'absolute'
+          //   , left: pos.left
+          //   , top : pos.top
+          //   , width : $el.outerWidth()
+          //   , height : $el.outerHeight()
+          //   , zIndex : 0
+          // });
+
+          // $cover.click(openComments);
+          $showComments.click(openComments);
+
+          function openComments() {
               if (opened) {
                 $comments.slideUp(function(){
                     opened = false;
@@ -144,9 +161,19 @@ $(function() {
               } else {
                 // loading.slideDown();
                 // get latest top n comments, sort by user
-                $.get('/post/id/comments', {}, appendComments)
+                $.get('/post/' + postId + '/comments', {}, function(r) {
+                    loaded = true;
+                    updateCommentCount(r.commentsCount);
+                    var $html = $(getCommentsHtml(r.comments));
+                    $commentList.append($html);
+                    // TODO loading icon
+                    $loading.slideUp();
+                    if(!opened) $comments.slideDown(function(){
+                        opened = true;
+                    });
+                });
               }
-          });
+          }
 
           function appendCommentForm(){
             var formHtml = kissTemplate(commentFormTemplate, { id: $el.attr('data-id'), operation: 'new' });
@@ -155,7 +182,11 @@ $(function() {
             $form.ajaxForm({
                 success: function(r){
                   $formHtml.find('textarea').val('');
-                  appendComments(r);
+                  updateCommentCount(r.commentsCount);
+                  var $html = $(getCommentsHtml(r.comments));
+                  $html.hide();
+                  $commentList.append($html);
+                  $html.slideDown();
                 }
             });
             $comments.append($formHtml);
@@ -163,19 +194,18 @@ $(function() {
 
           appendCommentForm();
 
-          function appendComments(comments) {
-            console.log('append');
-            loaded = true;
-            // var html = kissTemplate(commentTemplate, data);
-            $html = $(commentTemplate);
-            // $html = $(html).hide();
-            $commentList.append($html);
-            // TODO loading icon
-            $loading.slideUp();
-            if(!opened) $comments.slideDown(function(){
-                opened = true;
-            });
+          function getCommentsHtml(comments) {
+            var htmls = [];
+            for(var i=0;i<comments.length;i++) {
+              htmls.push(kissTemplate(commentTemplate, comments[i]));
+            }
+            return htmls.join('');
           }
+
+          function updateCommentCount(count) {
+
+          }
+
       });
 
     }

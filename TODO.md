@@ -83,6 +83,9 @@ Entertainment
 
 staffs
 ---
+Circle, friend Circle
+auto import friend information from sns,(renren, weibo, qq, facebook, twitter), if that user actived on posts.li, you too will be friend again
+label user，label颜色
 * 测试题编辑器
 support gist
 ![description](gist url)
@@ -97,3 +100,5 @@ str.replace()
    .replace()
    .replace();
 prevent too fast comment chating
+
+jquery maybe is a big problem when move to ipad and other HTML5 device
