@@ -1,41 +1,86 @@
-.new-post.editor
-  include editor-bar-outer
-  form(action="/posts/new", method="post", name='post')
-    .side-controls.lazy
-      .clearfix
-        span posts.li/
-        input.slug(name="slug")
-        input(type='hidden', name='title')
-      .clearfix
-        label
-          input(type="checkbox", name="syncWeibo")
-          span 微博
-        label
-          input(type="checkbox", name="syncWeibo")
-          span QQ微博
-        label
-          input(type="checkbox", name="syncWeibo")
-          span twitter
-        label
-          if(locals.facebook)
+// new post
+.row.entry
+
+  .avatar-info
+    // avatar
+    .avatar
+      a.avatar(href="#", style="background-image:url('#{avatar(user.md5, 64)}')", title="Jason's blog")
+
+  .new-post.editor
+    include editor-bar-outer
+    form(action="/posts/new", method="post", name='post')
+      .side-controls.lazy
+        .clearfix
+          span posts.li/
+          input.slug(name="slug")
+          input(type='hidden', name='title')
+        .clearfix
+          label
             input(type="checkbox", name="syncWeibo")
-            span facebook
-          else
-            a(href="/syncfacebook", target="_blank") facebook
+            span 微博
+          label
+            input(type="checkbox", name="syncWeibo")
+            span QQ微博
+          label
+            input(type="checkbox", name="syncWeibo")
+            span twitter
+          label
+            if(locals.facebook)
+              input(type="checkbox", name="syncWeibo")
+              span facebook
+            else
+              a(href="/syncfacebook", target="_blank") facebook
 
-        textarea(name="description", maxlength="120", placeholder="enter your description[url]")
+          textarea(name="description", maxlength="120", placeholder="enter your description[url]")
 
-      .clearfix
-        input.btn.primary(type="submit", value="Post")
+        .clearfix
+          input.btn.primary(type="submit", value="Post")
 
-    .tips.lazy
-      .right
-        a(href="#") Help &nbsp;
-        &nbsp;
-        a.collapse(href="#") &times;
+      .tips.lazy
+        .right
+          a(href="#") Help &nbsp;
+          &nbsp;
+          a.collapse(href="#") &times;
 
-    textarea(placeholder="Say something", name='content')
-  .lazy
-    .editor-bar
-      include editor-bar
-    .preview
+      textarea(placeholder="Say something", name='content')
+    .lazy
+      .editor-bar
+        include editor-bar
+      .preview
+
+  .span4.sidebar
+    p
+      span.icon.award.disable
+    p
+      span.icon.loop.tipsy(title="Your posts have been rebloged")
+      span 12345
+      span.icon.star.tipsy(title="Your posts have been marked")
+      span 12345
+      span.icon.heart.tipsy(title="Your posts have been liked")
+      span 12345
+
+    //
+      a.btn 温故
+    // TODO bookmark plugin, 1 click send, 3 seconds wait for user react
+    // if can not get "main", "content" info for the page, let user locate it
+      a.btn(href=" /* see loader.js */ ") send to posts.li
+
+  //
+    pre.hide
+      | Header 1
+      | ====
+      | Header 2
+      | ----
+      | ### Header 3
+      | **bold**, *italic*, _underline_, [web link](http://posts.li), `code`
+
+      | - item 1
+      | - item 2
+
+      | ```
+      | code block
+      | ```
+      | > quote text
+
+      | ![images](http://dev:3000/images/logo-small.png)
+

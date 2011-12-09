@@ -8,53 +8,7 @@ block content
   .row
     .span16
 
-      // new post
-      .row.entry
-
-        .avatar-info
-          // avatar
-          .avatar
-            a.avatar(href="#", style="background-image:url('#{avatar(user.md5, 64)}')", title="Jason's blog")
-
-        include new-post-editor
-
-        .span4.sidebar
-          p
-            span.icon.award.disable
-          p
-            span.icon.loop.tipsy(title="Your posts have been rebloged")
-            span 12345
-            span.icon.star.tipsy(title="Your posts have been marked")
-            span 12345
-            span.icon.heart.tipsy(title="Your posts have been liked")
-            span 12345
-
-          //
-            a.btn 温故
-          // TODO bookmark plugin, 1 click send, 3 seconds wait for user react
-          // if can not get "main", "content" info for the page, let user locate it
-            a.btn(href=" /* see loader.js */ ") send to posts.li
-
-        //
-          pre.hide
-            | Header 1
-            | ====
-            | Header 2
-            | ----
-            | ### Header 3
-            | **bold**, *italic*, _underline_, [web link](http://posts.li), `code`
-
-            | - item 1
-            | - item 2
-
-            | ```
-            | code block
-            | ```
-            | > quote text
-
-            | ![images](http://dev:3000/images/logo-small.png)
-
-
+      include new-post-editor
 
       #posts-list
         != partial('entry', locals.posts)
