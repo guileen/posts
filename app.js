@@ -16,7 +16,6 @@ var res = /*3.x*/ express.response || /*2.x*/ require('http').ServerResponse.pro
 var _render = res.render
 var _slice = Array.prototype.slice;
 res.render = function() {
-  console.log('hello');
   var args = _slice.call(arguments);
   if(this.req.query._pjax){
     args[0] = args[0] + '-pjax';

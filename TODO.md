@@ -83,9 +83,11 @@ Entertainment
 
 staffs
 ---
+After modify, redirect? back and update content.
 Circle, friend Circle
 auto import friend information from sns,(renren, weibo, qq, facebook, twitter), if that user actived on posts.li, you too will be friend again
 label user，label颜色
+cloud download, 云下载, challenge is browser break point continuse, just bookmark tools
 * 测试题编辑器
 support gist
 ![description](gist url)

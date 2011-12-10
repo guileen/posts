@@ -116,9 +116,9 @@ $(function() {
           }
       });
 
-      $rm.click(function(){
+      $rm.live('click', function(){
           $(this).popover('show');
-      })
+      });
 
       /* =======================
        * comments
@@ -203,8 +203,10 @@ $(function() {
           }
 
           function updateCommentCount(count) {
-
+            //TODO
           }
+
+          // TODO show xxx is typing
 
       });
 

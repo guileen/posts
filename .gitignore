@@ -2,7 +2,6 @@ node_modules
 *.swp
 public/stylesheets/style.css
 public/upload/
-public/images/
 public/javascripts/*.min.js
 
 test.png
