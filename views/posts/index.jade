@@ -11,4 +11,5 @@ block content
       include new-post-editor
 
       #posts-list
-        != partial('entry', locals.posts)
+        - for entry in posts
+          include entry
