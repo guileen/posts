@@ -11,6 +11,22 @@ var app = module.exports = express.createServer();
 
 var development = app.settings.env == 'development';
 
+// hack express render to support pjax
+var res = /*3.x*/ express.response || /*2.x*/ require('http').ServerResponse.prototype
+var _render = res.render
+var _slice = Array.prototype.slice;
+res.render = function() {
+  console.log('hello');
+  var args = _slice.call(arguments);
+  if(this.req.query._pjax){
+    args[0] = args[0] + '-pjax';
+    // render('xxx'), not support render('xxx.jade')
+    // if you want this, use below lines
+    // var i = args[0].lastIndexOf('.');
+    // args[0] = (i === -1) ? args[0] + '-pjax' : args[0].substring(0, i) + '-pjax' + args[0].substring(i);
+  }
+  _render.apply(this, args);
+}
 // Configuration
 
 app.configure(function() {
@@ -32,11 +48,11 @@ app.configure(function() {
 });
 
 app.configure('development', function() {
-  // app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+  // app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.configure('production', function() {
-  // app.use(express.errorHandler()); 
+  // app.use(express.errorHandler());
 });
 
 app.use(function(err, req, res, next) {
@@ -46,7 +62,7 @@ app.use(function(err, req, res, next) {
     } else if (err == 500) {
       res.render('500');
     } else if (err instanceof Error) {
-      // log req.body, req.query, req.cookie, req.user, and error 
+      // log req.body, req.query, req.cookie, req.user, and error
       res.render('500');
       console.log(err.stack);
     } else {
@@ -74,6 +90,7 @@ app.locals({
 });
 app.dynamicHelpers({
     user: function(req) {return req.session.user}
+  , pjax: function(req) {return req.query._pjax == 'true'}
 });
 
 // Middlewares

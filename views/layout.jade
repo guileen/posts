@@ -21,7 +21,8 @@ html(lang="en")
       script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js')
 
     script(src="/bootstrap/js/bootstrap-modal.js")
-    script(src="/bootstrap/js/bootstrap-twipsy.js")
+    // use self modified bootstrap-twipsy
+    script(src="/javascripts/bootstrap-twipsy.js")
     script(src="/bootstrap/js/bootstrap-popover.js")
     script(src="/javascripts/autoresize/jquery.autoresize.js")
     script(src="/javascripts/github-flavored-markdown/scripts/showdown.js")
@@ -60,30 +61,28 @@ html(lang="en")
         a(href="/")
           img(src="/images/logo-small.png")
 
-      #content
-        #templates
-          #comment-template
-            include posts/comment
-          #comment-form
-            // TODO simplfy this
-            .row
-              .avatar-info
-                .avatar
-                  a.avatar(href="#", style="background-image:url('avatar(user.md5, 32)')", title="Jason's blog")
-              .span11
-                form(action='/post/#\{id}/comments/#\{operation}', method='post')
-                  textarea(name="content", style="width:100%")
-                  input.btn.primary(type="submit", value="comment")
-        #notify-container.ui-notify
-           #basic-template
-             a.ui-notify-cross.ui-notify-close(href="#")&times;
-             h1 \#{title}
-             p \#{text}
+      #templates
+        #comment-template
+          include posts/comment
+        #comment-form
+          // TODO simplfy this
+          .row
+            .avatar-info
+              .avatar
+                a.avatar(href="#", style="background-image:url('avatar(user.md5, 32)')", title="Jason's blog")
+            .span11
+              form(action='/post/#\{id}/comments/#\{operation}', method='post')
+                textarea(name="content", style="width:100%")
+                input.btn.primary(type="submit", value="comment")
+      #notify-container.ui-notify
+         #basic-template
+           a.ui-notify-cross.ui-notify-close(href="#")&times;
+           h1 \#{title}
+           p \#{text}
 
-        .current
-          block content
-            != body
-        .next
+      #content
+        block content
+          != body
 
       footer
         p All rights reserved. &copy; posts.li 2011
