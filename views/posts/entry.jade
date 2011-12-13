@@ -34,7 +34,7 @@
       // junk              -5
       // searching keywords also effect to user taste
       if(user._id == entry.authorId || isModerator(user))
-        a.pjax.icon.pen.clickable.tipsy(href="/post/#{entry._id}/modify", title="Modify")
+        a.modify-post.icon.pen.clickable.tipsy(href="#/post/#{entry._id}/modify", title="Modify")
         // TODO use something like tipsy drop down the confirm message
         span.icon.trash.clickable.tipsy(title="Remove", id="rm-#{entry._id}")
       span.icon.share.done.clickable.tipsy(class = false && 'fill', title="Share to SNS")

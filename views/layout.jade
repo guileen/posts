@@ -20,7 +20,8 @@ html(lang="en")
       script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js')
       script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js')
 
-    script(src="/bootstrap/js/bootstrap-modal.js")
+    // use self modified jquery.modal fit for bootstrap style
+    script(src="/javascripts/jquery.modal.js")
     // use self modified bootstrap-twipsy
     script(src="/javascripts/bootstrap-twipsy.js")
     script(src="/bootstrap/js/bootstrap-popover.js")
@@ -61,9 +62,20 @@ html(lang="en")
             a.signup(href="/signup") Sign up
 
         a(href="/")
-          img(src="/images/logo-small.png")
+          img(src="/images/logo.png")
 
       #templates
+        #modify-post-template
+          include posts/editor-bar-outer
+          form(method="post", name="modifypost")
+            textarea(placeholder="Say something", name="content")#\{entry.revisions[entry.revisions.length - 1].content}
+            .clearfix.editor-bar
+              include posts/editor-bar
+            .right
+              input.btn.primary(type="submit", value="Modify")
+            input(name="message", placeholder="commit message")
+              input(name="title", type="hidden", value="#\{entry.title}")
+
         #comment-template
           include posts/comment
         #comment-form
@@ -73,7 +85,7 @@ html(lang="en")
               .avatar
                 a.avatar(href="#", style="background-image:url('avatar(user.md5, 32)')", title="Jason's blog")
             .span11
-              form(action='/post/#\{id}/comments/#\{operation}', method='post')
+              form(action='/post/{{id}}/comments/{{operation}}', method='post')
                 textarea(name="content", style="width:100%")
                 input.btn.primary(type="submit", value="comment")
       #notify-container.ui-notify

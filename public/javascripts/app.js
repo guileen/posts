@@ -1,21 +1,39 @@
-function kissTemplate (template, params) {
-  return template.replace(/#(?:\{|%7B)(.*?)(?:\}|%7D)/g, function($1, $2) {
-      // return ($2 in params) ? params[$2] : '';
-      // to support embed properties
-      // var v = params;
-      // var s = $2.split['.']; // can not support foo[bar]
-      // for(var i=0;i<s.length;i++){
-      //   v = v[s[i]] || '';
-      // }
-      // return v;
-      // , a bit waste, but client so so
-      try{
-        return params[$2] || new Function('o', 'with(o||{})return ' + $2)(params) || '';
-      } catch(e) {
-        return '#{' + $2 + '}';
-      }
-  });
+if(!$.support.pjax) {
+  window.history.replaceState = window.history.pushState = $.noop();
 }
+
+// underscore template
+_ = {}
+// By default, Underscore uses ERB-style template delimiters, change the
+// following template settings to use alternative delimiters.
+_.templateSettings = {
+  evaluate    : /{%([\s\S]+?)%}/g,
+  interpolate : /{{([\s\S]+?)}}/g
+};
+
+// JavaScript micro-templating, similar to John Resig's implementation.
+// Underscore templating handles arbitrary delimiters, preserves whitespace,
+// and correctly escapes quotes within interpolated code.
+_.template = function(str, data) {
+  var c  = _.templateSettings;
+  var tmpl = 'var __p=[],print=function(){__p.push.apply(__p,arguments);};' +
+    'with(obj||{}){__p.push(\'' +
+    str.replace(/\\/g, '\\\\')
+       .replace(/'/g, "\\'")
+       .replace(c.interpolate, function(match, code) {
+         return "'," + code.replace(/\\'/g, "'") + ",'";
+       })
+       .replace(c.evaluate || null, function(match, code) {
+         return "');" + code.replace(/\\'/g, "'")
+                            .replace(/[\r\n\t]/g, ' ') + "__p.push('";
+       })
+       .replace(/\r/g, '\\r')
+       .replace(/\n/g, '\\n')
+       .replace(/\t/g, '\\t')
+       + "');}return __p.join('');";
+  var func = new Function('obj', tmpl);
+  return data ? func(data) : func;
+};
 
 $.fn.extend({
 
@@ -72,7 +90,6 @@ $.fn.extend({
       });
     }
 });
-
 
 /**
  * default load plugins

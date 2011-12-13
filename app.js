@@ -17,7 +17,7 @@ var _render = res.render
 var _slice = Array.prototype.slice;
 res.render = function() {
   var args = _slice.call(arguments);
-  if(this.req.query._pjax){
+  if(this.req.xhr || this.req.query._pjax){
     args[0] = args[0] + '-pjax';
     // render('xxx'), not support render('xxx.jade')
     // if you want this, use below lines

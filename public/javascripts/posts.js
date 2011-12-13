@@ -66,7 +66,7 @@ $(function() {
     $(".new-post form").ajaxForm({
         success : function(data, textStatus, xhr) {
           var $html = $(data).hide();
-          triggerPost($html);
+          triggerPosts($html);
           $("#posts-list").prepend($html);
           closeEditor(function() {
               editor.reset();
@@ -89,13 +89,14 @@ $(function() {
     /*
      * prepare template
      */
-    var commentTemplate = $('#comment-template').html();
-    var commentFormTemplate = $('#comment-form').html();
+    var commentTemplate = _.template($('#comment-template').html());
+    var commentFormTemplate = _.template($('#comment-form').html());
+    var modifyFormTemplate = _.template($('#modify-post-template').html());
 
     /**
-     * triggerPost, init post controls, required for ajax append post
+     * triggerPosts, init post controls, required for ajax append post
      */
-    function triggerPost($post){
+    function triggerPosts($post){
 
       /* ==========================
        * remove post
@@ -176,7 +177,7 @@ $(function() {
           }
 
           function appendCommentForm(){
-            var formHtml = kissTemplate(commentFormTemplate, { id: $el.attr('data-id'), operation: 'new' });
+            var formHtml = commentFormTemplate({ id: $el.attr('data-id'), operation: 'new' });
             var $formHtml = $(formHtml);
             $form = $formHtml.find('form');
             $form.ajaxForm({
@@ -197,7 +198,7 @@ $(function() {
           function getCommentsHtml(comments) {
             var htmls = [];
             for(var i=0;i<comments.length;i++) {
-              htmls.push(kissTemplate(commentTemplate, comments[i]));
+              htmls.push(commentTemplate(comments[i]));
             }
             return htmls.join('');
           }
@@ -208,10 +209,25 @@ $(function() {
 
           // TODO show xxx is typing
 
+          /* ================
+           * modify
+           * ================ */
+          $el.find('a.modify-post').bind('click', function(event){
+              event.preventDefault();
+              $.get('/api/post/'+postId, {fields: 'revisions,title'}, function(data){
+                  var html = modifyFormTemplate(data);
+                  console.log(html);
+                  $html = $(html);
+                  $html.hide();
+                  $el.find('.post-content').before($html);
+                  $html.slideDown();
+              });
+          });
+
       });
 
     }
 
-    triggerPost($('.entry'));
+    triggerPosts($('.entry'));
 
 });
