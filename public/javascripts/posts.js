@@ -212,16 +212,28 @@ $(function() {
           /* ================
            * modify
            * ================ */
+          var isModify = false;
+          var isModifyLoaded = false;
+          var $modifyHtml = null;
           $el.find('a.modify-post').bind('click', function(event){
               event.preventDefault();
-              $.get('/api/post/'+postId, {fields: 'revisions,title'}, function(data){
-                  var html = modifyFormTemplate(data);
-                  console.log(html);
-                  $html = $(html);
-                  $html.hide();
-                  $el.find('.post-content').before($html);
-                  $html.slideDown();
-              });
+              if(isModify) {
+                $modifyHtml.slideUp();
+                isModify = false;
+              } else if (isModifyLoaded) {
+                $modifyHtml.slideDown();
+                isModify = true;
+              } else {
+                isModify = true;
+                $.get('/api/post/'+postId, {fields: 'revisions,title'}, function(data){
+                    isModifyLoaded = true;
+                    var html = modifyFormTemplate(data);
+                    $modifyHtml = $(html);
+                    $modifyHtml.hide();
+                    $el.find('.post-content').before($modifyHtml);
+                    $modifyHtml.slideDown();
+                });
+              }
           });
 
       });
