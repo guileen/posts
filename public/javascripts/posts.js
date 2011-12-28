@@ -212,6 +212,23 @@ $(function() {
           /* ================
            * modify
            * ================ */
+
+          function postModifyReady($html) {
+            var $preview = $html.find(".preview");
+            var editor = initEditor($html.find('textarea'), $html.find(".editor-bar"), function(html) {
+                $preview.html(html);
+                var title = $preview.children('h1,h2,h3,h4,h5,h6').first().text();
+                $html.find('input[name="title"]').val(title);
+            });
+
+            // auto resize textarea when input
+            $html.find('textarea').autoResize({
+                // minHeight: 60,
+                maxHeight: 300,
+                extraSpace: 16
+            });
+          };
+
           var isModify = false;
           var isModifyLoaded = false;
           var $modifyHtml = null;
@@ -219,18 +236,22 @@ $(function() {
               event.preventDefault();
               if(isModify) {
                 $modifyHtml.slideUp();
+                $el.find('.post-content').slideDown();
                 isModify = false;
               } else if (isModifyLoaded) {
                 $modifyHtml.slideDown();
+                $el.find('.post-content').slideUp();
                 isModify = true;
               } else {
                 isModify = true;
-                $.get('/api/post/'+postId, {fields: 'revisions,title'}, function(data){
+                $.get('/api/post/'+postId, {fields: 'revisions,title,html'}, function(data){
                     isModifyLoaded = true;
                     var html = modifyFormTemplate(data);
                     $modifyHtml = $(html);
                     $modifyHtml.hide();
                     $el.find('.post-content').before($modifyHtml);
+                    $el.find('.post-content').slideUp();
+                    postModifyReady($modifyHtml);
                     $modifyHtml.slideDown();
                 });
               }

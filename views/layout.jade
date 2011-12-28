@@ -66,16 +66,19 @@ html(lang="en")
 
       #templates
         #modify-post-template
-          div
+          .editor
             include posts/editor-bar-outer
             form(method="post", name="modifypost")
-              textarea(placeholder="Say something", name="content")#\{entry.revisions[entry.revisions.length - 1].content}
+              textarea(placeholder="Say something", name="content",
+              style="width:100%"){{revisions[revisions.length - 1].content}}
               .clearfix.editor-bar
                 include posts/editor-bar
-              .right
-                input.btn.primary(type="submit", value="Modify")
-              input(name="message", placeholder="commit message")
+              .clearfix
+                .right
+                  input.btn.primary(type="submit", value="Modify")
+                input(name="message", placeholder="commit message")
                 input(name="title", type="hidden", value="#\{entry.title}")
+              .preview {{html}}
 
         #comment-template
           include posts/comment
