@@ -98,5 +98,6 @@ app.dynamicHelpers({
 
 require('./lib/route').route(app);
 
-app.listen(3000);
+// node-dev app.js 5000
+app.listen(process.argv[2] || 3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
