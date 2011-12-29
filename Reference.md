@@ -121,3 +121,8 @@ Icon and Design
 [iconic set]http://somerandomdude.com/work/iconic/
 [pc icons]http://pc.de/icons/
 [750 icons set, $]http://www.webalys.com/premium/design-vector-icons-library.html
+
+Recommender System and Serach Engine
+----
+[chinese segement system, loso](https://github.com/victorlin/loso)
+[recommender system](http://code.google.com/p/recsyscode/)
