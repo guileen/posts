@@ -16,15 +16,17 @@ var res = /*3.x*/ express.response || /*2.x*/ require('http').ServerResponse.pro
 var _render = res.render
 var _slice = Array.prototype.slice;
 res.render = function() {
-  var args = _slice.call(arguments);
   if(this.req.xhr || this.req.query._pjax){
+    var args = _slice.call(arguments);
     args[0] = args[0] + '-pjax';
+    _render.apply(this, args);
     // render('xxx'), not support render('xxx.jade')
     // if you want this, use below lines
     // var i = args[0].lastIndexOf('.');
     // args[0] = (i === -1) ? args[0] + '-pjax' : args[0].substring(0, i) + '-pjax' + args[0].substring(i);
+  } else {
+    _render.apply(this, arguments);
   }
-  _render.apply(this, args);
 }
 // Configuration
 
