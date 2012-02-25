@@ -31,9 +31,10 @@ html(lang="en")
     script(src="/javascripts/form/jquery.form.js")
     script(src="/javascripts/jquery-pjax/jquery.pjax.js")
     script(src='/javascripts/jquery-notify/src/jquery.notify.js')
-    script(src="/javascripts/app.js")
-    script(src="/javascripts/editor.js")
-    script(src="/javascripts/post-modify.js")
+    // app javascripts
+    script(src="/javascripts/app/app.js")
+    script(src="/javascripts/app/editor.js")
+    script(src="/javascripts/app/post-modify.js")
 
     block scripts
 
@@ -87,7 +88,7 @@ html(lang="en")
           .row
             .avatar-info
               .avatar
-                a.avatar(href="#", style="background-image:url('avatar(user.md5, 32)')", title="Jason's blog")
+                a.avatar(href="#", style="background-image:url('{{avatar(user.md5, 32)}}')", title="Jason's blog")
             .span11
               form(action='/post/{{id}}/comments/{{operation}}', method='post')
                 textarea(name="content", style="width:100%")
