@@ -4,7 +4,7 @@
  */
 
 var express = require('express');
-var settings = require('./settings');
+var config = require('./config');
 var RedisStore = require('connect-redis')(express);
 
 var app = module.exports = express.createServer();
@@ -47,8 +47,8 @@ app.configure(function() {
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 
-  for (var name in settings) {
-    app.set(name, settings[name]);
+  for (var name in config) {
+    app.set(name, config[name]);
   }
 });
 

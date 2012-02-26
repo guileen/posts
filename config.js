@@ -1,8 +1,13 @@
-var mongoskin = require('mongoskin');
-var logger = require('nlogger').logger(module);
-var settings = require('../settings');
+var config = module.exports = {
+  uploadPath : '/Users/gl/var/upload'
+, staticRoot : 'http://dev:8080/upload'
+, db : require('mongoskin').db('mongodb://localhost/posts')
+, redis : require('redis').createClient()
+};
 
-var db = module.exports = mongoskin.db(settings.database);
+var logger = require('nlogger').logger(module);
+
+var db = config.db;
 
 db.bind('users');
 db.bind('posts');
