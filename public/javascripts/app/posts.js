@@ -89,9 +89,9 @@ $(function() {
     /*
      * prepare template
      */
-    var commentTemplate = _.template($('#comment-template').html());
-    var commentFormTemplate = _.template($('#comment-form').html());
-    var modifyFormTemplate = _.template($('#modify-post-template').html());
+    var commentTemplate = Mustache.compile($('#comment-template').html());
+    var commentFormTemplate = Mustache.compile($('#comment-form').html());
+    var modifyFormTemplate = Mustache.compile($('#modify-post-template').html());
 
     /**
      * triggerPosts, init post controls, required for ajax append post
@@ -177,7 +177,7 @@ $(function() {
           }
 
           function appendCommentForm(){
-            var formHtml = commentFormTemplate({ id: $el.attr('data-id'), operation: 'new' });
+            var formHtml = commentFormTemplate({ id: $el.attr('data-id'), operation: 'new', user: user});
             var $formHtml = $(formHtml);
             $form = $formHtml.find('form');
             $form.ajaxForm({
