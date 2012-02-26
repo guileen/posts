@@ -30,6 +30,10 @@ res.render = function() {
 }
 // Configuration
 
+app.configure('development', function() {
+    app.use(express.logger({ format: ':method :url :status' }));
+});
+
 app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');

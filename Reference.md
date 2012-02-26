@@ -104,6 +104,7 @@ PJAX
 
 Other Javascript
 ----
+[browser side template -- Mustache]
 [github flavored markdown](https://github.com/github/github-flavored-markdown)
 [smoothscroll](http://www.kryogenix.org/code/browser/smoothscroll/)
 [file-uploader](https://github.com/valums/file-uploader)
@@ -126,3 +127,10 @@ Recommender System and Serach Engine
 ----
 [chinese segement system, loso](https://github.com/victorlin/loso)
 [recommender system](http://code.google.com/p/recsyscode/)
+
+Just notes for other projects
+====
+
+GUI Game
+----
+[Simple DirectMedia Layer](http://www.libsdl.org/)

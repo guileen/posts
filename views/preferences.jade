@@ -16,13 +16,17 @@ block content
         input(name="fullname", placeholder="Full name", value=user.fullname, autocomplete='off')
 
     .clearfix
+      .input
+        a(href='/google-reader') google reader
+
+
+    .clearfix
       label SNS
       .input
         a()同步新浪微博
         a()同步腾讯微博
         a twitter
         a facebook
-        a(href='/sync/google-reader') google reader
 
     - if(!locals.signupStep2)
       .clearfix
@@ -42,7 +46,7 @@ block content
       .input.avatarexplain
         img(src=avatar(user.md5, 48))
         p
-          strong Change you avatar at <a href="http://getavatar.com" target="_blank">getavatar.com</a>
+          strong Change you avatar at <a href="http://gravatar.com" target="_blank">gravatar.com</a>
           | using #{user.email}
 
     .actions

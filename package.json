@@ -10,7 +10,6 @@
     , "connect-redis": "*"
     , "connect-less": ">= 0.0.1"
     , "iform": ">= 0.0.1"
-    , "express-validator": ">= 0.1.1"
     , "formidable" : ">= 1.0.0"
     , "oauth" : ">=0.0.1"
   }
