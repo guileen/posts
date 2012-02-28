@@ -11,6 +11,7 @@ var db = config.db;
 
 db.bind('users');
 db.bind('posts');
+db.bind('feeds');
 db.bind('system.js');
 
 db.system.js.save({
@@ -27,4 +28,5 @@ db.system.js.save({
 
 
 db.users.ensureIndex({email: 1}, {unique: true}, function() {});
+db.feeds.ensureIndex({id: 1}, {unique: true}, function() {});
 

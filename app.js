@@ -96,6 +96,7 @@ app.locals({
 app.dynamicHelpers({
     user: function(req) {return req.session.user}
   , pjax: function(req) {return req.query._pjax == 'true'}
+  , url: function(req) {return req.url}
 });
 
 // Middlewares
