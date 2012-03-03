@@ -14,6 +14,7 @@ Server envorionment
 keywords: Continuous integration, Continuous deployment, Automated deployment.
 [use git pre-commit CI](http://www.javascriptkata.com/2010/10/28/ready-js-prepare-your-javascript-for-production/)
 [deploying node app](http://www.carbonsilk.com/node/deploying-nodejs-apps/)
+[How to deploy node js application with examples](http://gun.io/blog/tutorial-deploy-node-js-server-with-example/)
 [MRTG] for network monitor
 [puppet]
 [chef]
@@ -127,6 +128,23 @@ Recommender System and Serach Engine
 ----
 [chinese segement system, loso](https://github.com/victorlin/loso)
 [recommender system](http://code.google.com/p/recsyscode/)
+[ruby recommendify](https://github.com/paulasmuth/recommendify)
+
+* KNN User-base Recommender 
+
+  user who have similar taste also like items a b c
+  rate(user, item) = avg(similarusers(user).rate(item))
+
+* Item base Recommender
+
+  user who like this also like that
+  rate(item) = avg(rate(user, simlaritems(item))
+
+  cos_sim(a, b) = (x1*y1 + x2*y2 + x3*y3) / (sqrt(x1** + x2** + x3**) * sqrt(y1** + y2** + y3**))
+
+
+* computing and use corouting and reporting
+
 
 Just notes for other projects
 ====
