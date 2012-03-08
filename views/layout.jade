@@ -33,9 +33,11 @@ html(lang="en")
     script(src='/javascripts/jquery-notify/src/jquery.notify.js')
     script(src='/javascripts/mustache.js')
     // app javascripts
-    script(src="/javascripts/app/app.js")
-    script(src="/javascripts/app/editor.js")
-    script(src="/javascripts/app/post-modify.js")
+    script(src="/javascripts/posts/lib/base.js")
+    script(src="/javascripts/posts/lib/editor.js")
+    script(src="/javascripts/posts/lib/posts.js")
+    script(src="/javascripts/posts/pages/post-modify.js")
+    script(src="/javascripts/posts/pages/layout.js")
 
     if(user)
       script
@@ -73,7 +75,7 @@ html(lang="en")
           img(src="/images/logo.png")
 
       #templates
-        #modify-post-template
+        #template-modify-post
           .editor
             include posts/editor-bar-outer
             form(method="post", name="modifypost")
@@ -88,18 +90,20 @@ html(lang="en")
                 input(name="title", type="hidden", value="{{ entry.title }}")
               .preview {{{ html }}}
 
-        #comment-template
+        #template-comment
           include posts/comment
-        #comment-form
+        #template-comment-form
           // TODO simplfy this
           .row
             .avatar-info
               .avatar
+                // FIXME this will load an non exists image
                 a.avatar(href="#", style="background-image:url('{{ user.avatar }}')", title="Jason's blog")
             .span11
               form(action='/post/{{ id }}/comments/{{ operation }}', method='post')
                 textarea(name="content", style="width:100%")
                 input.btn.primary(type="submit", value="comment")
+      // jquery-notify template
       #notify-container.ui-notify
          #basic-template
            a.ui-notify-cross.ui-notify-close(href="#")&times;
@@ -109,6 +113,10 @@ html(lang="en")
       #content
         block content
           != body
+
+      script
+        p test
+        .sss ffo
 
       footer
         p All rights reserved. &copy; posts.li 2011

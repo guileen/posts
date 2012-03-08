@@ -1,19 +1,42 @@
-// TODO ajaxSetup global
-function removePost(id) {
-  $.post( '/post/' + id + '/remove', null, function(r) {
-      if (r.success) {
-        $('#rm-' + id).data('twipsy').$tip.remove();
-        $('#rm-' + id).parents('.entry').slideUp(function() {
-            $(this).remove();
-        });
-      }
-  });
+// use js-signal?
+posts.service = {
+  user : null
+, posts : null
+, remove : function(id) {
+
+  }
+, share : function(id) {
+
+  }
+, reblog : function(id) {
+
+  }
+, comment : function(id) {
+
+  }
+, like : function(id) {
+
+  }
+, dislike : function(id) {
+
+  }
 }
 
-/**
- * on dom ready
- */
-$(function() {
+posts.list = {
+
+  // TODO ajaxSetup global
+  remove : function (id) {
+    $.post( '/post/' + id + '/remove', null, function(r) {
+        if (r.success) {
+          $('#rm-' + id).data('twipsy').$tip.remove();
+          $('#rm-' + id).parents('.entry').slideUp(function() {
+              $(this).remove();
+          });
+        }
+    });
+  }
+
+, initTopEditor : function () {
     // TODO editor support <c-z> undo, redo
 
     // New post
@@ -24,6 +47,7 @@ $(function() {
     if ($editor.length === 0 || $preview.length === 0) {
       return;
     }
+
 
     function refreshPreview(html) {
       $preview.html(html);
@@ -37,7 +61,7 @@ $(function() {
       form.slug.value = title.toLowerCase().replace(/[\s'",?&]+/g, '-');
     }
 
-    var editor = initEditor($editor, $('.editor .editor-bar') , refreshPreview);
+    var editor = posts.editor.create($editor, $('.editor .editor-bar') , refreshPreview);
 
     // show new-post panel
     $editor.focusin(function() {
@@ -66,7 +90,7 @@ $(function() {
     $(".new-post form").ajaxForm({
         success : function(data, textStatus, xhr) {
           var $html = $(data).hide();
-          triggerPosts($html);
+          posts.list.initEntry($html);
           $("#posts-list").prepend($html);
           closeEditor(function() {
               editor.reset();
@@ -85,23 +109,48 @@ $(function() {
             self.selectionEnd = self.value[i - 1] == ' ' ? i - 1 : i;
         }, 50);
     });
+  }
 
-    /*
-     * prepare template
-     */
-    var commentTemplate = Mustache.compile($('#comment-template').html());
-    var commentFormTemplate = Mustache.compile($('#comment-form').html());
-    var modifyFormTemplate = Mustache.compile($('#modify-post-template').html());
+, initEntries : function () {
+    $('.entry').each(function(i, el) {
+        posts.list.initEntry(el);
+    })
+  }
 
-    /**
-     * triggerPosts, init post controls, required for ajax append post
-     */
-    function triggerPosts($post){
+, initEntry : function (entry) {
+    var $entry = $(entry);
+
+    $entry.find('.post').each(function(i, el) {
+        new Post(el);
+    });
+
+  }
+
+// TODO Post move to pages?
+, initPost : function (el) {
+    var $el, postId, opened, loaded;
+  if(el instanceof HTMLElement) {
+
+          $el = $(el);
+          postId = $el.attr('data-id');
+          opened = false;
+          loaded = false;
+
+  } else {
+    // el is data
+    postId = el.id;
+    $el = $(posts.views.render('post-entry', el));
+  }
+
+      var $rm = $el.find('.icon.trash')
+            , $showComments = $el.find('.show-comments')
+            , $loading = $el.children('.loading')
+            , $comments = $el.children('.comments')
+            , $commentList = $comments.children('.comment-list');
 
       /* ==========================
        * remove post
        * ==========================*/
-      var $rm = $post.find('.icon.trash');
       $rm.popover({
           trigger:'manual'
         , html:true
@@ -109,7 +158,7 @@ $(function() {
         , content : function(){
             var id = this.id.substring(3);
             var hideSnip = "$('#rm-" + id + "').popover('hide')";
-            var removeSnip = "removePost('" + id + "');";
+            var removeSnip = "posts.list.remove('" + id + "');";
             return '<p class="clearfix">Are you sure?</p><br>'
             + '<p style="text-align:center;">'
             + '<a class="btn" href="javascript:void(0)" onclick="' + removeSnip + hideSnip + '">Yes</a>'
@@ -121,18 +170,7 @@ $(function() {
           $(this).popover('show');
       });
 
-      /* =======================
-       * comments
-       * ======================= */
-      $post.find('.post').each(function(i, el) {
-          var $el = $(el)
-            , postId = $el.attr('data-id')
-            , opened = false
-            , loaded = false
-            , $showComments = $el.find('.show-comments')
-            , $loading = $el.children('.loading')
-            , $comments = $el.children('.comments')
-            , $commentList = $comments.children('.comment-list');
+
 
           // uncomment to support cover layer
           // var $cover = $('<div>')
@@ -177,7 +215,7 @@ $(function() {
           }
 
           function appendCommentForm(){
-            var formHtml = commentFormTemplate({ id: $el.attr('data-id'), operation: 'new', user: user});
+            var formHtml = posts.views.render('comment-form', { id: $el.attr('data-id'), operation: 'new', user: user});
             var $formHtml = $(formHtml);
             $form = $formHtml.find('form');
             $form.ajaxForm({
@@ -198,7 +236,7 @@ $(function() {
           function getCommentsHtml(comments) {
             var htmls = [];
             for(var i=0;i<comments.length;i++) {
-              htmls.push(commentTemplate(comments[i]));
+              htmls.push(posts.views.render('comment', comments[i]));
             }
             return htmls.join('');
           }
@@ -215,7 +253,7 @@ $(function() {
 
           function postModifyReady($html) {
             var $preview = $html.find(".preview");
-            var editor = initEditor($html.find('textarea'), $html.find(".editor-bar"), function(html) {
+            var editor = posts.editor.create($html.find('textarea'), $html.find(".editor-bar"), function(html) {
                 $preview.html(html);
                 var title = $preview.children('h1,h2,h3,h4,h5,h6').first().text();
                 $html.find('input[name="title"]').val(title);
@@ -246,7 +284,7 @@ $(function() {
                 isModify = true;
                 $.get('/api/post/'+postId, {fields: 'revisions,title,html'}, function(data){
                     isModifyLoaded = true;
-                    var html = modifyFormTemplate(data);
+                    var html = posts.views.render('modify-post', data);
                     $modifyHtml = $(html);
                     $modifyHtml.hide();
                     $el.find('.post-content').before($modifyHtml);
@@ -256,11 +294,6 @@ $(function() {
                 });
               }
           });
+  }
 
-      });
-
-    }
-
-    triggerPosts($('.entry'));
-
-});
+}

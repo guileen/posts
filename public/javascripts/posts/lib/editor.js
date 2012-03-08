@@ -1,7 +1,8 @@
-function initEditor(textarea, bar, onUpdate) {
-  var $editor = $(textarea)
-    , $bar  = $(bar);
-    
+posts.editor = {
+  // TODO craete('#div').on('input')
+  create : function (textarea, bar, onUpdate) {
+    var $editor = $(textarea)
+      , $bar  = $(bar);
 
     var converter = new Showdown.converter();
 
@@ -17,8 +18,8 @@ function initEditor(textarea, bar, onUpdate) {
 
     //TODO make it a little delay, don't refresh too fast
     function update() {
-        var html = converter.makeHtml($editor.val());
-        onUpdate(html);
+      var html = converter.makeHtml($editor.val());
+      onUpdate(html);
     };
     $editor.keyup(update);
 
@@ -46,4 +47,5 @@ function initEditor(textarea, bar, onUpdate) {
     return {
       reset: resetEditor
     };
+  }
 }
