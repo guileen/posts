@@ -152,29 +152,29 @@ Post.prototype = {
   }
 
 , initRemove: function() {
-      var $rm = this.$el.find('.icon.trash');
+    var $rm = this.$el.find('.icon.trash');
 
-      /* ==========================
-       * remove post
-       * ==========================*/
-      $rm.popover({
-          trigger: 'manual'
-        , html: true
-, placement: 'below'
-        , content: function() {
-            var id = this.id.substring(3);
-            var hideSnip = "$('#rm-" + id + "').popover('hide')";
-            var removeSnip = "posts.list.remove('" + id + "');";
-            return '<p class="clearfix">Are you sure?</p><br>'
-            + '<p style="text-align:center;">'
-            + '<a class="btn" href="javascript:void(0)" onclick="' + removeSnip + hideSnip + '">Yes</a>'
-            + '&nbsp;<a class="btn primary" onclick="' + hideSnip + '">No</a></p>';
-          }
-      });
+    /* ==========================
+     * remove post
+     * ==========================*/
+    $rm.popover({
+        trigger: 'manual'
+      , html: true
+      , placement: 'below'
+      , content: function() {
+          var id = this.id.substring(3);
+          var hideSnip = "$('#rm-" + id + "').popover('hide')";
+          var removeSnip = "posts.list.remove('" + id + "');";
+          return '<p class="clearfix">Are you sure?</p><br>'
+          + '<p style="text-align:center;">'
+          + '<a class="btn" href="javascript:void(0)" onclick="' + removeSnip + hideSnip + '">Yes</a>'
+          + '&nbsp;<a class="btn primary" onclick="' + hideSnip + '">No</a></p>';
+        }
+    });
 
-      $rm.live('click', function() {
-          $(this).popover('show');
-      });
+    $rm.live('click', function() {
+        $(this).popover('show');
+    });
   }
 
 , initComment: function() {
