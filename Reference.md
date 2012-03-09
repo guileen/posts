@@ -110,6 +110,7 @@ Other Javascript
 [smoothscroll](http://www.kryogenix.org/code/browser/smoothscroll/)
 [file-uploader](https://github.com/valums/file-uploader)
 [HTML 5 form, H5F](https://github.com/ryanseddon/H5F)
+[js-signals](https://github.com/millermedeiros/js-signals)
 
 Image preview
 ----
