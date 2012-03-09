@@ -23,7 +23,7 @@ html(lang="en")
     // use self modified jquery.modal fit for bootstrap style
     script(src="/javascripts/jquery.modal.js")
     // use self modified bootstrap-twipsy
-    script(src="/javascripts/bootstrap-twipsy.js")
+    script(src="/bootstrap/js/bootstrap-tooltip.js")
     script(src="/bootstrap/js/bootstrap-popover.js")
     script(src="/javascripts/autoresize/jquery.autoresize.js")
     script(src="/javascripts/github-flavored-markdown/scripts/showdown.js")
@@ -85,7 +85,7 @@ html(lang="en")
                 include posts/editor-bar
               .clearfix
                 .right
-                  input.btn.primary(type="submit", value="Modify")
+                  input.btn.btn-primary(type="submit", value="Modify")
                 input(name="message", placeholder="commit message")
                 input(name="title", type="hidden", value="{{ entry.title }}")
               .preview {{{ html }}}
@@ -99,10 +99,10 @@ html(lang="en")
               .avatar
                 // FIXME this will load an non exists image
                 a.avatar(href="#", style="background-image:url('{{ user.avatar }}')", title="Jason's blog")
-            .span11
+            .span9
               form(action='/post/{{ id }}/comments/{{ operation }}', method='post')
                 textarea(name="content", style="width:100%")
-                input.btn.primary(type="submit", value="comment")
+                input.btn.btn-primary(type="submit", value="comment")
       // jquery-notify template
       #notify-container.ui-notify
          #basic-template

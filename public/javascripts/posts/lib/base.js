@@ -38,12 +38,12 @@ posts.initPlugins = function() {
   // });
 
   $("form.search").focusin(function() {
-      $("form.search input").animate({width: 450});
+      $("form.search input").animate({width: 350});
   }).focusout(function() {
-      $("form.search input").animate({width: 150});
+      $("form.search input").animate({width: 100});
   });
 
-  $(".tipsy").twipsy({
+  $(".tipsy").tooltip({
       live: true
   });
 
