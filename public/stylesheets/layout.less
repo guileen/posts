@@ -1,7 +1,7 @@
 // colors
 @foreColor:         #000;
-@linkColor:         rgba(0, 0, 0, 0.5);
-@linkColorHover:    @foreColor;
+@siteLinkColor:         rgba(0, 0, 0, 0.5);
+@siteLinkColorHover:    @foreColor;
 @background:         #eee;
 @contentBackground:  darken(@background, 5);
 @postBackground:    #fff;
@@ -15,9 +15,15 @@ html, body {
   color:    @foreColor;
 }
 
-a, a:hover {
-  cursor: pointer;
+a {
+  color: @siteLinkColor;
   text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: @siteLinkColorHover;
+    text-decoration: none;
+  }
 }
 
 form {
@@ -25,6 +31,9 @@ form {
 }
 
 header{
+  a {
+    font-weight: bold;
+  }
   margin: 5px;
   .user-controls {
     float: right;
