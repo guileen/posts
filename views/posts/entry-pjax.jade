@@ -37,7 +37,7 @@
         a.modify-post.icon.pen.clickable.tipsy(href="#/post/#{entry._id}/modify", title="Modify")
         // TODO use something like tipsy drop down the confirm message
         span.icon.trash.clickable.tipsy(title="Remove", id="rm-#{entry._id}")
-      span.icon.share.done.clickable.tipsy(class = false && 'fill', title="Share to SNS")
+        a.icon.share.done.clickable.tipsy(class = false && 'fill', href='/share/#{entry._id}', title="Share to SNS", rel="modal:open")
       span.icon.link.clickable.tipsy(class = false && 'fill', title="Link")
       // TODO read later
       // span.icon.clock.clickable.tipsy(title="Read later")

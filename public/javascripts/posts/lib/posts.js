@@ -149,6 +149,36 @@ Post.prototype = {
     this.initRemove();
     this.initComment();
     this.initModify();
+    this.initShare();
+    this.initLink();
+    this.initLike();
+    this.initDislike();
+    this.initReblog();
+    this.initMark();
+  }
+
+, initShare: function() {
+
+  }
+
+, initLink: function() {
+
+  }
+
+, initLike: function() {
+
+  }
+
+, initDislike: function() {
+
+  }
+
+, initReblog: function() {
+
+  }
+
+, initMark: function() {
+
   }
 
 , initRemove: function() {
