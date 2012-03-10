@@ -14,6 +14,13 @@ block content
           include entry-pjax
 
 block template
+  #template-remove-post
+    p.clearfix Are you sure?
+    br
+    p(style="text-align:center;")
+      span.btn(onclick="posts.list.remove('{{ id }}');$('#rm-{{ id }}').popover('hide');") Yes
+      &nbsp;
+      a.btn.btn-primary(onclick="$('#rm-{{ id }}').popover('hide');") No
   #template-modify-post
     .editor
       include editor-bar-outer

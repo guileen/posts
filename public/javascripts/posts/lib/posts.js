@@ -28,10 +28,10 @@ posts.list = {
   remove: function(id) {
     $.post('/post/' + id + '/remove', null, function(r) {
         if (r.success) {
-          $('#rm-' + id).data('twipsy').$tip.remove();
           $('#rm-' + id).parents('.entry').slideUp(function() {
               $(this).remove();
           });
+          $('#rm-' + id).data('tooltip').$tip.remove();
         }
     });
   }
@@ -135,6 +135,9 @@ function Post(el) {
   if (el instanceof HTMLElement) {
     this.$el = $(el);
     this.pid = this.$el.attr('data-id');
+    this.data = {
+      id: this.pid
+    }
   } else {
     // el is data
     this.pid = el.id;
@@ -190,6 +193,7 @@ Post.prototype = {
   }
 
 , initRemove: function() {
+    var self = this;
     var $rm = this.$el.find('.icon.trash');
 
     /* ==========================
@@ -200,13 +204,7 @@ Post.prototype = {
       , html: true
       , placement: 'bottom'
       , content: function() {
-          var id = this.id.substring(3);
-          var hideSnip = "$('#rm-" + id + "').popover('hide')";
-          var removeSnip = "posts.list.remove('" + id + "');";
-          return '<p class="clearfix">Are you sure?</p><br>'
-          + '<p style="text-align:center;">'
-          + '<a class="btn" href="javascript:void(0)" onclick="' + removeSnip + hideSnip + '">Yes</a>'
-          + '&nbsp;<a class="btn btn-primary" onclick="' + hideSnip + '">No</a></p>';
+          return posts.views.render('remove-post', self.data);
         }
     });
 
