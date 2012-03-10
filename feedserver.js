@@ -1,8 +1,8 @@
 var config = require('./config')
   , FeedParser = require('feedparser')
   , service = require('./lib/service')
+  , feedqueue = require('./lib/feedqueue')
   , db = config.db
-  , redis = config.redis
   , MAX_RETRY = 0
   , RETRY_TIMEOUT = 5000
   , MAX_CONCURRENT = 10
@@ -59,7 +59,7 @@ function tryParseFeed(feed, count) {
   });
 
   parser.on('meta', function(meta) {
-      console.log('meta of :' + feed);
+      // console.log('meta of :' + feed);
       // console.log(meta);
       db.feeds.update({id: feed},  {
           $set: {
@@ -74,8 +74,8 @@ function tryParseFeed(feed, count) {
   });
 
   parser.on('article', function(article) {
-      console.log('article of :' + feed);
-      console.log(article);
+      // console.log('article of :' + feed);
+      // console.log(article);
       service.updateFeedPost(feed, article, log);
   });
 
@@ -90,7 +90,7 @@ function tryParseFeed(feed, count) {
 
 function parseNextFeed() {
   parallel ++;
-  redis.rpoplpush('feed-queue', 'feed-queue', function(err, feed) {
+  feedqueue.popFeed(function(err, feed) {
       if(err) throw err;
       console.log('start parse:' + feed);
       console.log('parallel is ' + parallel);
@@ -100,7 +100,7 @@ function parseNextFeed() {
 
 function startParse() {
   next_sync_time = Date.now() + CYCLE_TIME;
-  redis.llen('feed-queue', function(err, len) {
+  feedqueue.feedsCount(function(err, len) {
       feeds_count = len;
       var l = Math.min(len, MAX_CONCURRENT)
       for(var i = 0; i < l; i++) {
