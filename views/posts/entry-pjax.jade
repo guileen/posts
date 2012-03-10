@@ -15,13 +15,13 @@
       .user_info
 
     // the popup menu
-    .user-menu
-      .clearfix
-        a 5123
-      .clearfix
-        a(href="#") Chat
-      .clearfix
-        a(href="#") Unfollow
+      .user-menu
+        .clearfix
+          a 5123
+        .clearfix
+          a(href="#") Chat
+        .clearfix
+          a(href="#") Unfollow
 
   .post(data-id=entry._id)
 
@@ -35,12 +35,17 @@
       // searching keywords also effect to user taste
       if(user._id == entry.authorId || isModerator(user))
         a.modify-post.icon.pen.clickable.tipsy(href="#/post/#{entry._id}/modify", title="Modify")
-        // TODO use something like tipsy drop down the confirm message
         span.icon.trash.clickable.tipsy(title="Remove", id="rm-#{entry._id}")
-        a.icon.share.done.clickable.tipsy(class = false && 'fill', href='/share/#{entry._id}', title="Share to SNS", rel="modal:open")
-      span.icon.link.clickable.tipsy(class = false && 'fill', title="Link")
+
+      // shared use .share.done
+      // a.icon.share.clickable.tipsy(class = false && 'done', href='/share/#{entry._id}', title="Share to SNS", rel="modal:open")
+
+      // copy link for share
+      // span.icon.link.clickable.tipsy(class = false && 'fill', title="Link")
+
       // TODO read later
       // span.icon.clock.clickable.tipsy(title="Read later")
+
       // like has no effect, user wont click it
       // use bookmark, favorit
 
@@ -59,18 +64,23 @@
 
     .post-controls.right
       span.icon.loop.clickable.tipsy(class = false && 'fill', title="Reblog")
-      span.icon.star.clickable.tipsy(class = false && 'fill', title="Mark")
+
+      // span.icon.star.clickable.tipsy(class = false && 'fill', title="Mark")
+
       // TODO (personalize, fee, user icon) use card, heart as like, spade as dislike, club as share, diamond as favorit
       span.icon.heart.clickable.tipsy(class = false && 'fill', title="Like")
-      span.show-comments.icon.comment-alt.clickable.tipsy(class=entry.commentsCount && "fill" , title="#{entry.commentsCount || 'No'} comments")
+      span.icon.none
         // TODO xxx participate in this post, 3 different way, choose 1, click head icon view his comments only
         // 1. your friends participate
         // 2. most rated participator, most comment participator, author, random users
         // 3. all participators, maybe very much, thousounds, mouse over, docks style, gallary style
         // 4. if topic is about a view point, you can agree or oppose his point, show participators in 2 group
       span xxx, xxx, xxx
-      span.icon.none
-      span.icon.close-icon.clickable.tipsy(title="Never show this again")
+      span.show-comments.icon.comment-alt.clickable.tipsy(class=entry.commentsCount && "fill" , title="#{entry.commentsCount || 'No'} comments")
+
+      //
+        span.icon.none
+        span.icon.close-icon.clickable.tipsy(title="Never show this again")
 
     .post-info
       // TODO fix time update problem
