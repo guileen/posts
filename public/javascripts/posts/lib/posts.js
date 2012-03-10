@@ -26,7 +26,7 @@ posts.list = {
 
   // TODO ajaxSetup global
   remove: function(id) {
-    $.post('/post/' + id + '/remove', null, function(r) {
+    $.post('/api/post/' + id + '/remove', null, function(r) {
         if (r.success) {
           $('#rm-' + id).parents('.entry').slideUp(function() {
               $(this).remove();
@@ -173,7 +173,7 @@ Post.prototype = {
     var self = this;
     var $like = this.$el.find('.icon.heart');
     $like.on('click', function() {
-        var url = '/post/' + self.pid + '/like/' + ($like.hasClass('fill') ? '0' : '1');
+        var url = '/api/post/' + self.pid + '/like/' + ($like.hasClass('fill') ? '0' : '1');
         $.post(url, null, function(data) {
           $like.toggleClass('fill');
         })
@@ -251,7 +251,7 @@ Post.prototype = {
     } else {
       // loading.slideDown();
       // get latest top n comments, sort by user
-      $.get('/post/' + this.pid + '/comments', {}, function(r) {
+      $.get('/api/post/' + this.pid + '/comments', {}, function(r) {
           self.commentsLoaded = true;
           self.updateCommentCount(r.commentsCount);
           var $html = $(self.getCommentsHtml(r.comments));
