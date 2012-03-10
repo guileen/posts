@@ -134,10 +134,11 @@ function Post(el) {
 
   if (el instanceof HTMLElement) {
     this.$el = $(el);
-    this.postId = this.$el.attr('data-id');
+    this.pid = this.$el.attr('data-id');
   } else {
     // el is data
-    this.postId = el.id;
+    this.pid = el.id;
+    this.data = el;
     this.$el = $(posts.views.render('post-entry', el));
   }
 
@@ -166,7 +167,14 @@ Post.prototype = {
   }
 
 , initLike: function() {
-
+    var self = this;
+    var $like = this.$el.find('.icon.heart');
+    $like.on('click', function() {
+        var url = '/post/' + self.pid + '/like/' + ($like.hasClass('fill') ? '0' : '1');
+        $.post(url, null, function(data) {
+          $like.toggleClass('fill');
+        })
+    })
   }
 
 , initDislike: function() {
@@ -245,7 +253,7 @@ Post.prototype = {
     } else {
       // loading.slideDown();
       // get latest top n comments, sort by user
-      $.get('/post/' + this.postId + '/comments', {}, function(r) {
+      $.get('/post/' + this.pid + '/comments', {}, function(r) {
           self.commentsLoaded = true;
           self.updateCommentCount(r.commentsCount);
           var $html = $(self.getCommentsHtml(r.comments));
@@ -330,7 +338,7 @@ Post.prototype = {
           self.isModify = true;
         } else {
           self.isModify = true;
-          $.get('/api/post/' + self.postId, {fields: 'revisions,title,html'}, function(data) {
+          $.get('/api/post/' + self.pid, {fields: 'revisions,title,html'}, function(data) {
               self.isModifyLoaded = true;
               var html = posts.views.render('modify-post', data);
               self.$modifyHtml = $(html);
