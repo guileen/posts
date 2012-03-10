@@ -2,20 +2,38 @@ extends ../layout
 
 block content
   .page-header
-    h1 Sign in
+    h1 Sign in&nbsp;
       small enter the world of posts
 
-  form
-    .clearfix
-      label(for="email") Username
-      .input
-        input(name="email", placeholder="User name")
+  form.form-horizontal#form-signin(action='/api/signin', method='post')
+    .control-group
+      label.control-label(for="email") Email
+      .controls
+        input(name="email", placeholder="Email", required)
 
-    .clearfix
-      label(for="password") Password
-      .input
-        input(name="password", type="password", placeholder="Password")
-    .actions
+    .control-group
+      label.control-label(for="password") Password
+      .controls
+        input(name="password", type="password", placeholder="Password", required)
+    .form-actions
       input.btn.btn-primary(type="submit", value="Sign in")
       &nbsp;
-      button.btn(type="reset") Cancel
+      a.btn(href='signup') Sign up
+
+block scripts
+  script
+    $(function(){
+      $('#form-signin').ajaxForm({
+        error: function(xhr, st, err){
+          console.log(st);
+          console.log(err);
+        },
+        success: function(data, s, xhr){
+          if(data.success){
+            location.href="/";
+          } else {
+            $notify.notify('create', {title: 'Something went wront', text: data.msg});
+          }
+        }
+      });
+    });

@@ -9,47 +9,47 @@ block content
       small custom you profile
 
 
-  form.preferences(action='/preferences', method='post')
-    .clearfix
-      label(for="fullname") Full name
-      .input
+  form.form-horizontal.preferences(action='/preferences', method='post')
+    .control-group
+      label.control-label(for="fullname") Full name
+      .controls
         input(name="fullname", placeholder="Full name", value=user.fullname, autocomplete='off')
 
-    .clearfix
-      .input
+    .control-group
+      .controls
         a(href='/google-reader?next=#{encodeURIComponent(url)}') google reader
 
 
-    .clearfix
-      label SNS
-      .input
+    .control-group
+      label.control-label SNS
+      .controls
         a()同步新浪微博
         a()同步腾讯微博
         a twitter
         a facebook
 
     - if(!locals.signupStep2)
-      .clearfix
-        label(for="password") Current Password
-        .input
+      .control-group
+        label.control-label(for="password") Current Password
+        .controls
           input(name="password", type="password", placeholder="Current Password")
-      .clearfix
-        label(for="new-password") New Password
-        .input
+      .control-group
+        label.control-label(for="new-password") New Password
+        .controls
           input(name="new-password", type="password", placeholder="New password")
-      .clearfix
-        label(for="repeat-password") Repeat Password
-        .input
+      .control-group
+        label.control-label(for="repeat-password") Repeat Password
+        .controls
           input(name="repeat-password", type="password", placeholder="Repeat new password")
 
-    .clearfix
-      .input.avatarexplain
+    .control-group
+      .controls.avatarexplain
         img(src=avatar(user.md5, 48))
         p
           strong Change you avatar at <a href="http://gravatar.com" target="_blank">gravatar.com</a>
           | using #{user.email}
 
-    .actions
+    .form-actions
       input.btn.btn-primary(type="submit", value="Save settings")
       &nbsp;
       button.btn(type="reset") Cancel
