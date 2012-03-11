@@ -11,6 +11,20 @@ posts.views = {
 , render : function(template, context) {
     return this.load(template)(context);
   }
+, avatar : function(user, size) {
+    if(user.isFeed) {
+      return user.favicon;
+    } else {
+      return gravatr(user.email, size)
+    }
+  }
+, gravatr: function(email, size) {
+    var avatar = 'http://www.gravatar.com/avatar/' + md5(email) + '?d=retro';
+    if(size){
+      return avatar + '&s=' + size;
+    }
+    return avatar;
+  }
 }
 
 posts.initPlugins = function() {
