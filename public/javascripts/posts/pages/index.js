@@ -1,5 +1,5 @@
 $(function(){
     posts.initPlugins();
     posts.list.initTopEditor();
-    posts.list.initEntries();
+    posts.list.loadTimeline();
 })

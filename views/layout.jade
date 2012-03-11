@@ -12,6 +12,7 @@ html(lang="en")
     //if lt IE 9
       script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
     script(src='/javascripts/jquery-1.7.1.min.js')
+    // required by jquery notify
     script(src='/javascripts/jquery.ui.widget.js')
     // microsoft CDN
       script(src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.4.min.js")
@@ -22,28 +23,32 @@ html(lang="en")
 
     // use self modified jquery.modal fit for bootstrap style
     script(src="/javascripts/jquery.modal.js")
-    // use self modified bootstrap-twipsy
+    // bootstrap scripts
     script(src="/bootstrap/js/bootstrap-tooltip.js")
     script(src="/bootstrap/js/bootstrap-popover.js")
+    // text area autoresize
     script(src="/javascripts/autoresize/jquery.autoresize.js")
+    // markdown
+    // TODO fix github tags
     script(src="/javascripts/github-flavored-markdown/scripts/showdown.js")
+    // html5 form validation
     script(src="/javascripts/H5F/h5f.js")
+    // jquery ajaxform
     script(src="/javascripts/form/jquery.form.js")
+    // jquery pushstate
     script(src="/javascripts/jquery-pjax/jquery.pjax.js")
+    // jquery notify
     script(src='/javascripts/jquery-notify/src/jquery.notify.js')
+    // mustache template engine
     script(src='/javascripts/mustache.js')
+    script(src='/javascripts/async.js')
+    script(src='/javascripts/md5.js')
     // app javascripts
     script(src="/javascripts/posts/lib/base.js")
     script(src="/javascripts/posts/lib/editor.js")
     script(src="/javascripts/posts/lib/posts.js")
     script(src="/javascripts/posts/pages/post-modify.js")
     script(src="/javascripts/posts/pages/layout.js")
-
-    if(user)
-      script
-        var user = {
-          avatar : '#{avatar(user.md5, 64)}'
-        }
 
     block scripts
 

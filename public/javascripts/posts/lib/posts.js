@@ -1,31 +1,101 @@
 // use js-signal?
-posts.service = {
+posts.api = {
   user: null
 , posts: null
+, feeds: {}
+, users: {}
+
+, ajax: function(url, method, params, callback) {
+    if(!callback && typeof params === 'function') {
+      callback = params;
+      params = null;
+    }
+    $.ajax(url, {
+        type: method
+      , data: params
+      , success: function(data, textStatus, jqxhr) {
+          callback(null, data);
+        }
+      , error: function(jqxhr, textStatus, err) {
+          callback(err);
+        }
+    });
+  }
+
+, get: function(url, params, callback) {
+    this.ajax(url, 'get', params, callback);
+  }
+
+, post: function(url, params, callback) {
+    this.ajax(url, 'post', params, callback);
+  }
+
 , remove: function(id) {
 
   }
+
 , share: function(id) {
 
   }
+
 , reblog: function(id) {
 
   }
+
 , comment: function(id) {
 
   }
+
 , like: function(id) {
 
   }
+
 , dislike: function(id) {
 
+  }
+
+, loadTimeline: function(start, len, callback) {
+    $.get('/api/post/timeline/' + start + '/' + len, callback);
+  }
+
+, loadUsers: function(uids, callback) {
+    var _uids = uids.filter(function(u) {return ! u in posts.api.users});
+    if(_uids.length > 0) {
+      this.get('/api/user/mget', {users: _uids}, function(err, data) {
+          data.forEach(function(u){ posts.api.users[u._id] = u; });
+          var result = uids.map(function(uid) {return posts.api.users[uid]})
+          callback(null, result);
+      });
+    } else {
+      var result = uids.map(function(uid) {return posts.api.users[uid]})
+      callback(null, result);
+    }
+  }
+
+, loadFeeds: function(fids, callback) {
+
+    var _fids = fids.filter(function(f) {return ! f in posts.api.feeds});
+    if(_fids.length > 0) {
+      this.get('/api/feed/mget', {feeds: _fids}, function(err, data) {
+          data.forEach(function(f){ posts.api.feeds[f.id] = f; });
+          var result = fids.map(function(fid) {return posts.api.feeds[fid]})
+          callback(null, result);
+      });
+    } else {
+      var result = fids.map(function(fid) {return posts.api.feeds[fid]})
+      callback(null, result);
+    }
   }
 };
 
 posts.list = {
 
+  timelineIndex: 0
+
+, ratelineIndex: 0
+
   // TODO ajaxSetup global
-  remove: function(id) {
+, remove: function(id) {
     $.post('/api/post/' + id + '/remove', null, function(r) {
         if (r.success) {
           $('#rm-' + id).parents('.entry').slideUp(function() {
@@ -111,6 +181,42 @@ posts.list = {
     });
   }
 
+, loadTimeline: function(len) {
+    len = len || 10;
+    posts.api.loadTimeline(this.timelineIndex, len, function(plist) {
+        console.log(plist);
+        posts.list.timelineIndex += plist.length;
+        posts.list.renderPosts(plist);
+    });
+  }
+
+, renderPosts: function(plist) {
+    var uids = [], fids = [];
+    plist.forEach(function(pdata) {
+        if(pdata.isFeed) {
+          fids.push(pdata.feed);
+        } else {
+          uids.push(pdata.authorId);
+        }
+    });
+
+    async.parallel([
+        function(_callback) {
+          posts.api.loadFeeds(fids, _callback);
+        }
+      , function(_callback) {
+          posts.api.loadUsers(uids, _callback);
+        }
+      ], function(err, data) {
+        // user and feeds has load
+        var $list = this.$list || (this.$list = $('#posts-list'));
+        plist.forEach(function(pdata) {
+            $list.append(new Post(pdata).$el);
+        });
+    });
+
+  }
+
 , initEntries: function() {
     $('.entry').each(function(i, el) {
         posts.list.initEntry(el);
@@ -130,19 +236,23 @@ posts.list = {
 };
 
 // TODO Post move to pages?
-function Post(el) {
+function Post(data, user) {
 
-  if (el instanceof HTMLElement) {
-    this.$el = $(el);
+  if (data instanceof HTMLElement) {
+    this.$el = $(data);
     this.pid = this.$el.attr('data-id');
     this.data = {
       id: this.pid
     }
   } else {
     // el is data
-    this.pid = el.id;
-    this.data = el;
-    this.$el = $(posts.views.render('post-entry', el));
+    this.pid = data._id;
+    this.data = data;
+    this.user = user;
+    this.$el = $(posts.views.render('post-entry', {
+          post: data
+        , user: user
+    }));
   }
 
 }

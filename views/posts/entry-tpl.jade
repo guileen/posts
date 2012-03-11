@@ -1,0 +1,102 @@
+.row.entry
+
+  .avatar-info
+    .avatar
+      // 1. TODO (personalize) diamond avatar border, HD, big size avatar upload
+      // Take a video of how we create diamond image, gathering pictures, hand drawing, pick out best one, make digital version, take avatar photo, apply border, final effect
+      // 2. auto switch border service if there already many border design, to help those border collector
+      // 3. mouse hover, name card (only VIP), more personalize information, background style and so on.
+      // VIP will get be promote for a while, to make him think it works
+      // topic border, topic chain style, topic controls icons
+      // NOTE effect must note bother other users, don't be very noise
+      // promote is another standalone service.
+      a.avatar(href="#", style="background-image:url('#{avatar(user.md5, 64)}')", title="Jason's blog")
+      // show this on hover, click to pop menu
+      .user_info
+
+    // the popup menu
+      .user-menu
+        .clearfix
+          a 5123
+        .clearfix
+          a(href="#") Chat
+        .clearfix
+          a(href="#") Unfollow
+
+  .post
+
+    .post-controls.right
+      // scores
+      // show-comment       1
+      // add comment        2
+      // bookmark(favorit)  3
+      // reblog             4  need comment
+      // junk              -5
+      // searching keywords also effect to user taste
+      | if(user._id == entry.authorId || isModerator(user))
+      a.modify-post.icon.pen.clickable.tipsy(href="#/post/{{ post._id }}/modify", title="Modify")
+      span.icon.trash.clickable.tipsy(title="Remove", id="rm-{{ post._id }}")
+      | endif
+
+      // shared use .share.done
+      // a.icon.share.clickable.tipsy(class = false && 'done', href='/share/#{entry._id}', title="Share to SNS", rel="modal:open")
+
+      // copy link for share
+      // span.icon.link.clickable.tipsy(class = false && 'fill', title="Link")
+
+      // TODO read later
+      // span.icon.clock.clickable.tipsy(title="Read later")
+
+      // like has no effect, user wont click it
+      // use bookmark, favorit
+
+    // TODO use redis interset(user:id:friends, post:id:sharer)
+    // if entry.friendsSharedThis
+    .friends-info xxx, xxx, xxx shared this post
+    .post-info
+      a(href="#") {{ post.author || user.fullname || user.title }}
+        span :
+
+    .post-content
+      | if (! post.isMarkdown)
+      h1 {{ post.title }}
+      | endif
+      {{{ post.html }}}
+
+    .post-controls.right
+      span.icon.loop.clickable.tipsy(class = false && 'fill', title="Reblog")
+
+      // span.icon.star.clickable.tipsy(class = false && 'fill', title="Mark")
+
+      // TODO (personalize, fee, user icon) use card, heart as like, spade as dislike, club as share, diamond as favorit
+      span.icon.heart.clickable.tipsy(class = false && 'fill', title="Like")
+      span.icon.none
+        // TODO xxx participate in this post, 3 different way, choose 1, click head icon view his comments only
+        // 1. your friends participate
+        // 2. most rated participator, most comment participator, author, random users
+        // 3. all participators, maybe very much, thousounds, mouse over, docks style, gallary style
+        // 4. if topic is about a view point, you can agree or oppose his point, show participators in 2 group
+      span xxx, xxx, xxx
+      span.show-comments.icon.comment-alt.clickable.tipsy(class='{{ post.commentsCount && "fill" }}' , title="{{ post.commentsCount || 'No' }} comments")
+
+      //
+        span.icon.none
+        span.icon.close-icon.clickable.tipsy(title="Never show this again")
+
+    .post-info
+      // TODO fix time update problem
+      span.tipsy(date="{{ post.createTime.getTime() }}", title="{{ post.createTime.format('yyyy-mm-dd HH:MM:ss') }}") {{ smartDate(post.createTime) }}
+      &nbsp;&nbsp;
+      span.post-controls
+        | for tag in ['cpp', 'node']
+        a.tag(class="tag-{{ tag }}", href="/tag/{{ tag }}") {{ tag }}
+        | endfor
+        a.tag(class="tag-mytag", href="/tag/mytag") my-tag
+        span.clickable &times;
+        a.tag(class="tag-mytag", href="/tag/mytag") my-tag
+        span.clickable &times;
+        span.icon.tag.clickable.tipsy(class = false && 'fill', title="Add tags")
+
+
+    .comments
+      .comment-list
