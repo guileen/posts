@@ -2,10 +2,14 @@ var async = require('./async');
 
 async.parallel([
     function(_callback) {
-      _callback(null, 'a');
+      setTimeout(function() {
+          _callback(null, 'a');
+      }, 200)
     }
   , function(_callback) {
-      _callback(null, 'b');
+      setTimeout(function() {
+          _callback(null, 'b');
+      }, 100)
     }
 ], function(err, results) {
   console.log('test1');
@@ -16,10 +20,14 @@ async.parallel([
 
 async.parallel([
     function(_callback) {
-      _callback('err');
+      setTimeout(function() {
+          _callback('err');
+      }, 200)
     }
   , function(_callback) {
-      _callback(null, 'b');
+      setTimeout(function() {
+          _callback(null, 'a');
+      }, 100)
     }
 ], function(err, results) {
   console.log('test2');

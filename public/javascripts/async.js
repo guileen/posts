@@ -30,12 +30,17 @@ if (typeof module !== 'undefined' && module.exports) {
 // })
 
 async.parallel = function (tasks, callback) {
-  var results = [], maxIndex = tasks.length - 1;
+  var results = [], count = tasks.length;
   tasks.forEach(function(task, index) {
       task(function(err, data) {
           results[index] = data;
-          if(err) callback(err);
-          if(index === maxIndex) callback(null, results);
+          if(err) {
+            callback(err);
+            callback = null;
+          }
+          if(--count === 0 && callback) {
+            callback(null, results);
+          }
       });
   });
 }
