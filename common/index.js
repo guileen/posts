@@ -1,5 +1,5 @@
 var crypto = require('crypto');
-require('./dateformate');
+require('./dateformat');
 
 function hash(algorithm, str){
   var hash = crypto.createHash(algorithm);
