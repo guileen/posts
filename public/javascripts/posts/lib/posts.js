@@ -273,23 +273,22 @@ function Post(data, user) {
     posts.initPlugins(this.$el);
   }
 
+  this.initRemove();
+  this.initComment();
+  this.initModify();
+  this.initShare();
+  this.initLink();
+  this.initLike();
+  this.initDislike();
+  this.initReblog();
+  this.initMark();
+
 }
 
 Post.prototype = {
 
-  init: function() {
-    this.initRemove();
-    this.initComment();
-    this.initModify();
-    this.initShare();
-    this.initLink();
-    this.initLike();
-    this.initDislike();
-    this.initReblog();
-    this.initMark();
-  }
 
-, initShare: function() {
+  initShare: function() {
 
   }
 
