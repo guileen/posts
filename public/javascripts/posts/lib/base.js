@@ -45,7 +45,7 @@ posts.views = {
 //   }
 // }
 
-posts.initPlugins = function() {
+posts.initPlugins = function($dom) {
 
   // // if you want to test unsupported browser, uncomment below
   // $.pjax = function( options ) {
@@ -54,7 +54,7 @@ posts.initPlugins = function() {
   // $.fn.pjax = function() { return this }
 
   // default pjax, currently just test
-  $('a.pjax').pjax('#content', {
+  $dom.find('a.pjax').pjax('#content', {
       // fragment: '#content'
   }).live('click', function() {
       $('.content .current').slideUp().removeClass('current');
@@ -69,16 +69,9 @@ posts.initPlugins = function() {
   //     $('.content .next').addClass('current');
   // });
 
-  $("form.search").focusin(function() {
-      $("form.search input").animate({width: 350});
-  }).focusout(function() {
-      $("form.search input").animate({width: 100});
-  });
 
-  $(".tipsy").tooltip({
+  $dom.find(".tipsy").tooltip({
       live: true
   });
 
-  // init notify
-  window.$notify = $('#notify-container').notify();
 }

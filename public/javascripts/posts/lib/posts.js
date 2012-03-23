@@ -265,6 +265,7 @@ function Post(data, user) {
           post: data
         , user: user
     }));
+    posts.initPlugins(this.$el);
   }
 
 }

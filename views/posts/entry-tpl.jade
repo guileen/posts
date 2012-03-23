@@ -85,7 +85,7 @@
 
     .post-info
       // TODO fix time update problem
-      span.tipsy(date="#{ new Date(post.createTime).getTime() }", title="#{ (new Date(post.createTime)).format('yyyy-mm-dd HH:MM:ss') }") smartDate(new Date(post.createTime))
+      span.tipsy(date="#{ new Date(post.createTime).getTime() }", title="#{ (new Date(post.createTime)).format('yyyy-mm-dd HH:MM:ss') }")= smartDate(new Date(post.createTime))
       &nbsp;&nbsp;
       span.post-controls
         for tag in ['cpp', 'node']

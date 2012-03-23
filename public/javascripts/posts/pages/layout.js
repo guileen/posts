@@ -95,6 +95,17 @@ $.fn.extend({
  * default load plugins
  */
 $(function() {
-    posts.initPlugins();
+
+  $("form.search").focusin(function() {
+      $("form.search input").animate({width: 350});
+  }).focusout(function() {
+      $("form.search input").animate({width: 100});
+  });
+
+  // init notify
+  window.$notify = $('#notify-container').notify();
+
+  posts.initPlugins($(document));
+
 });
 
