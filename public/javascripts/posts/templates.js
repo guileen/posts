@@ -382,9 +382,9 @@ buf.push('<!-- TODO fix time update problem-->');
 __jade.shift();
 __jade.unshift({ lineno: 88, filename: __jade[0].filename });
 buf.push('<span');
-buf.push(attrs({ 'date':("" + ( new Date(post.createTime).getTime() ) + ""), 'title':("" + ( (new Date(post.createTime)).format('yyyy-mm-dd HH:MM:ss') ) + ""), "class": ('tipsy') }));
+buf.push(attrs({ 'date':("" + ( post.createTime.getTime() ) + ""), 'title':("" + ( post.createTime.format('yyyy-mm-dd HH:MM:ss') ) + ""), "class": ('tipsy') }));
 buf.push('>');
-var __val__ = smartDate(new Date(post.createTime))
+var __val__ = smartDate(post.createTime)
 buf.push(escape(null == __val__ ? "" : __val__));
 __jade.unshift({ lineno: undefined, filename: __jade[0].filename });
 __jade.shift();
