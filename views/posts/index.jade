@@ -14,16 +14,14 @@ block content
           include entry-pjax
 
 block template
-  #template-post-entry
-    include entry-tpl
-  #template-remove-post
+  script#template-remove-post(type='jst')
     p.clearfix Are you sure?
     br
     p(style="text-align:center;")
       span.btn(onclick="posts.list.remove('{{ id }}');$('#rm-{{ id }}').popover('hide');") Yes
       &nbsp;
       a.btn.btn-primary(onclick="$('#rm-{{ id }}').popover('hide');") No
-  #template-modify-post
+  script#template-modify-post(type='jst')
     .editor
       include editor-bar-outer
       form(method="post", name="modifypost")
@@ -38,9 +36,9 @@ block template
           input(name="title", type="hidden", value="{{ entry.title }}")
         .preview {{{ html }}}
 
-  #template-comment
+  script#template-comment(type='jst')
     include comment
-  #template-comment-form
+  script#template-comment-form(type='jst')
     // TODO simplfy this
     .row
       .avatar-info

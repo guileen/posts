@@ -59,7 +59,13 @@ posts.api = {
   }
 
 , loadUsers: function(uids, callback) {
-    var _uids = uids.filter(function(u) {return ! u in posts.api.users});
+    var _uids = [];
+    for(var i in uids) {
+      var u = uids[i];
+      if(_uids.indexOf(u) < 0 && !posts.api.users[u]) {
+        _uids.push(u);
+      }
+    }
     if(_uids.length > 0) {
       this.get('/api/user/mget', {users: _uids}, function(err, data) {
           data.forEach(function(u){ posts.api.users[u._id] = u; });
@@ -74,7 +80,13 @@ posts.api = {
 
 , loadFeeds: function(fids, callback) {
 
-    var _fids = fids.filter(function(f) {return ! f in posts.api.feeds});
+    var _fids = [];
+    for(var i in fids) {
+      var f = fids[i];
+      if(_fids.indexOf(f) < 0 && !posts.api.feeds[f]) {
+        _fids.push(f);
+      }
+    }
     if(_fids.length > 0) {
       this.get('/api/feed/mget', {feeds: _fids}, function(err, data) {
           data.forEach(function(f){ posts.api.feeds[f.id] = f; });
@@ -184,7 +196,6 @@ posts.list = {
 , loadTimeline: function(len) {
     len = len || 10;
     posts.api.loadTimeline(this.timelineIndex, len, function(plist) {
-        console.log(plist);
         posts.list.timelineIndex += plist.length;
         posts.list.renderPosts(plist);
     });
@@ -211,7 +222,8 @@ posts.list = {
         // user and feeds has load
         var $list = this.$list || (this.$list = $('#posts-list'));
         plist.forEach(function(pdata) {
-            $list.append(new Post(pdata).$el);
+            var user = pdata.isFeed ? posts.api.feeds[pdata.feed] : posts.api.users[pdata.authorId];
+            $list.append(new Post(pdata, user).$el);
         });
     });
 
@@ -249,7 +261,7 @@ function Post(data, user) {
     this.pid = data._id;
     this.data = data;
     this.user = user;
-    this.$el = $(posts.views.render('post-entry', {
+    this.$el = $(posts.views.render('posts/entry-tpl.jade', {
           post: data
         , user: user
     }));

@@ -3,29 +3,48 @@ var posts = posts || {};
 posts.views = {
   _cache : {}
 , load : function(template) {
-    if(!this._cache[template]) {
-      this._cache[template] = Mustache.compile($('#template-' + template).html());
-    }
-    return this._cache[template];
+    return jade.templates[template];
+    // if(!this._cache[template]) {
+    //   this._cache[template] = jst.compile($('#template-' + template).html());
+    // }
+    // return this._cache[template];
   }
 , render : function(template, context) {
+    for(var name in this) {
+      context[name] = this[name];
+    }
     return this.load(template)(context);
   }
 , avatar : function(user, size) {
+    console.log(user);
     if(user.isFeed) {
-      return user.favicon;
+      return user.favicon || posts.views.favicon(user.id);
     } else {
-      return gravatr(user.email, size)
+      return posts.views.gravatar(user.email, size)
     }
   }
-, gravatr: function(email, size) {
+, gravatar: function(email, size) {
     var avatar = 'http://www.gravatar.com/avatar/' + md5(email) + '?d=retro';
     if(size){
       return avatar + '&s=' + size;
     }
     return avatar;
   }
+, favicon: function(url) {
+    var purl = parseUrl(url);
+    if(purl) {
+      return purl.root + '/favicon.ico';
+    } else {
+      return null;
+    }
+  }
 }
+
+// jst.filters.avatar = function(size) {
+//   return function (user) {
+//     return posts.views.avatar(user, size);
+//   }
+// }
 
 posts.initPlugins = function() {
 

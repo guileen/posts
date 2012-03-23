@@ -10,7 +10,7 @@
       // topic border, topic chain style, topic controls icons
       // NOTE effect must note bother other users, don't be very noise
       // promote is another standalone service.
-      a.avatar(href="#", style="background-image:url('#{avatar(user.md5, 64)}')", title="Jason's blog")
+      a.avatar(href="#", style="background-image:url('#{ avatar(user, 64) }')", title="Jason's blog")
       // show this on hover, click to pop menu
       .user_info
 
@@ -33,10 +33,9 @@
       // reblog             4  need comment
       // junk              -5
       // searching keywords also effect to user taste
-      | if(user._id == entry.authorId || isModerator(user))
-      a.modify-post.icon.pen.clickable.tipsy(href="#/post/{{ post._id }}/modify", title="Modify")
-      span.icon.trash.clickable.tipsy(title="Remove", id="rm-{{ post._id }}")
-      | endif
+      if(user._id == post.authorId /*|| isModerator(user)*/)
+        a.modify-post.icon.pen.clickable.tipsy(href="#/post/#{ post._id }/modify", title="Modify")
+        span.icon.trash.clickable.tipsy(title="Remove", id="rm-#{ post._id }")
 
       // shared use .share.done
       // a.icon.share.clickable.tipsy(class = false && 'done', href='/share/#{entry._id}', title="Share to SNS", rel="modal:open")
@@ -54,14 +53,13 @@
     // if entry.friendsSharedThis
     .friends-info xxx, xxx, xxx shared this post
     .post-info
-      a(href="#") {{ post.author || user.fullname || user.title }}
+      a(href="#")= post.author || user.fullname || user.title
         span :
 
     .post-content
-      | if (! post.isMarkdown)
-      h1 {{ post.title }}
-      | endif
-      {{{ post.html }}}
+      if (! post.isMarkdown)
+        h1 #{ post.title }
+      != post.html
 
     .post-controls.right
       span.icon.loop.clickable.tipsy(class = false && 'fill', title="Reblog")
@@ -77,7 +75,7 @@
         // 3. all participators, maybe very much, thousounds, mouse over, docks style, gallary style
         // 4. if topic is about a view point, you can agree or oppose his point, show participators in 2 group
       span xxx, xxx, xxx
-      span.show-comments.icon.comment-alt.clickable.tipsy(class='{{ post.commentsCount && "fill" }}' , title="{{ post.commentsCount || 'No' }} comments")
+      span.show-comments.icon.comment-alt.clickable.tipsy(class=post.commentsCount && 'fill' , title="#{ post.commentsCount || 'No' } comments")
 
       //
         span.icon.none
@@ -85,12 +83,11 @@
 
     .post-info
       // TODO fix time update problem
-      span.tipsy(date="{{ post.createTime.getTime() }}", title="{{ post.createTime.format('yyyy-mm-dd HH:MM:ss') }}") {{ smartDate(post.createTime) }}
+      span.tipsy(date="#{ new Date(post.createTime).getTime() }", title="#{ (new Date(post.createTime)).format('yyyy-mm-dd HH:MM:ss') }") smartDate(new Date(post.createTime))
       &nbsp;&nbsp;
       span.post-controls
-        | for tag in ['cpp', 'node']
-        a.tag(class="tag-{{ tag }}", href="/tag/{{ tag }}") {{ tag }}
-        | endfor
+        for tag in ['cpp', 'node']
+          a.tag(class="tag-#{ tag }", href="/tag/#{ tag }")= tag
         a.tag(class="tag-mytag", href="/tag/mytag") my-tag
         span.clickable &times;
         a.tag(class="tag-mytag", href="/tag/mytag") my-tag
