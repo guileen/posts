@@ -16,11 +16,10 @@ posts.views = {
     return this.load(template)(context);
   }
 , avatar : function(user, size) {
-    console.log(user);
-    if(user.isFeed) {
-      return user.favicon || posts.views.favicon(user.id);
-    } else {
-      return posts.views.gravatar(user.email, size)
+    if(user.favicon) {
+      return user.favicon;
+    } else if(user.email) {
+      return posts.views.gravatar(user.email, size);
     }
   }
 , gravatar: function(email, size) {

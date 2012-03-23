@@ -10,7 +10,8 @@
       // topic border, topic chain style, topic controls icons
       // NOTE effect must note bother other users, don't be very noise
       // promote is another standalone service.
-      a.avatar(href="#", style="background-image:url('#{ avatar(user, 64) }')", title="Jason's blog")
+      a.tipsy.avatar(href="#", title=user.title || user.fullname)
+        img(src=avatar(user, 64) || favicon(post.link))
       // show this on hover, click to pop menu
       .user_info
 
@@ -33,6 +34,7 @@
       // reblog             4  need comment
       // junk              -5
       // searching keywords also effect to user taste
+      span =post.link
       if(user._id == post.authorId /*|| isModerator(user)*/)
         a.modify-post.icon.pen.clickable.tipsy(href="#/post/#{ post._id }/modify", title="Modify")
         span.icon.trash.clickable.tipsy(title="Remove", id="rm-#{ post._id }")
