@@ -264,6 +264,7 @@ function Post(data, user) {
   } else {
     // el is data
     this.pid = data._id;
+    this.key = data.key;
     this.data = data;
     this.user = user;
     this.$el = $(posts.views.render('posts/entry-tpl.jade', {
@@ -300,7 +301,7 @@ Post.prototype = {
     var self = this;
     var $like = this.$el.find('.icon.heart');
     $like.on('click', function() {
-        var url = '/api/post/' + self.pid + '/like/' + ($like.hasClass('fill') ? '0' : '1');
+        var url = '/api/like/' + self.key + '/' + ($like.hasClass('fill') ? '0' : '1');
         $.post(url, null, function(data) {
           $like.toggleClass('fill');
         })

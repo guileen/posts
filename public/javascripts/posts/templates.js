@@ -304,7 +304,7 @@ buf.push('<!-- TODO (personalize, fee, user icon) use card, heart as like, spade
 __jade.shift();
 __jade.unshift({ lineno: 72, filename: __jade[0].filename });
 buf.push('<span');
-buf.push(attrs({ 'title':("Like"), "class": ('icon') + ' ' + ('heart') + ' ' + ('clickable') + ' ' + ('tipsy') + ' ' + (false && 'fill') }));
+buf.push(attrs({ 'title':("Like"), "class": ('icon') + ' ' + ('heart') + ' ' + ('clickable') + ' ' + ('tipsy') + ' ' + (post.comInfo.isLike && 'fill') }));
 buf.push('>');
 __jade.unshift({ lineno: undefined, filename: __jade[0].filename });
 __jade.shift();
