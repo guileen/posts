@@ -63,15 +63,15 @@ app.configure('production', function() {
 app.use(function(err, req, res, next) {
     // TODO send status code, and make this static
     if (err == 404) {
-      res.render('404');
+      res.render('404', {status: 404});
     } else if (err == 500) {
-      res.render('500');
+      res.render('500', {status: 500});
     } else if (err instanceof Error) {
       // log req.body, req.query, req.cookie, req.user, and error
-      res.render('500');
+      res.render('500', {status: 500});
       console.log(err.stack);
     } else {
-      res.render('500');
+      res.render('500', {status: 500});
       console.log(err);
     }
 });
