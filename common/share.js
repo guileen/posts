@@ -1,6 +1,6 @@
-var root = typeof module != 'undefined' && module.exports || this;
+var exports = typeof module != 'undefined' && module.exports || this;
 
-root.formatSeconds = function(s, def) {
+exports.formatSeconds = function(s, def) {
     var d, h, m;
     if (s < 120) {
       return 'Just now';
@@ -26,7 +26,7 @@ root.formatSeconds = function(s, def) {
     return def;
   }
 
-root.simpleDate = function(date) {
+exports.simpleDate = function(date) {
     var centuryDate, centuryNow, delta, format, now, s;
     now = new Date();
     delta = now - date;
@@ -47,7 +47,7 @@ root.simpleDate = function(date) {
     return date.format(format);
   }
 
-root.smartDate = function(date) {
+exports.smartDate = function(date) {
     var centuryDate, centuryNow, delta, format, now, s;
     now = new Date();
     delta = now - date;
@@ -92,7 +92,7 @@ root.smartDate = function(date) {
     return date.format(format);
   }
 
-root.xor_str = function(subject, key) {
+exports.xor_str = function(subject, key) {
    var the_res = "";
     for (i = 0; i < subject.length; i++) {
         var cur = key.charCodeAt((i % key.length));
