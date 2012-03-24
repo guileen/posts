@@ -1,7 +1,6 @@
 var crypto = require('crypto');
-require('./dateformat');
 
-var smartdate = require('./smartdate.js');
+var share = require('./share');
 
 function hash(algorithm, str){
   var hash = crypto.createHash(algorithm);
@@ -16,9 +15,9 @@ module.exports = {
     return hash('md5', str);
   }
 
-, smartDate : smartdate.smartDate
+, smartDate : share.smartDate
 
-, simpleDate : smartdate.simpleDate
+, simpleDate : share.simpleDate
 
 , sha1 : function(str) {
     return hash('sha1', str);
