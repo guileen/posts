@@ -2,6 +2,7 @@ var config = require('./config')
   , FeedParser = require('feedparser')
   , service = require('./lib/service')
   , feedqueue = require('./lib/feedqueue')
+  , md5 = require('./common/').md5
   , db = config.db
   , MAX_RETRY = 0
   , RETRY_TIMEOUT = 5000
@@ -44,7 +45,9 @@ function tryParseFeed(feed, count) {
     }
   }
 
-  var parser = new FeedParser();
+  var parser = new FeedParser()
+    , feedkey = 'feed:' + md5(feed);
+
   parser.on('error', function(err) {
       console.log('error to parse feed: ' + feed);
       console.log(err.stack);
@@ -61,7 +64,7 @@ function tryParseFeed(feed, count) {
   parser.on('meta', function(meta) {
       // console.log('meta of :' + feed);
       // console.log(meta);
-      db.feeds.update({id: feed},  {
+      db.feeds.update({key: feedkey},  {
           $set: {
             title: meta.title
           , favicon: meta.favicon
@@ -76,7 +79,7 @@ function tryParseFeed(feed, count) {
   parser.on('article', function(article) {
       // console.log('article of :' + feed);
       // console.log(article);
-      service.updateFeedPost(feed, article, log);
+      service.updateFeedPost(feedkey, article, log);
   });
 
   parser.on('end', doneFeed);
