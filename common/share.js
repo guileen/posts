@@ -1,5 +1,14 @@
 var exports = typeof module != 'undefined' && module.exports || this;
 
+exports.mergeObject = function(src, dest) {
+  for(var name in src) {
+    if(src.hasOwnProperty(name)) {
+      dest[name] = src[name];
+    }
+  }
+  return dest;
+}
+
 exports.formatSeconds = function(s, def) {
     var d, h, m;
     if (s < 120) {

@@ -8,16 +8,12 @@ function hash(algorithm, str){
   return hash.digest('hex');
 }
 
-module.exports = {
+module.exports = share.mergeObject(share, {
   hash : hash
 
 , md5 : function(str) {
     return hash('md5', str);
   }
-
-, smartDate : share.smartDate
-
-, simpleDate : share.simpleDate
 
 , sha1 : function(str) {
     return hash('sha1', str);
@@ -61,4 +57,4 @@ module.exports = {
     return user.groups && user.groups.indexOf('moderator')>=0;
   }
 
-};
+});
