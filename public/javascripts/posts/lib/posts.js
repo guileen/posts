@@ -83,23 +83,23 @@ posts.api = {
     }
   }
 
-, loadFeeds: function(fids, callback) {
+, loadFeeds: function(fkeys, callback) {
 
     var _fids = [];
-    for(var i in fids) {
-      var f = fids[i];
+    for(var i in fkeys) {
+      var f = fkeys[i];
       if(_fids.indexOf(f) < 0 && !posts.api.feeds[f]) {
         _fids.push(f);
       }
     }
     if(_fids.length > 0) {
       this.get('/api/feed/mget', {feeds: _fids}, function(err, data) {
-          data.forEach(function(f){ posts.api.feeds[f.id] = f; });
-          var result = fids.map(function(fid) {return posts.api.feeds[fid]})
+          data.forEach(function(f){ posts.api.feeds[f.key] = f; });
+          var result = fkeys.map(function(fid) {return posts.api.feeds[fid]})
           callback(null, result);
       });
     } else {
-      var result = fids.map(function(fid) {return posts.api.feeds[fid]})
+      var result = fkeys.map(function(fid) {return posts.api.feeds[fid]})
       callback(null, result);
     }
   }
@@ -207,10 +207,10 @@ posts.list = {
   }
 
 , renderPosts: function(plist) {
-    var uids = [], fids = [];
+    var uids = [], fkeys = [];
     plist.forEach(function(pdata) {
         if(pdata.isFeed) {
-          fids.push(pdata.feed);
+          fkeys.push(pdata.feedkey);
         } else {
           uids.push(pdata.authorId);
         }
@@ -218,7 +218,7 @@ posts.list = {
 
     async.parallel([
         function(_callback) {
-          posts.api.loadFeeds(fids, _callback);
+          posts.api.loadFeeds(fkeys, _callback);
         }
       , function(_callback) {
           posts.api.loadUsers(uids, _callback);
