@@ -94,21 +94,21 @@ posts.api = {
 
 , loadFeeds: function(fkeys, callback) {
 
-    var _fids = [];
+    var _fkeys = [];
     for(var i in fkeys) {
       var f = fkeys[i];
-      if(_fids.indexOf(f) < 0 && !posts.api.feeds[f]) {
-        _fids.push(f);
+      if(_fkeys.indexOf(f) < 0 && !posts.api.feeds[f]) {
+        _fkeys.push(f);
       }
     }
-    if(_fids.length > 0) {
-      this.get('/api/feed/mget', {feeds: _fids}, function(err, data) {
+    if(_fkeys.length > 0) {
+      this.get('/api/feed/mget', {feeds: _fkeys}, function(err, data) {
           data.forEach(function(f){ posts.api.feeds[f.key] = f; });
-          var result = fkeys.map(function(fid) {return posts.api.feeds[fid]})
+          var result = fkeys.map(function(fkey) {return posts.api.feeds[fkey]})
           callback(null, result);
       });
     } else {
-      var result = fkeys.map(function(fid) {return posts.api.feeds[fid]})
+      var result = fkeys.map(function(fkey) {return posts.api.feeds[fkey]})
       callback(null, result);
     }
   }
@@ -244,7 +244,7 @@ posts.list = {
         // user and feeds has load
         var $list = this.$list || (this.$list = $('#posts-list'));
         plist.forEach(function(pdata) {
-            var user = pdata.isFeed ? posts.api.feeds[pdata.feed] : posts.api.users[pdata.authorId];
+            var user = (pdata.isFeed ? posts.api.feeds[pdata.feedkey] : posts.api.users[pdata.authorId]) || {};
             $list.append(new Post(pdata, user).$el);
         });
     });
