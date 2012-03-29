@@ -63,6 +63,15 @@ posts.api = {
     });
   }
 
+, loadAuthorline: function(start, len, callback) {
+    this.get('/api/post/authorline/' + start + '/' + len, function(err, data) {
+        data.forEach(function(p) {
+            p.createTime = new Date(p.createTime)
+        });
+        callback(err, data);
+    });
+  }
+
 , loadUsers: function(uids, callback) {
     var _uids = [];
     for(var i in uids) {
@@ -201,6 +210,14 @@ posts.list = {
 , loadTimeline: function(len) {
     len = len || 10;
     posts.api.loadTimeline(this.timelineIndex, len, function(err, plist) {
+        posts.list.timelineIndex += plist.length;
+        posts.list.renderPosts(plist);
+    });
+  }
+
+, loadAuthorline: function(len) {
+    len = len || 10;
+    posts.api.loadAuthorline(this.timelineIndex, len, function(err, plist) {
         posts.list.timelineIndex += plist.length;
         posts.list.renderPosts(plist);
     });
