@@ -124,6 +124,7 @@ Icon and Design
 [iconic set]http://somerandomdude.com/work/iconic/
 [pc icons]http://pc.de/icons/
 [750 icons set, $]http://www.webalys.com/premium/design-vector-icons-library.html
+[116-free-loading-gif](http://webpagebynumbers.com/116-free-loading-gif-animations)
 
 Recommender System and Serach Engine
 ----

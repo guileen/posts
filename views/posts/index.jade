@@ -4,14 +4,14 @@ block scripts
   script(src="/javascripts/posts/pages/index.js")
 
 block content
-  .row
-    .span12
+  include new-post-editor
 
-      include new-post-editor
+  #posts-list
+    - for entry in posts
+      include entry-pjax
 
-      #posts-list
-        - for entry in posts
-          include entry-pjax
+  #posts-loading
+    .icon.loading.right
 
 block template
   script#template-remove-post(type='jst')
