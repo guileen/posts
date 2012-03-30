@@ -1,8 +1,8 @@
 $(function() {
-    posts.list.initTopEditor();
-    // posts.list.loadTimeline();
-
-    posts.list.loadAuthorline();
+    posts.page.initTopEditor();
+    // posts.page.loadTimeline();
+    posts.page.loadAuthorlineWithPost();
+    posts.page.loadNextUserPost();
 
     var $win = $(window)
       , $doc = $(document);
@@ -18,6 +18,7 @@ $(function() {
       {
         /// end
         $('#posts-loading').show();
+        posts.page.loadNextUserPost();
       }
     }
 

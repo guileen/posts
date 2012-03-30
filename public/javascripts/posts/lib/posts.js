@@ -1,9 +1,11 @@
+(function() {
 // use js-signal?
-posts.api = {
+var api = posts.api = {
   user: null
 , posts: null
-, feeds: {}
-, users: {}
+, authorline: null // users sort by score
+, feeds: {} // cache, key is key
+, users: {} // cache, key is _id
 
 , ajax: function(url, method, params, callback) {
     if(!callback && typeof params === 'function') {
@@ -63,7 +65,7 @@ posts.api = {
     });
   }
 
-, loadAuthorline: function(start, len, callback) {
+, loadAuthorlineWithPost: function(start, len, callback) {
     this.get('/api/post/authorline/' + start + '/' + len, function(err, data) {
         data.forEach(function(p) {
             p.createTime = new Date(p.createTime)
@@ -72,22 +74,29 @@ posts.api = {
     });
   }
 
+, loadAuthorline: function(start, len, callback) {
+    this.get('/api/user/authorline/' + start + '/' + len, function(err, data) {
+        if(data) api.authorline = data;
+        callback(err, data);
+    });
+  }
+
 , loadUsers: function(uids, callback) {
     var _uids = [];
     for(var i in uids) {
       var u = uids[i];
-      if(_uids.indexOf(u) < 0 && !posts.api.users[u]) {
+      if(_uids.indexOf(u) < 0 && !api.users[u]) {
         _uids.push(u);
       }
     }
     if(_uids.length > 0) {
       this.get('/api/user/mget', {users: _uids}, function(err, data) {
-          data.forEach(function(u){ posts.api.users[u._id] = u; });
-          var result = uids.map(function(uid) {return posts.api.users[uid]})
+          data.forEach(function(u){ api.users[u._id] = u; });
+          var result = uids.map(function(uid) {return api.users[uid]})
           callback(null, result);
       });
     } else {
-      var result = uids.map(function(uid) {return posts.api.users[uid]})
+      var result = uids.map(function(uid) {return api.users[uid]})
       callback(null, result);
     }
   }
@@ -97,24 +106,24 @@ posts.api = {
     var _fkeys = [];
     for(var i in fkeys) {
       var f = fkeys[i];
-      if(_fkeys.indexOf(f) < 0 && !posts.api.feeds[f]) {
+      if(_fkeys.indexOf(f) < 0 && !api.feeds[f]) {
         _fkeys.push(f);
       }
     }
     if(_fkeys.length > 0) {
       this.get('/api/feed/mget', {feeds: _fkeys}, function(err, data) {
-          data.forEach(function(f){ posts.api.feeds[f.key] = f; });
-          var result = fkeys.map(function(fkey) {return posts.api.feeds[fkey]})
+          data.forEach(function(f){ api.feeds[f.key] = f; });
+          var result = fkeys.map(function(fkey) {return api.feeds[fkey]})
           callback(null, result);
       });
     } else {
-      var result = fkeys.map(function(fkey) {return posts.api.feeds[fkey]})
+      var result = fkeys.map(function(fkey) {return api.feeds[fkey]})
       callback(null, result);
     }
   }
 };
 
-posts.list = {
+var page = posts.page = {
 
   timelineIndex: 0
 
@@ -186,7 +195,7 @@ posts.list = {
     $('.new-post form').ajaxForm({
         success: function(data, textStatus, xhr) {
           var $html = $(data).hide();
-          posts.list.initEntry($html);
+          page.initEntry($html);
           $('#posts-list').prepend($html);
           closeEditor(function() {
               editor.reset();
@@ -209,18 +218,30 @@ posts.list = {
 
 , loadTimeline: function(len) {
     len = len || 10;
-    posts.api.loadTimeline(this.timelineIndex, len, function(err, plist) {
-        posts.list.timelineIndex += plist.length;
-        posts.list.renderPosts(plist);
+    api.loadTimeline(this.timelineIndex, len, function(err, plist) {
+        page.timelineIndex += plist.length;
+        page.renderPosts(plist);
     });
   }
 
-, loadAuthorline: function(len) {
+, loadAuthorlineWithPost: function(len) {
     len = len || 10;
-    posts.api.loadAuthorline(this.timelineIndex, len, function(err, plist) {
-        posts.list.timelineIndex += plist.length;
-        posts.list.renderPosts(plist);
+    api.loadAuthorlineWithPost(this.timelineIndex, len, function(err, plist) {
+        page.timelineIndex += plist.length;
+        page.renderPosts(plist);
     });
+  }
+
+, loadNextUserPost: function() {
+    if(!api.authorline || api.current) {
+      api.loadAuthorline(0, 200/*1000*/, function(err, data) {
+
+      });
+    }
+  }
+
+, loadUserPost: function() {
+
   }
 
 , renderPosts: function(plist) {
@@ -235,16 +256,16 @@ posts.list = {
 
     async.parallel([
         function(_callback) {
-          posts.api.loadFeeds(fkeys, _callback);
+          api.loadFeeds(fkeys, _callback);
         }
       , function(_callback) {
-          posts.api.loadUsers(uids, _callback);
+          api.loadUsers(uids, _callback);
         }
       ], function(err, data) {
         // user and feeds has load
         var $list = this.$list || (this.$list = $('#posts-list'));
         plist.forEach(function(pdata) {
-            var user = (pdata.isFeed ? posts.api.feeds[pdata.feedkey] : posts.api.users[pdata.authorId]) || {};
+            var user = (pdata.isFeed ? api.feeds[pdata.feedkey] : api.users[pdata.authorId]) || {};
             $list.append(new Post(pdata, user).$el);
         });
     });
@@ -253,7 +274,7 @@ posts.list = {
 
 , initEntries: function() {
     $('.entry').each(function(i, el) {
-        posts.list.initEntry(el);
+        page.initEntry(el);
     });
   }
 
@@ -496,3 +517,5 @@ Post.prototype = {
 
   }
 };
+
+})();
