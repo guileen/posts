@@ -11,49 +11,52 @@ html(lang="en")
 
     //if lt IE 9
       script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
-    script(src='/javascripts/jquery-1.7.1.min.js')
-    // required by jquery notify
-    script(src='/javascripts/jquery.ui.widget.js')
-    // microsoft CDN
-      script(src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.4.min.js")
-      script(src='http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.16/jquery-ui.min.js')
-    // google CDN
-      script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js')
-      script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js')
 
-    // use self modified jquery.modal fit for bootstrap style
-    script(src="/javascripts/jquery.modal.js")
-    // bootstrap scripts
-    script(src="/bootstrap/js/bootstrap-tooltip.js")
-    script(src="/bootstrap/js/bootstrap-popover.js")
-    // text area autoresize
-    script(src="/javascripts/autoresize/jquery.autoresize.js")
-    // markdown
-    // TODO fix github tags
-    script(src="/javascripts/github-flavored-markdown/scripts/showdown.js")
-    // html5 form validation
-    script(src="/javascripts/H5F/h5f.js")
-    // jquery ajaxform
-    script(src="/javascripts/form/jquery.form.js")
-    // jquery pushstate
-    script(src="/javascripts/jquery-pjax/jquery.pjax.js")
-    // jquery notify
-    script(src='/javascripts/jquery-notify/src/jquery.notify.js')
-    // template engine
-    // script(src='/javascripts/jst.js')
-    script(src='/javascripts/jade.runtime.js')
-    // compiled templates
-    script(src='/javascripts/posts/templates.js')
-    script(src='/javascripts/async.js')
-    script(src='/javascripts/md5.js')
-    script(src='/javascripts/url.js')
-    script(src='/javascripts/share.js')
-    // app javascripts
-    script(src="/javascripts/posts/lib/base.js")
-    script(src="/javascripts/posts/lib/editor.js")
-    script(src="/javascripts/posts/lib/posts.js")
-    script(src="/javascripts/posts/pages/post-modify.js")
-    script(src="/javascripts/posts/pages/layout.js")
+    if(debug)
+      script(src='/javascripts/jquery-1.7.1.min.js')
+      // required by jquery notify
+      script(src='/javascripts/jquery.ui.widget.js')
+      // use self modified jquery.modal fit for bootstrap style
+      script(src="/javascripts/jquery.modal.js")
+      // bootstrap scripts
+      script(src="/bootstrap/js/bootstrap-tooltip.js")
+      script(src="/bootstrap/js/bootstrap-popover.js")
+      // text area autoresize
+      script(src="/javascripts/autoresize/jquery.autoresize.js")
+      // markdown
+      // TODO fix github tags
+      script(src="/javascripts/github-flavored-markdown/scripts/showdown.js")
+      // html5 form validation
+      script(src="/javascripts/H5F/h5f.js")
+      // jquery ajaxform
+      script(src="/javascripts/form/jquery.form.js")
+      // jquery pushstate
+      script(src="/javascripts/jquery-pjax/jquery.pjax.js")
+      // jquery notify
+      script(src='/javascripts/jquery-notify/src/jquery.notify.js')
+      // template engine
+      // script(src='/javascripts/jst.js')
+      script(src='/javascripts/jade.runtime.js')
+      // compiled templates
+      script(src='/javascripts/posts/templates.js')
+      script(src='/javascripts/async.js')
+      script(src='/javascripts/md5.js')
+      script(src='/javascripts/url.js')
+      script(src='/javascripts/share.js')
+      // app javascripts
+      script(src="/javascripts/posts/lib/base.js")
+      script(src="/javascripts/posts/lib/editor.js")
+      script(src="/javascripts/posts/lib/posts.js")
+      script(src="/javascripts/posts/pages/post-modify.js")
+      script(src="/javascripts/posts/pages/layout.js")
+    else
+      // microsoft CDN
+        script(src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.4.min.js")
+        script(src='http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.16/jquery-ui.min.js')
+      // google CDN
+        script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js')
+        script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js')
+      script(src="/javascripts/libs.min.js")
 
     block scripts
 

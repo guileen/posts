@@ -92,6 +92,7 @@ app.get('/error', function(req, res, next) {
 app.locals(require('./common'));
 app.locals({
     title: 'Posts'
+  , debug: development
 });
 app.dynamicHelpers({
     user: function(req) {return req.session.user}
