@@ -16,6 +16,7 @@ Node.js
 ----
 [node-googlereaderauth](https://github.com/Tobbe/googlereaderauth)
 [node-readability](https://github.com/luin/node-readability)
+[spider](https://github.com/mikeal/spider)
 i18n
 ----
 [i18n-node](https://github.com/mashpie/i18n-node)
