@@ -30,10 +30,12 @@ Node.js
 [node-seq]
 [browsertify]
 
-Google reader
+[Feeds]
 ----
 [node-googlereaderauth](https://github.com/Tobbe/googlereaderauth)
-
+[readablity](http://code.google.com/p/arc90labs-readability/)
+[node-readability](https://github.com/luin/node-readability)
+[spider](https://github.com/mikeal/spider)
 i18n
 ----
 [i18n-node](https://github.com/mashpie/i18n-node)
