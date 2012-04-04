@@ -15,6 +15,7 @@ Node.js
 [Feeds]
 ----
 [node-googlereaderauth](https://github.com/Tobbe/googlereaderauth)
+[readablity](http://code.google.com/p/arc90labs-readability/)
 [node-readability](https://github.com/luin/node-readability)
 [spider](https://github.com/mikeal/spider)
 i18n
