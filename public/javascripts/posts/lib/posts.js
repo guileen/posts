@@ -4,6 +4,7 @@ var api = posts.api = {
   user: null
 , posts: null
 , authorline: null // users sort by score
+, authorlinePostion: 0
 , feeds: {} // cache, key is key
 , users: {} // cache, key is _id
 
@@ -75,10 +76,31 @@ var api = posts.api = {
   }
 
 , loadAuthorline: function(start, len, callback) {
-    this.get('/api/user/authorline/' + start + '/' + len, function(err, data) {
+    this.get('/api/post/authorline/' + start + '/' + len, function(err, data) {
         if(data) api.authorline = data;
         callback(err, data);
     });
+  }
+
+, loadNextUsersPosts: function(len, callback) {
+    if(api.authorline && api.authorlinePostion < api.authorline.length) {
+      var users = api.authorline.slice(api.authorlinePostion, api.authorlinePostion + len);
+      api.loadUnreadUsersPosts(users, 1, callback);
+      api.authorlinePostion += users.length;
+    } else {
+      api.loadAuthorline(0, 200, function(err, line) {
+          if(err) return callback(err);
+          api.authorlinePostion = 0;
+          if(line.length == 0) {
+            return api.loadRecommendPost(callback);
+          }
+          api.loadNextUsersPosts(callback);
+      });
+    }
+  }
+
+, loadUnreadUsersPosts: function(users, perlen, callback) {
+    api.get('/api/users/posts', {users: users, perlen: perlen}, callback);
   }
 
 , loadUsers: function(uids, callback) {
@@ -225,23 +247,21 @@ var page = posts.page = {
   }
 
 , loadAuthorlineWithPost: function(len) {
+    $('#posts-loading').show();
     len = len || 10;
     api.loadAuthorlineWithPost(this.timelineIndex, len, function(err, plist) {
         page.timelineIndex += plist.length;
         page.renderPosts(plist);
+        $('#posts-loading').hide();
     });
   }
 
-, loadNextUserPost: function() {
-    if(!api.authorline || api.current) {
-      api.loadAuthorline(0, 200/*1000*/, function(err, data) {
-
-      });
-    }
-  }
-
-, loadUserPost: function() {
-
+, loadNextUsersPosts: function(len) {
+    $('#posts-loading').show();
+    api.loadNextUsersPosts(len, function(err, plist) {
+        page.renderPosts(plist);
+        $('#posts-loading').hide();
+    });
   }
 
 , renderPosts: function(plist) {

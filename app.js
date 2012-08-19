@@ -7,9 +7,12 @@ var express = require('express');
 var config = require('./config');
 var RedisStore = require('connect-redis')(express);
 
-var app = module.exports = express.createServer();
+var app = module.exports = express();
 
 var development = app.settings.env == 'development';
+
+var cclog = require('cclog');
+cclog.replace();
 
 // hack express render to support pjax
 var res = /*3.x*/ express.response || /*2.x*/ require('http').ServerResponse.prototype
@@ -37,13 +40,24 @@ app.configure('development', function() {
 app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
-  app.set('view options', {pretty: development, layout: false});
+  // app.set('view options', {pretty: development, layout: false});
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({ secret: "keyboard cat", store: new RedisStore }));
   app.use(require('connect-less')({ src: __dirname + '/public/', compress: !development }));
   app.use(express.favicon(__dirname + '/public/favicon.ico'));
+
+  // dynamicHelpers
+  app.use(function(req, res, next){
+      res.locals({
+          user: req.session.user
+        , pjax: req.query._pjax
+        , url: req.url
+      })
+      next();
+  });
+
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 
@@ -92,12 +106,7 @@ app.get('/error', function(req, res, next) {
 app.locals(require('./common'));
 app.locals({
     title: 'Posts'
-  , debug: development
-});
-app.dynamicHelpers({
-    user: function(req) {return req.session.user}
-  , pjax: function(req) {return req.query._pjax == 'true'}
-  , url: function(req) {return req.url}
+  , DEBUG: development
 });
 
 // Middlewares
@@ -107,5 +116,8 @@ app.dynamicHelpers({
 require('./lib/route').route(app);
 
 // node-dev app.js 5000
-app.listen(process.argv[2] || 3000);
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+var port = process.argv[2] || 3000
+
+app.listen(port, function(){
+    console.log("Express server listening on port %d in %s mode", port, app.settings.env);
+});

@@ -2,7 +2,7 @@ $(function() {
     posts.page.initTopEditor();
     // posts.page.loadTimeline();
     posts.page.loadAuthorlineWithPost();
-    posts.page.loadNextUserPost();
+    // posts.page.loadNextUsersPosts();
 
     var $win = $(window)
       , $doc = $(document);
@@ -16,15 +16,10 @@ $(function() {
 
       if (scrolltop + windowheight + scrolloffset >= scrollheight)
       {
-        /// end
-        $('#posts-loading').show();
-        posts.page.loadNextUserPost();
+        posts.page.loadNextUsersPosts();
       }
     }
 
-    $('#posts-loading').hide();
-
     $win.bind('scroll', scrollalert);
-
 
 });

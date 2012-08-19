@@ -3,7 +3,7 @@
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
-      "express": "2.5.0"
+      "express": "3.x"
     , "robotskirt" : ">= 0.0.1"
     , "less": ">= 0.0.1"
     , "jade": ">= 0.0.1"
@@ -15,6 +15,7 @@
     , "feedparser" : ">=0.9.3"
     , "async" : ">=0.0.1"
     , "shorten" : ">=0.0.1"
-    , "zmq" : ">=0.0.1"
+    , "mongoskin" : ">=0.0.1"
+    , "cclog" :"*"
   }
 }
